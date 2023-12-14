@@ -38,7 +38,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Name}" Width="100" Height="25"/>
                                         <TextBlock Text="{Binding Deskription}" Width="100" Height="25"/>
-                                        <TextBlock Text="{Binding Time}" Width="100" Height="25"/>
+                                        <TextBlock Text="{Binding Time}" Width="150" Height="25"/>
 
                                         <CheckBox IsChecked="False" Checked="TaskComplete" Width="50" Height="25"/>
                                     </StackPanel>

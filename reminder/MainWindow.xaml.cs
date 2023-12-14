@@ -21,7 +21,7 @@ namespace reminder
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<MyDataItem> taskItems = new ObservableCollection<MyDataItem>();
+        ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
         public MainWindow()
         {
             InitializeComponent();
@@ -34,11 +34,11 @@ namespace reminder
             window1.ShowDialog();
             if (window1.DialogResult == true)
             {
-                MyDataItem newItem = new MyDataItem
+                TaskItem newItem = new TaskItem
                 {
-                    Name = window1.nameBox.Text,
-                    Deskription = window1.deskBox.Text,
-                    Time = (window1.timeBox.Text),
+                    Name = window1.TaskName,
+                    Deskription = window1.TaskDescription,
+                    Time = $"{window1.TaskTime.ToShortDateString()} {window1.TaskTime.ToShortTimeString()}",
                     IsChecked = false
                 };
 
@@ -61,7 +61,7 @@ namespace reminder
         {
             if (taskBox.SelectedItem != null)
             {
-                MyDataItem selectedTask = (MyDataItem)taskBox.SelectedItem;
+                TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
                 taskItems.Remove(selectedTask);
             }
         }
@@ -70,15 +70,15 @@ namespace reminder
         {
             if (taskBox.SelectedItem != null)
             {
-                MyDataItem selectedTask = (MyDataItem)taskBox.SelectedItem;
+                TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
                 EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Deskription, selectedTask.Time);
                 editWindow.ShowDialog();
 
                 if (editWindow.DialogResult == true)
                 {
-                    selectedTask.Name = editWindow.nameBox.Text;
-                    selectedTask.Deskription = editWindow.deskBox.Text;
-                    selectedTask.Time = editWindow.timeBox.Text;
+                    selectedTask.Name = editWindow.EditedName;
+                    selectedTask.Deskription = editWindow.EditedDesk;
+                    selectedTask.Time = $"{editWindow.EditedDate.ToShortDateString()} {editWindow.EditedDate.ToShortTimeString()}";
                 }
             }
         }

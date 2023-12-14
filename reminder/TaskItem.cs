@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace reminder
 {
-    public class MyDataItem : INotifyPropertyChanged
+    public class TaskItem : INotifyPropertyChanged
     {
         public string name;
         public string deskription;

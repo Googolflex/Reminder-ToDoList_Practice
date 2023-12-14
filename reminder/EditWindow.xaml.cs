@@ -21,7 +21,7 @@ namespace reminder
     {
         public string EditedName { get; private set; }
         public string EditedDesk { get; private set; }
-        public string EditedDate { get; private set; }
+        public DateTime EditedDate { get; private set; }
         public EditWindow(string initialName, string initialDesk, string initialDate)
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace reminder
         {
             EditedName = nameBox.Text;
             EditedDesk = deskBox.Text;
-            EditedDate = timeBox.Text;
+            EditedDate = Convert.ToDateTime(timeBox.Text);
             this.DialogResult = true;
         }
 

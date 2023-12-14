@@ -24,15 +24,30 @@ namespace reminder
             InitializeComponent();
         }
 
+        public string TaskName
+        {
+            get { return nameBox.Text; }
+        }
+
+        public string TaskDescription
+        {
+            get { return deskBox.Text; }
+        }
+
+        public DateTime TaskTime
+        {
+            get { return Convert.ToDateTime(timeBox.Text); }
+        }
+
+
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
-            this.Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.DialogResult= false;
         }
     }
 }
