@@ -11,8 +11,9 @@ namespace reminder
     {
         public string name;
         public string deskription;
-        public string time;
+        public DateTime time;
         public bool isChecked;
+        public bool isReminded;
 
         public string Name
         {
@@ -40,7 +41,7 @@ namespace reminder
             }
         }
 
-        public string Time
+        public DateTime Time
         {
             get { return time; }
             set
@@ -53,6 +54,7 @@ namespace reminder
             }
         }
 
+
         public bool IsChecked
         {
             get { return isChecked; }
@@ -62,6 +64,18 @@ namespace reminder
                 {
                     isChecked = value;
                     OnPropertyChanged(nameof(IsChecked));
+                }
+            }
+        }
+        public bool IsReminded
+        {
+            get { return isReminded; }
+            set
+            {
+                if (isReminded != value)
+                {
+                    isReminded = value;
+                    OnPropertyChanged(nameof(IsReminded));
                 }
             }
         }

@@ -13,6 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Window = System.Windows.Window;
+using System.Drawing;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace reminder
 {
@@ -22,10 +26,36 @@ namespace reminder
     public partial class MainWindow : Window
     {
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
+        private DispatcherTimer timer;
+
         public MainWindow()
         {
             InitializeComponent();
             taskBox.ItemsSource = taskItems;
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(10);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            CheckTaskTime();
+        }
+
+        private void CheckTaskTime()
+        {
+            foreach (TaskItem taskItem in taskItems)
+            {
+                if (DateTime.Now >= taskItem.Time && !taskItem.isReminded)
+                {
+                    taskbarIcon.ShowBalloonTip(taskItem.Name, taskItem.Deskription, BalloonIcon.Info);
+                    taskItem.isReminded = true;
+                }
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -38,8 +68,9 @@ namespace reminder
                 {
                     Name = window1.TaskName,
                     Deskription = window1.TaskDescription,
-                    Time = $"{window1.TaskTime.ToShortDateString()} {window1.TaskTime.ToShortTimeString()}",
-                    IsChecked = false
+                    Time = window1.TaskTime,
+                    IsChecked = false,
+                    IsReminded = false
                 };
 
                 taskItems.Add(newItem);
@@ -71,14 +102,14 @@ namespace reminder
             if (taskBox.SelectedItem != null)
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
-                EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Deskription, selectedTask.Time);
+                EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Deskription, selectedTask.Time.ToString());
                 editWindow.ShowDialog();
 
                 if (editWindow.DialogResult == true)
                 {
                     selectedTask.Name = editWindow.EditedName;
                     selectedTask.Deskription = editWindow.EditedDesk;
-                    selectedTask.Time = $"{editWindow.EditedDate.ToShortDateString()} {editWindow.EditedDate.ToShortTimeString()}";
+                    selectedTask.Time = editWindow.EditedDate;
                 }
             }
         }
