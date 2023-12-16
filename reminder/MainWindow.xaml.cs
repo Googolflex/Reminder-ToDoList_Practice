@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using Window = System.Windows.Window;
 using System.Drawing;
 using Hardcodet.Wpf.TaskbarNotification;
+using System.ComponentModel;
 
 namespace reminder
 {
@@ -27,9 +28,13 @@ namespace reminder
     {
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
         private DispatcherTimer timer;
+        private bool closingFromMenuItem = false;
+        private bool isClosingHandled = false;
 
         public MainWindow()
         {
+            this.Closing += MainWindow_Closing;
+
             InitializeComponent();
             taskBox.ItemsSource = taskItems;
 
@@ -58,17 +63,18 @@ namespace reminder
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void AddTask_Click(object sender, RoutedEventArgs e)
         {
-            AddWindow window1 = new AddWindow();
-            window1.ShowDialog();
-            if (window1.DialogResult == true)
+            AddWindow addWindow = new AddWindow();
+            addWindow.ShowDialog();
+            if (addWindow.DialogResult == true)
             {
                 TaskItem newItem = new TaskItem
                 {
-                    Name = window1.TaskName,
-                    Deskription = window1.TaskDescription,
-                    Time = window1.TaskTime,
+                    Name = addWindow.TaskName,
+                    Deskription = addWindow.TaskDescription,
+                    Time = addWindow.TaskTime,
+                    TimeToShow = $"{addWindow.TaskTime.ToShortDateString()} {addWindow.TaskTime.ToShortTimeString()}",
                     IsChecked = false,
                     IsReminded = false
                 };
@@ -85,7 +91,7 @@ namespace reminder
 
         private void TaskComplete(object sender, RoutedEventArgs e)
         {
-
+            (sender as CheckBox).IsEnabled = false;
         }
 
         private void DeleteTask(object sender, RoutedEventArgs e)
@@ -99,7 +105,7 @@ namespace reminder
 
         private void taskBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (taskBox.SelectedItem != null)
+            if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsChecked)
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
                 EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Deskription, selectedTask.Time.ToString());
@@ -112,6 +118,82 @@ namespace reminder
                     selectedTask.Time = editWindow.EditedDate;
                 }
             }
+        }
+
+        private void Credits_Click(object sender, RoutedEventArgs e)
+        {
+            string devName = (sender as MenuItem).Header.ToString();
+            if (devName == "Googolflex")
+                System.Diagnostics.Process.Start("https://github.com/Googolflex");
+            else
+                System.Diagnostics.Process.Start("https://github.com/de0f");
+
+        }
+
+        private void taskBar_Click(object sender, RoutedEventArgs e)
+        {
+            string devName = (sender as MenuItem).Header.ToString();
+            if (devName == "Close")
+            {
+                closingFromMenuItem = true;
+                this.Close();
+            }
+            else if (devName == "Show")
+            {
+                this.WindowState = WindowState.Normal;
+                this.ShowInTaskbar = true;
+            }
+        }
+
+        async void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (closingFromMenuItem && !isClosingHandled)
+            {
+                e.Cancel = true;
+                MessageBoxResult result = await Task.Run(() =>
+                {
+                    return MessageBox.Show("Do you want to close the reminder?", "Reminder", MessageBoxButton.YesNo);
+                });
+                if (result == MessageBoxResult.No)
+                {
+                    closingFromMenuItem = false;
+                    e.Cancel = true;
+                }
+                else
+                {
+                    isClosingHandled = true;
+                    e.Cancel = false;
+                    this.Close();
+                }
+            }
+            else if (!closingFromMenuItem)
+            {
+                this.WindowState = WindowState.Minimized;
+                this.ShowInTaskbar = false;
+                e.Cancel = true;
+            }
+        }
+
+        private void ClearCompleted_Click(object sender, RoutedEventArgs e)
+        {
+            if (taskItems != null)
+            {
+                ObservableCollection<TaskItem> tasksToRemove = new ObservableCollection<TaskItem>();
+                foreach (TaskItem item in taskItems)
+                {
+                    if(item.IsChecked)
+                    tasksToRemove.Add(item);
+                }
+                foreach (TaskItem item in tasksToRemove)
+                {
+                    taskItems.Remove(item);
+                }
+            }
+        }
+
+        private void taskBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            taskBox.SelectedItem = null;
         }
     }
 }

@@ -7,7 +7,15 @@
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
         Title="ToDo" Height="450" Width="800"
+        Icon="Icons/check.ico"
         Background="#FF272727">
+    <Window.Resources>
+        <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="Background" Value="DimGray"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -22,40 +30,69 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons/check.ico"/>
-        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20">
-            <MenuItem Header="File">
-                <MenuItem Header="Options"></MenuItem>
-                <MenuItem Header="Credits"></MenuItem>
+        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons/check.ico">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Close" Click="taskBar_Click"></MenuItem>
+                    <MenuItem Header="Show" Click="taskBar_Click"></MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20" Background="#6F6F6F">
+            <MenuItem Header="File" Foreground="Silver" Background="#6F6F6F">
+                <MenuItem Header="Options" Foreground="Silver"></MenuItem>
+                <MenuItem Header="Credits" Background="#6F6F6F">
+                    <MenuItem Header="Googolflex" Click="Credits_Click" Foreground="Silver"></MenuItem>
+                    <MenuItem Header="De0" Click="Credits_Click" Foreground="Silver"></MenuItem>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Add" Click="MenuItem_Click"></MenuItem>
+            <MenuItem Header="Add" Click="AddTask_Click" Foreground="Silver"></MenuItem>
+            <MenuItem Header="Clear Completed" Click="ClearCompleted_Click" Foreground="Silver"></MenuItem>
         </Menu>
-        <ListBox x:Name="taskBox" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="5" Background="#FF272727" BorderBrush="#FF272727" ItemsSource="{Binding taskItems}" SelectionMode="Single" MouseDoubleClick="taskBox_MouseDoubleClick">
+        <ScrollViewer Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
+            </ScrollViewer.Resources>
+            <ListBox x:Name="taskBox" Background="#FF272727" BorderBrush="#FF272727" ItemsSource="{Binding taskItems}" SelectionMode="Single" MouseDoubleClick="taskBox_MouseDoubleClick" LostFocus="taskBox_LostFocus">
             <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Grid>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}" Width="100" Height="25"/>
-                                        <TextBlock Text="{Binding Deskription}" Width="100" Height="25"/>
-                                        <TextBlock Text="{Binding Time}" Width="150" Height="25"/>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="0,2"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="Silver"
+                                BorderThickness="0"
+                                CornerRadius="15">
+                                        <Grid>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0">
+                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="150" Margin="4,0,20,0" Foreground="Silver" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Deskription}" Height="25" MaxWidth="300" Margin="0,0,20,0" Foreground="Silver" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding TimeToShow}" Height="25" Margin="0,0,20,0" Foreground="Silver" FontSize="16" FontWeight="SemiBold"/>
 
-                                        <CheckBox IsChecked="False" Checked="TaskComplete" Width="50" Height="25"/>
-                                    </StackPanel>
+                                                <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" Width="50" Margin="0,8,0,0" Height="25"/>
+                                            </StackPanel>
 
-                                    <Grid.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Delete" Click="DeleteTask">Delete</MenuItem>
-                                        </ContextMenu>
-                                    </Grid.ContextMenu>
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>
+                                            <Grid.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Delete" Click="DeleteTask">Delete</MenuItem>
+                                                </ContextMenu>
+                                            </Grid.ContextMenu>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#20ADD8E6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
         </ListBox>
+        </ScrollViewer>
     </Grid>
 </Window>
