@@ -57,7 +57,7 @@ namespace reminder
             {
                 if (DateTime.Now >= taskItem.Time && !taskItem.isReminded)
                 {
-                    taskbarIcon.ShowBalloonTip(taskItem.Name, taskItem.Deskription, BalloonIcon.Info);
+                    taskbarIcon.ShowBalloonTip(taskItem.Name, taskItem.Desсription, BalloonIcon.Info);
                     taskItem.isReminded = true;
                 }
             }
@@ -72,7 +72,7 @@ namespace reminder
                 TaskItem newItem = new TaskItem
                 {
                     Name = addWindow.TaskName,
-                    Deskription = addWindow.TaskDescription,
+                    Desсription = addWindow.TaskDescription,
                     Time = addWindow.TaskTime,
                     TimeToShow = $"{addWindow.TaskTime.ToShortDateString()} {addWindow.TaskTime.ToShortTimeString()}",
                     IsChecked = false,
@@ -108,13 +108,13 @@ namespace reminder
             if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsChecked)
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
-                EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Deskription, selectedTask.Time.ToString());
+                EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Desсription, selectedTask.Time.ToString());
                 editWindow.ShowDialog();
 
                 if (editWindow.DialogResult == true)
                 {
                     selectedTask.Name = editWindow.EditedName;
-                    selectedTask.Deskription = editWindow.EditedDesk;
+                    selectedTask.Desсription = editWindow.EditedDesk;
                     selectedTask.Time = editWindow.EditedDate;
                 }
             }

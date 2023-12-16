@@ -10,7 +10,7 @@ namespace reminder
     public class TaskItem : INotifyPropertyChanged
     {
         public string name;
-        public string deskription;
+        public string description;
         public DateTime time;
         public string timeToShow;
         public bool isChecked;
@@ -29,15 +29,15 @@ namespace reminder
             }
         }
 
-        public string Deskription
+        public string Desсription
         {
-            get { return deskription; }
+            get { return description; }
             set
             {
-                if (deskription != value)
+                if (description != value)
                 {
-                    deskription = value;
-                    OnPropertyChanged(nameof(Deskription));
+                    description = value;
+                    OnPropertyChanged(nameof(Desсription));
                 }
             }
         }

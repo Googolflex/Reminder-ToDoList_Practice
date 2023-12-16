@@ -33,21 +33,21 @@
         <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons/check.ico">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Close" Click="taskBar_Click"></MenuItem>
-                    <MenuItem Header="Show" Click="taskBar_Click"></MenuItem>
+                    <MenuItem Header="Close" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold" Click="taskBar_Click"></MenuItem>
+                    <MenuItem Header="Show" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold" Click="taskBar_Click"></MenuItem>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
-        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20" Background="#6F6F6F">
-            <MenuItem Header="File" Foreground="Silver" Background="#6F6F6F">
-                <MenuItem Header="Options" Foreground="Silver"></MenuItem>
-                <MenuItem Header="Credits" Background="#6F6F6F">
-                    <MenuItem Header="Googolflex" Click="Credits_Click" Foreground="Silver"></MenuItem>
-                    <MenuItem Header="De0" Click="Credits_Click" Foreground="Silver"></MenuItem>
+        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20" Background="#40ADD8E6" BorderBrush="#40ADD8E6">
+            <MenuItem Header="File" Foreground="#20B2AA" FontWeight="SemiBold">
+                <MenuItem Header="Options" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
+                <MenuItem Header="Credits" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold">
+                    <MenuItem Header="Googolflex" Background="#485357" BorderBrush="#485357" Click="Credits_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
+                    <MenuItem Header="De0" Background="#485357" BorderBrush="#485357" Click="Credits_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Add" Click="AddTask_Click" Foreground="Silver"></MenuItem>
-            <MenuItem Header="Clear Completed" Click="ClearCompleted_Click" Foreground="Silver"></MenuItem>
+            <MenuItem Header="Add" Click="AddTask_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
+            <MenuItem Header="Clear Completed" Click="ClearCompleted_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
         </Menu>
         <ScrollViewer Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <ScrollViewer.Resources>
@@ -63,21 +63,21 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
                                     <Border Background="{TemplateBinding Background}"
-                                BorderBrush="Silver"
+                                BorderBrush="#20ADD8E6"
                                 BorderThickness="0"
                                 CornerRadius="15">
                                         <Grid>
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0">
-                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="150" Margin="4,0,20,0" Foreground="Silver" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding Deskription}" Height="25" MaxWidth="300" Margin="0,0,20,0" Foreground="Silver" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding TimeToShow}" Height="25" Margin="0,0,20,0" Foreground="Silver" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="150" Margin="4,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Desсription}" Height="25" MaxWidth="300" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding TimeToShow}" Height="25" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
 
                                                 <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" Width="50" Margin="0,8,0,0" Height="25"/>
                                             </StackPanel>
 
                                             <Grid.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Header="Delete" Click="DeleteTask">Delete</MenuItem>
+                                                <ContextMenu Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold">
+                                                    <MenuItem Header="Delete" Background="#485357" BorderBrush="#485357" Click="DeleteTask" Foreground="#20B2AA" FontWeight="SemiBold">Delete</MenuItem>
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
                                         </Grid>
@@ -86,6 +86,10 @@
                             </Setter.Value>
                         </Setter>
                         <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked}" Value="True">
+                                <Setter Property="Background" Value="#20006400"/>
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="#20ADD8E6"/>
                             </Trigger>
