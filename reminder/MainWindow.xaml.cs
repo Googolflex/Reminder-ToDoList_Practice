@@ -18,6 +18,8 @@ using Window = System.Windows.Window;
 using System.Drawing;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.ComponentModel;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace reminder
 {
@@ -30,18 +32,27 @@ namespace reminder
         private DispatcherTimer timer;
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
+        string filePath = "tasks.xml";
 
         public MainWindow()
         {
             this.Closing += MainWindow_Closing;
 
             InitializeComponent();
-            taskBox.ItemsSource = taskItems;
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(10);
             timer.Tick += Timer_Tick;
             timer.Start();
+
+
+            if (File.Exists(filePath))
+            {
+                taskItems = DeserializeFromXml<ObservableCollection<TaskItem>>("tasks.xml");
+                taskBox.ItemsSource = taskItems;
+            }
+            else
+                taskBox.ItemsSource = taskItems;
 
 
         }
@@ -80,6 +91,7 @@ namespace reminder
                 };
 
                 taskItems.Add(newItem);
+
             }
         }
 
@@ -161,9 +173,10 @@ namespace reminder
                 }
                 else
                 {
+                    SerializeToXml("tasks.xml", taskItems);
                     isClosingHandled = true;
                     e.Cancel = false;
-                    this.Close();
+                    this.Close();                
                 }
             }
             else if (!closingFromMenuItem)
@@ -195,5 +208,22 @@ namespace reminder
         {
             taskBox.SelectedItem = null;
         }
+        static void SerializeToXml<T>(string filePath, T data)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (TextWriter writer = new StreamWriter(filePath))
+            {
+                serializer.Serialize(writer, data);
+            }
+        }
+        static T DeserializeFromXml<T>(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (TextReader reader = new StreamReader(filePath))
+            {
+                return (T)serializer.Deserialize(reader);
+            }
+        }
+
     }
 }
