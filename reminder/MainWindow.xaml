@@ -6,7 +6,7 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
-        Title="ToDo" Height="450" Width="800"
+        Title="ToDoList" Height="450" Width="800"
         Icon="Icons/check.ico"
         Background="#FF272727">
     <Window.Resources>
@@ -39,7 +39,7 @@
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
-        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20" Background="#40ADD8E6" BorderBrush="#40ADD8E6">
+        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20" Background="#485357" BorderBrush="#485357">
             <MenuItem Header="File" Foreground="#20B2AA" FontWeight="SemiBold">
                 <MenuItem Header="Credits" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold">
                     <MenuItem Header="Googolflex" Background="#485357" BorderBrush="#485357" Click="Credits_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>

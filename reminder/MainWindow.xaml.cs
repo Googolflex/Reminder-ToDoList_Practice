@@ -164,7 +164,7 @@ namespace reminder
                 e.Cancel = true;
                 MessageBoxResult result = await Task.Run(() =>
                 {
-                    return MessageBox.Show("Do you want to close the reminder?", "Reminder", MessageBoxButton.YesNo);
+                    return MessageBox.Show("Do you want to close ToDoList?", "Reminder", MessageBoxButton.YesNo);
                 });
                 if (result == MessageBoxResult.No)
                 {
