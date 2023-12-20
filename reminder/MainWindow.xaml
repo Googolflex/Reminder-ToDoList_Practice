@@ -68,16 +68,16 @@
                                 CornerRadius="15">
                                         <Grid>
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0">
-                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="150" Margin="4,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding Desсription}" Height="25" MaxWidth="300" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="200" Margin="4,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Desсription}" Height="25" MaxWidth="350" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
                                                 <TextBlock Text="{Binding TimeToShow}" Height="25" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
 
                                                 <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" Width="50" Margin="0,8,0,0" Height="25"/>
                                             </StackPanel>
 
                                             <Grid.ContextMenu>
-                                                <ContextMenu Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold">
-                                                    <MenuItem Header="Delete" Background="#485357" BorderBrush="#485357" Click="DeleteTask" Foreground="#20B2AA" FontWeight="SemiBold">Delete</MenuItem>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Delete" Background="#485357" BorderBrush="#485357" Click="DeleteTask" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
                                         </Grid>
