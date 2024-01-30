@@ -43,7 +43,6 @@
             <MenuItem Header="File" Foreground="#20B2AA" FontWeight="SemiBold">
                 <MenuItem Header="Credits" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold">
                     <MenuItem Header="Googolflex" Background="#485357" BorderBrush="#485357" Click="Credits_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
-                    <MenuItem Header="De0" Background="#485357" BorderBrush="#485357" Click="Credits_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Add" Click="AddTask_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>

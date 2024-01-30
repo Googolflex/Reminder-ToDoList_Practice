@@ -124,8 +124,6 @@ namespace reminder
             string devName = (sender as MenuItem).Header.ToString();
             if (devName == "Googolflex")
                 System.Diagnostics.Process.Start("https://github.com/Googolflex");
-            else
-                System.Diagnostics.Process.Start("https://github.com/de0f");
 
         }
 
