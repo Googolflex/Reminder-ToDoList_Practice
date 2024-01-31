@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace reminder
 {
     public class TaskItem : INotifyPropertyChanged
     {
         public string name;
-        public string deskription;
-        public string time;
+        public string description;
+        public DateTime time;
+        public string timeToShow;
         public bool isChecked;
+        public bool isReminded;
 
         public string Name
         {
@@ -27,20 +25,20 @@ namespace reminder
             }
         }
 
-        public string Deskription
+        public string Desсription
         {
-            get { return deskription; }
+            get { return description; }
             set
             {
-                if (deskription != value)
+                if (description != value)
                 {
-                    deskription = value;
-                    OnPropertyChanged(nameof(Deskription));
+                    description = value;
+                    OnPropertyChanged(nameof(Desсription));
                 }
             }
         }
 
-        public string Time
+        public DateTime Time
         {
             get { return time; }
             set
@@ -53,6 +51,20 @@ namespace reminder
             }
         }
 
+        public string TimeToShow
+        {
+            get { return timeToShow; }
+            set
+            {
+                if (timeToShow != value)
+                {
+                    timeToShow = value;
+                    OnPropertyChanged(nameof(TimeToShow));
+                }
+            }
+        }
+
+
         public bool IsChecked
         {
             get { return isChecked; }
@@ -62,6 +74,18 @@ namespace reminder
                 {
                     isChecked = value;
                     OnPropertyChanged(nameof(IsChecked));
+                }
+            }
+        }
+        public bool IsReminded
+        {
+            get { return isReminded; }
+            set
+            {
+                if (isReminded != value)
+                {
+                    isReminded = value;
+                    OnPropertyChanged(nameof(IsReminded));
                 }
             }
         }
