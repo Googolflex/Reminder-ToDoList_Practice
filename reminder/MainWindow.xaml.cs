@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Window = System.Windows.Window;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.ComponentModel;
 using System.IO;
@@ -16,10 +15,11 @@ namespace reminder
     public partial class MainWindow : Window
     {
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
+        ObservableCollection<String> previousTasks { get; set; } = new ObservableCollection<String>();
         private DispatcherTimer timer;
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
-        string filePath = "tasks.xml";
+        string filePath = $"Tasks/{DateTime.Now.ToShortDateString()}.xml";
 
         public MainWindow()
         {
@@ -32,10 +32,23 @@ namespace reminder
             timer.Tick += Timer_Tick;
             timer.Start();
 
+            if (!Directory.Exists("Tasks"))
+                Directory.CreateDirectory("Tasks");
+            else
+            {
+                string[] strings = new string[Directory.GetFiles("Tasks").Length];
+                strings = Directory.GetFiles("Tasks");
+                foreach (string file in strings) {
+                        string temp = file.Remove(0, 6).Remove(10, 4);
+                    if (temp != DateTime.Now.ToShortDateString())
+                        previousTasks.Add(temp);
+                }
+                previousDayMenu.ItemsSource = previousTasks;
+            }
 
             if (File.Exists(filePath))
             {
-                taskItems = DeserializeFromXml<ObservableCollection<TaskItem>>("tasks.xml");
+                taskItems = DeserializeFromXml<ObservableCollection<TaskItem>>($"Tasks/{DateTime.Now.ToShortDateString()}.xml");
                 taskBox.ItemsSource = taskItems;
             }
             else
@@ -158,7 +171,7 @@ namespace reminder
                 }
                 else
                 {
-                    SerializeToXml("tasks.xml", taskItems);
+                    SerializeToXml($"Tasks/{DateTime.Now.ToShortDateString()}.xml", taskItems);
                     isClosingHandled = true;
                     e.Cancel = false;
                     this.Close();                
@@ -210,5 +223,12 @@ namespace reminder
             }
         }
 
+        private void OpenPreviousDay(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = sender as MenuItem;
+            string day = menuItem.Header.ToString();
+            WindowToThePast windowToThePast = new WindowToThePast($"Tasks/{day}.xml");
+            windowToThePast.Show();
+        }
     }
 }
