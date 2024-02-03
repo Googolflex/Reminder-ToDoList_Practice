@@ -7,7 +7,8 @@ namespace reminder
     {
         public string name;
         public string description;
-        public DateTime time;
+        public DateTime firstTime;
+        public DateTime secondTime;
         public string timeToShow;
         public bool isChecked;
         public bool isReminded;
@@ -38,15 +39,28 @@ namespace reminder
             }
         }
 
-        public DateTime Time
+        public DateTime FirstTime
         {
-            get { return time; }
+            get { return firstTime; }
             set
             {
-                if (time != value)
+                if (firstTime != value)
                 {
-                    time = value;
-                    OnPropertyChanged(nameof(Time));
+                    firstTime = value;
+                    OnPropertyChanged(nameof(FirstTime));
+                }
+            }
+        }
+
+        public DateTime SecondTime
+        {
+            get { return secondTime; }
+            set
+            {
+                if (secondTime != value)
+                {
+                    secondTime = value;
+                    OnPropertyChanged(nameof(SecondTime));
                 }
             }
         }

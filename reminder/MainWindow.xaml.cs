@@ -16,6 +16,7 @@ namespace reminder
     {
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
         ObservableCollection<String> previousTasks { get; set; } = new ObservableCollection<String>();
+        AutoStartup autoStartManager = new AutoStartup("ToDoList");
         private DispatcherTimer timer;
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
@@ -66,7 +67,7 @@ namespace reminder
         {
             foreach (TaskItem taskItem in taskItems)
             {
-                if (DateTime.Now >= taskItem.Time && !taskItem.isReminded)
+                if (DateTime.Now >= taskItem.FirstTime && !taskItem.isReminded)
                 {
                     taskbarIcon.ShowBalloonTip(taskItem.Name, taskItem.Desсription, BalloonIcon.Info);
                     taskItem.isReminded = true;
@@ -78,14 +79,30 @@ namespace reminder
         {
             AddWindow addWindow = new AddWindow();
             addWindow.ShowDialog();
-            if (addWindow.DialogResult == true)
+            if (addWindow.DialogResult == true && addWindow.IsTimeInterval != true)
             {
                 TaskItem newItem = new TaskItem
                 {
                     Name = addWindow.TaskName,
                     Desсription = addWindow.TaskDescription,
-                    Time = addWindow.TaskTime,
+                    FirstTime = addWindow.TaskTime,
                     TimeToShow = $"{addWindow.TaskTime.ToShortDateString()} {addWindow.TaskTime.ToShortTimeString()}",
+                    IsChecked = false,
+                    IsReminded = false
+                };
+
+                taskItems.Add(newItem);
+
+            }
+            else if(addWindow.DialogResult == true && addWindow.IsTimeInterval == true)
+            {
+                TaskItem newItem = new TaskItem
+                {
+                    Name = addWindow.TaskName,
+                    Desсription = addWindow.TaskDescription,
+                    FirstTime = addWindow.TaskTime,
+                    SecondTime = addWindow.TaskTime2,
+                    TimeToShow = $"{addWindow.TaskTime.ToShortDateString()} {addWindow.TaskTime.ToShortTimeString()} - {addWindow.TaskTime2.ToShortDateString()} {addWindow.TaskTime2.ToShortTimeString()}",
                     IsChecked = false,
                     IsReminded = false
                 };
@@ -120,14 +137,21 @@ namespace reminder
             if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsChecked)
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
-                EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Desсription, selectedTask.Time.ToString());
+                EditWindow editWindow = new EditWindow(selectedTask);
                 editWindow.ShowDialog();
 
                 if (editWindow.DialogResult == true)
                 {
                     selectedTask.Name = editWindow.EditedName;
                     selectedTask.Desсription = editWindow.EditedDesk;
-                    selectedTask.Time = editWindow.EditedDate;
+                    selectedTask.FirstTime = editWindow.FirstEditedDate;
+                    if (selectedTask.SecondTime != DateTime.MinValue)
+                    {
+                        selectedTask.SecondTime = editWindow.SecondEditedDate;
+                        selectedTask.TimeToShow = $"{editWindow.FirstEditedDate.ToShortDateString()} {editWindow.FirstEditedDate.ToShortTimeString()} - {editWindow.SecondEditedDate.ToShortDateString()} {editWindow.SecondEditedDate.ToShortTimeString()}";
+                    }
+                    else
+                        selectedTask.TimeToShow = $"{editWindow.FirstEditedDate.ToShortDateString()} {editWindow.FirstEditedDate.ToShortTimeString()}";
                 }
             }
         }
@@ -229,6 +253,23 @@ namespace reminder
             string day = menuItem.Header.ToString();
             WindowToThePast windowToThePast = new WindowToThePast($"Tasks/{day}.xml");
             windowToThePast.Show();
+        }
+
+        private void AddAutorun_Click(object sender, RoutedEventArgs e)
+        {
+            if (!autoStartManager.IsAutoStartEnabled())
+            {
+                autoStartManager.AddToAutoStart();
+                MessageBox.Show("The application has been added to autorun");
+            }
+            else
+                MessageBox.Show("The application has already been added to autorun");
+        }
+
+        private void RemoveFromAutorun_Click(object sender, RoutedEventArgs e)
+        {
+            if (autoStartManager.IsAutoStartEnabled())
+                autoStartManager.RemoveFromAutoStart();
         }
     }
 }

@@ -7,20 +7,30 @@ namespace reminder
     {
         public string EditedName { get; private set; }
         public string EditedDesk { get; private set; }
-        public DateTime EditedDate { get; private set; }
-        public EditWindow(string initialName, string initialDesk, string initialDate)
+        public DateTime FirstEditedDate { get; private set; }
+
+        public DateTime SecondEditedDate { get; private set; }
+        public EditWindow(TaskItem task)
         {
             InitializeComponent();
-            nameBox.Text = initialName;
-            deskBox.Text = initialDesk;
-            timeBox.Text = initialDate;
+            nameBox.Text = task.Name;
+            deskBox.Text = task.Desсription;
+            timeBox.Text = task.FirstTime.ToString();
+            if (task.SecondTime != DateTime.MinValue)
+            {
+                timeLabel2.Visibility = Visibility.Visible;
+                timeBox2.Visibility = Visibility.Visible;
+                timeBox2.Text = task.SecondTime.ToString();
+            }
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
             EditedName = nameBox.Text;
             EditedDesk = deskBox.Text;
-            EditedDate = Convert.ToDateTime(timeBox.Text);
+            FirstEditedDate = Convert.ToDateTime(timeBox.Text);
+            if(Convert.ToDateTime(timeBox2.Text) != DateTime.MinValue)
+                SecondEditedDate = Convert.ToDateTime(timeBox2.Text);
             this.DialogResult = true;
         }
 

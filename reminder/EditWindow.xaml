@@ -21,6 +21,8 @@
             <TextBox x:Name="deskBox" Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold" Margin="0,0,0,3" Background="#40ADD8E6" BorderBrush="#40ADD8E6"></TextBox>
             <Label Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold">Task Time:</Label>
             <wpfTool:DateTimePicker x:Name="timeBox" Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold" Background="#40ADD8E6" BorderBrush="#40ADD8E6"></wpfTool:DateTimePicker>
+            <Label x:Name="timeLabel2" Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold" Visibility="Hidden">To:</Label>
+            <wpfTool:DateTimePicker x:Name="timeBox2" Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold" Background="#40ADD8E6" BorderBrush="#40ADD8E6" Visibility="Hidden"></wpfTool:DateTimePicker>
         </StackPanel>
         <Button Grid.Row="1" IsDefault="True" Click="Accept_Click" Width="70" Height="20" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#008B8B" Background="#40ADD8E6" BorderBrush="#40ADD8E6">Edit</Button>
         <Button Grid.Row="1" IsCancel="True" Click="Cancel_Click" Width="70" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#008B8B" Background="#40ADD8E6" BorderBrush="#40ADD8E6">Cancel</Button>
