@@ -6,7 +6,7 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
-        Title="ToDoList" Height="450" Width="800"
+        Title="ToDoList" Height="450" Width="920"
         Icon="Icons/check.ico"
         Background="#FF272727">
     <Window.Resources>
@@ -83,11 +83,12 @@
                                 CornerRadius="15">
                                         <Grid>
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0">
-                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="200" Margin="4,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="200" Margin="14,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
                                                 <TextBlock Text="{Binding Desсription}" Height="25" MaxWidth="350" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
                                                 <TextBlock Text="{Binding TimeToShow}" Height="25" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
+                                            </StackPanel>
 
-                                                <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" Background="#40ADD8E6" BorderBrush="#FF272727" Width="50" Margin="0,8,0,0" Height="25" >
+                                            <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" Background="#40ADD8E6" BorderBrush="#FF272727" HorizontalAlignment="Right" Width="50" Margin="0,8,0,0" Height="25" >
                                                     <CheckBox.Style>
                                                         <Style TargetType="CheckBox">
                                                             <Style.Triggers>
@@ -98,9 +99,8 @@
                                                         </Style>
                                                     </CheckBox.Style>
                                                 </CheckBox>
-                                            </StackPanel>
 
-                                            <Grid.ContextMenu>
+                                                <Grid.ContextMenu>
                                                 <ContextMenu>
                                                     <MenuItem Header="Delete" Background="#485357" BorderBrush="#485357" Click="DeleteTask" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
                                                 </ContextMenu>
