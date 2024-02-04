@@ -79,35 +79,14 @@ namespace reminder
         {
             AddWindow addWindow = new AddWindow();
             addWindow.ShowDialog();
-            if (addWindow.DialogResult == true && addWindow.IsTimeInterval != true)
+            if (addWindow.DialogResult == true)
             {
-                TaskItem newItem = new TaskItem
-                {
-                    Name = addWindow.TaskName,
-                    Desсription = addWindow.TaskDescription,
-                    FirstTime = addWindow.TaskTime,
-                    TimeToShow = $"{addWindow.TaskTime.ToShortDateString()} {addWindow.TaskTime.ToShortTimeString()}",
-                    IsChecked = false,
-                    IsReminded = false
-                };
-
-                taskItems.Add(newItem);
+                taskItems.Add(addWindow.newTask);
 
             }
             else if(addWindow.DialogResult == true && addWindow.IsTimeInterval == true)
             {
-                TaskItem newItem = new TaskItem
-                {
-                    Name = addWindow.TaskName,
-                    Desсription = addWindow.TaskDescription,
-                    FirstTime = addWindow.TaskTime,
-                    SecondTime = addWindow.TaskTime2,
-                    TimeToShow = $"{addWindow.TaskTime.ToShortDateString()} {addWindow.TaskTime.ToShortTimeString()} - {addWindow.TaskTime2.ToShortDateString()} {addWindow.TaskTime2.ToShortTimeString()}",
-                    IsChecked = false,
-                    IsReminded = false
-                };
-
-                taskItems.Add(newItem);
+                taskItems.Add(addWindow.newTask);
 
             }
         }

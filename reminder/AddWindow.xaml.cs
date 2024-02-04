@@ -5,6 +5,8 @@ namespace reminder
 {
     public partial class AddWindow : Window
     {
+
+        public TaskItem newTask;
         public AddWindow()
         {
             InitializeComponent();
@@ -30,7 +32,7 @@ namespace reminder
             get { if (timeBox2.Text != null)
                     return Convert.ToDateTime(timeBox2.Text);
                 else
-                    return Convert.ToDateTime(timeBox.Text);
+                    return DateTime.MinValue;
             }
         }
 
@@ -42,7 +44,7 @@ namespace reminder
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-
+            CreateNewTaskItem();
             this.DialogResult = true;
         }
 
@@ -64,6 +66,35 @@ namespace reminder
             timeBox2.Text = string.Empty;
             timeBox2.Visibility = Visibility.Hidden;
             timeLabel2.Visibility = Visibility.Hidden;
+        }
+
+        private void CreateNewTaskItem()
+        {
+            if (IsTimeInterval)
+            {
+                newTask = new TaskItem
+                {
+                    Name = TaskName,
+                    Desсription = TaskDescription,
+                    FirstTime = TaskTime,
+                    SecondTime = TaskTime2,
+                    TimeToShow = $"{TaskTime.ToShortDateString()} {TaskTime.ToShortTimeString()} - {TaskTime2.ToShortDateString()} {TaskTime2.ToShortTimeString()}",
+                    IsChecked = false,
+                    IsReminded = false,
+                };
+            }
+            else
+            {
+                newTask = new TaskItem
+                {
+                    Name = TaskName,
+                    Desсription = TaskDescription,
+                    FirstTime = TaskTime,
+                    TimeToShow = $"{TaskTime.ToShortDateString()} {TaskTime.ToShortTimeString()}",
+                    IsChecked = false,
+                    IsReminded = false
+                };
+            }
         }
     }
 }
