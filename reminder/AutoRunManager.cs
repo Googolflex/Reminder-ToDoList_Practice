@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace reminder
 {
-    internal class AutoStartup
+    internal class AutoRunManager
     {
         private string executablePath;
         private string appRegistryKey;
 
-        public AutoStartup(string registryKey)
+        public AutoRunManager(string registryKey)
         {
             executablePath = Assembly.GetExecutingAssembly().Location;
             appRegistryKey = registryKey;

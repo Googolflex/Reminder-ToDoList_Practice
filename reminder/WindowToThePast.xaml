@@ -45,21 +45,59 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
                                     <Border Background="{TemplateBinding Background}"
-                                BorderBrush="#20ADD8E6"
-                                BorderThickness="0"
-                                CornerRadius="15">
+                    BorderBrush="{DynamicResource SelectedTaskColor}"
+                    BorderThickness="0"
+                    CornerRadius="15">
                                         <Grid>
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0">
-                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="200" Margin="4,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding Desсription}" Height="25" MaxWidth="350" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding TimeToShow}" Height="25" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
-
-                                                <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" Width="50" Margin="0,8,0,0" Height="25"/>
+                                                <TextBlock Text="{Binding Name}" MaxWidth="200" Margin="14,0,20,0">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
+                                                            <Setter Property="FontSize" Value="16"/>
+                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Text="{Binding Desсription}" MaxWidth="350" Margin="0,0,20,0">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
+                                                            <Setter Property="FontSize" Value="16"/>
+                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Text="{Binding TimeToShow}" Style="{StaticResource onlyForTextBlocks}" Height="25" Margin="0,0,20,0"/>
                                             </StackPanel>
+
+                                            <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Right" Width="50" Margin="0,8,0,0" Height="25" >
+                                                <CheckBox.Style>
+                                                    <Style TargetType="CheckBox">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsChecked}" Value="True">
+                                                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </CheckBox.Style>
+                                            </CheckBox>
 
                                             <Grid.ContextMenu>
                                                 <ContextMenu>
-                                                    <MenuItem Header="Delete" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
+                                                    <MenuItem Header="Delete"></MenuItem>
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
                                         </Grid>
@@ -69,11 +107,11 @@
                         </Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsChecked}" Value="True">
-                                <Setter Property="Background" Value="#20006400"/>
+                                <Setter Property="Background" Value="{DynamicResource CheckedTaskColor}"/>
                                 <Setter Property="IsEnabled" Value="False"></Setter>
                             </DataTrigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#20ADD8E6"/>
+                                <Setter Property="Background" Value="{DynamicResource SelectedTaskColor}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>

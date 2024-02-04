@@ -16,7 +16,7 @@ namespace reminder
     {
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
         ObservableCollection<String> previousTasks { get; set; } = new ObservableCollection<String>();
-        AutoStartup autoStartManager = new AutoStartup("ToDoList");
+        AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
         private DispatcherTimer timer;
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
@@ -142,16 +142,7 @@ namespace reminder
 
                 if (editWindow.DialogResult == true)
                 {
-                    selectedTask.Name = editWindow.EditedName;
-                    selectedTask.Desсription = editWindow.EditedDesk;
-                    selectedTask.FirstTime = editWindow.FirstEditedDate;
-                    if (selectedTask.SecondTime != DateTime.MinValue)
-                    {
-                        selectedTask.SecondTime = editWindow.SecondEditedDate;
-                        selectedTask.TimeToShow = $"{editWindow.FirstEditedDate.ToShortDateString()} {editWindow.FirstEditedDate.ToShortTimeString()} - {editWindow.SecondEditedDate.ToShortDateString()} {editWindow.SecondEditedDate.ToShortTimeString()}";
-                    }
-                    else
-                        selectedTask.TimeToShow = $"{editWindow.FirstEditedDate.ToShortDateString()} {editWindow.FirstEditedDate.ToShortTimeString()}";
+                    selectedTask = editWindow.editedTask;
                 }
             }
         }
@@ -255,21 +246,29 @@ namespace reminder
             windowToThePast.Show();
         }
 
-        private void AddAutorun_Click(object sender, RoutedEventArgs e)
+        private void AutorunOptions_Click(object sender, RoutedEventArgs e)
         {
-            if (!autoStartManager.IsAutoStartEnabled())
+            MenuItem senderButton = sender as MenuItem;
+            if (senderButton.Header.ToString() == "Add to autorun")
             {
-                autoStartManager.AddToAutoStart();
-                MessageBox.Show("The application has been added to autorun");
+                if (!autoRunManager.IsAutoStartEnabled())
+                {
+                    autoRunManager.AddToAutoStart();
+                    MessageBox.Show("The application has been added to autorun");
+                }
+                else
+                    MessageBox.Show("The application has already been added to autorun");
             }
             else
-                MessageBox.Show("The application has already been added to autorun");
-        }
-
-        private void RemoveFromAutorun_Click(object sender, RoutedEventArgs e)
-        {
-            if (autoStartManager.IsAutoStartEnabled())
-                autoStartManager.RemoveFromAutoStart();
+            {
+                if (autoRunManager.IsAutoStartEnabled())
+                {
+                    autoRunManager.RemoveFromAutoStart();
+                    MessageBox.Show("The application has been removed from autorun");
+                }
+                else
+                    MessageBox.Show("The application is not in autorun");
+            }
         }
     }
 }

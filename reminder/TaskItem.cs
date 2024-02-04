@@ -5,6 +5,9 @@ namespace reminder
 {
     public class TaskItem : INotifyPropertyChanged
     {
+        private static int nextId = 0;
+
+        public int id;
         public string name;
         public string description;
         public DateTime firstTime;
@@ -12,6 +15,11 @@ namespace reminder
         public string timeToShow;
         public bool isChecked;
         public bool isReminded;
+
+        public int Id
+        {
+            get { return nextId++; }
+        }
 
         public string Name
         {

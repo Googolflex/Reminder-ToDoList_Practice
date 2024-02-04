@@ -6,14 +6,13 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
-        Title="ToDoList" Height="450" Width="920"
-        Icon="Icons/check.ico"
-        Background="#FF272727">
+        Title="ToDoList" Height="450" Width="940"
+        Icon="Icons/check.ico">
     <Window.Resources>
         <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
             <Setter Property="Width" Value="10"/>
-            <Setter Property="Background" Value="#FF272727"/>
-            <Setter Property="BorderBrush" Value="#FF272727"/>
+            <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForWindow}"/>
             <Setter Property="Opacity" Value="20"/>
         </Style>
     </Window.Resources>
@@ -34,41 +33,45 @@
         <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="Icons/check.ico">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Close" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold" Click="taskBar_Click"></MenuItem>
-                    <MenuItem Header="Show" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold" Click="taskBar_Click"></MenuItem>
+                    <MenuItem Header="Close" Click="taskBar_Click">
+                    </MenuItem>
+                    <MenuItem Header="Show" Click="taskBar_Click"></MenuItem>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
-        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20" Background="#485357" BorderBrush="#485357">
-            <MenuItem Header="File" Foreground="#20B2AA" FontWeight="SemiBold">
-                <MenuItem Header="Credits" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold">
-                    <MenuItem Header="Googolflex" Background="#485357" BorderBrush="#485357" Click="Credits_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
+        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20">
+            <MenuItem Header="File">
+                <MenuItem Header="Credits">
+                    <MenuItem Header="Googolflex" Click="Credits_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem x:Name="previousDayMenu" Header="Open previous tasks" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold" ItemsSource="{Binding previousTasks}">
+                <MenuItem x:Name="previousDayMenu" Header="Open previous tasks" ItemsSource="{Binding previousTasks}">
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="MenuItem">
-                            <Setter Property="Background" Value="#485357"/>
-                            <Setter Property="BorderBrush" Value="#485357"/>
-                            <Setter Property="Foreground" Value="#20B2AA"/>
+                            <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForMenu}"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
                             <Setter Property="Width" Value="145"/>
                             <EventSetter Event="Click" Handler="OpenPreviousDay"/>
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
-                <MenuItem Header="Options" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold">
-                    <MenuItem Header="Add to autosrun" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold" Click="AddAutorun_Click"></MenuItem>
-                    <MenuItem Header="Remove from autorun" Background="#485357" BorderBrush="#485357" Foreground="#20B2AA" FontWeight="SemiBold" Click="RemoveFromAutorun_Click"></MenuItem>
+                <MenuItem Header="Options" >
+                    <MenuItem Header="Autorun">
+                        <MenuItem Header="Add to autorun" Click="AutorunOptions_Click"></MenuItem>
+                        <MenuItem Header="Remove from autorun" Click="AutorunOptions_Click"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Themes"></MenuItem>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Add" Click="AddTask_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
-            <MenuItem Header="Clear Completed" Click="ClearCompleted_Click" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
+            <MenuItem Header="Add" Click="AddTask_Click"></MenuItem>
+            <MenuItem Header="Clear Completed" Click="ClearCompleted_Click"></MenuItem>
         </Menu>
         <ScrollViewer Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <ScrollViewer.Resources>
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
             </ScrollViewer.Resources>
-            <ListBox x:Name="taskBox" Background="#FF272727" BorderBrush="#FF272727" ItemsSource="{Binding taskItems}" SelectionMode="Single" MouseDoubleClick="taskBox_MouseDoubleClick" LostFocus="taskBox_LostFocus">
+            <ListBox x:Name="taskBox" Background="{DynamicResource BackgroundColorForWindow}" BorderBrush="{DynamicResource BackgroundColorForWindow}" ItemsSource="{Binding taskItems}" SelectionMode="Single" MouseDoubleClick="taskBox_MouseDoubleClick" LostFocus="taskBox_LostFocus">
             <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -78,17 +81,45 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
                                     <Border Background="{TemplateBinding Background}"
-                                BorderBrush="#20ADD8E6"
+                                BorderBrush="{DynamicResource SelectedTaskColor}"
                                 BorderThickness="0"
                                 CornerRadius="15">
                                         <Grid>
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0">
-                                                <TextBlock Text="{Binding Name}" Height="25" MaxWidth="200" Margin="14,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding Desсription}" Height="25" MaxWidth="350" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding TimeToShow}" Height="25" Margin="0,0,20,0" Foreground="#008B8B" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Name}" MaxWidth="200" Margin="14,0,20,0">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
+                                                            <Setter Property="FontSize" Value="16"/>
+                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Text="{Binding Desсription}" MaxWidth="350" Margin="0,0,20,0">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
+                                                            <Setter Property="FontSize" Value="16"/>
+                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Text="{Binding TimeToShow}" Style="{StaticResource onlyForTextBlocks}" Height="25" Margin="0,0,20,0"/>
                                             </StackPanel>
 
-                                            <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" Background="#40ADD8E6" BorderBrush="#FF272727" HorizontalAlignment="Right" Width="50" Margin="0,8,0,0" Height="25" >
+                                            <CheckBox Checked="TaskComplete" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Right" Width="50" Margin="0,8,0,0" Height="25" >
                                                     <CheckBox.Style>
                                                         <Style TargetType="CheckBox">
                                                             <Style.Triggers>
@@ -102,7 +133,7 @@
 
                                                 <Grid.ContextMenu>
                                                 <ContextMenu>
-                                                    <MenuItem Header="Delete" Background="#485357" BorderBrush="#485357" Click="DeleteTask" Foreground="#20B2AA" FontWeight="SemiBold"></MenuItem>
+                                                    <MenuItem Header="Delete"></MenuItem>
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
                                         </Grid>
@@ -112,11 +143,11 @@
                         </Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsChecked}" Value="True">
-                                <Setter Property="Background" Value="#20006400"/>
+                                <Setter Property="Background" Value="{DynamicResource CheckedTaskColor}"/>
                                 <Setter Property="IsEnabled" Value="False"></Setter>
                             </DataTrigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#20ADD8E6"/>
+                                <Setter Property="Background" Value="{DynamicResource SelectedTaskColor}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
