@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
         Title="Edit" Height="360" Width="260"
-        Background="#FF272727"
+        Background="{DynamicResource BackgroundColorForWindow}"
         Icon="Icons/create.ico">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,14 +15,16 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Margin="0,10,0,0">
-            <Label Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold">Task Name:</Label>
-            <TextBox x:Name="nameBox" Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold" Margin="0,0,0,3" Background="#40ADD8E6" BorderBrush="#40ADD8E6"></TextBox>
-            <Label Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold">Task Description:</Label>
-            <TextBox x:Name="deskBox" Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold" Margin="0,0,0,3" Background="#40ADD8E6" BorderBrush="#40ADD8E6"></TextBox>
-            <Label Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold">Task Time:</Label>
-            <wpfTool:DateTimePicker x:Name="timeBox" Foreground="#008B8B" FontSize="16" FontWeight ="SemiBold" Background="#40ADD8E6" BorderBrush="#40ADD8E6"></wpfTool:DateTimePicker>
+            <Label>Task Name:</Label>
+            <TextBox x:Name="nameBox"></TextBox>
+            <Label>Task Description:</Label>
+            <TextBox x:Name="deskBox"></TextBox>
+            <Label>Task Time:</Label>
+            <wpfTool:DateTimePicker x:Name="timeBox"></wpfTool:DateTimePicker>
+            <Label x:Name="timeLabel2" Visibility="Hidden">To:</Label>
+            <wpfTool:DateTimePicker x:Name="timeBox2" Visibility="Hidden"></wpfTool:DateTimePicker>
         </StackPanel>
-        <Button Grid.Row="1" IsDefault="True" Click="Accept_Click" Width="70" Height="20" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#008B8B" Background="#40ADD8E6" BorderBrush="#40ADD8E6">Edit</Button>
-        <Button Grid.Row="1" IsCancel="True" Click="Cancel_Click" Width="70" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#008B8B" Background="#40ADD8E6" BorderBrush="#40ADD8E6">Cancel</Button>
+        <Button Grid.Row="1" IsDefault="True" Click="Accept_Click" HorizontalAlignment="Left" VerticalAlignment="Top">Edit</Button>
+        <Button Grid.Row="1" IsCancel="True" Click="Cancel_Click"  HorizontalAlignment="Right" VerticalAlignment="Top">Cancel</Button>
     </Grid>
 </Window>

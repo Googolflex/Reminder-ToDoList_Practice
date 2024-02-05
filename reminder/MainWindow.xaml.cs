@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Window = System.Windows.Window;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.ComponentModel;
 using System.IO;
@@ -16,10 +15,12 @@ namespace reminder
     public partial class MainWindow : Window
     {
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
+        ObservableCollection<String> previousTasks { get; set; } = new ObservableCollection<String>();
+        AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
         private DispatcherTimer timer;
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
-        string filePath = "tasks.xml";
+        string filePath = $"Tasks/{DateTime.Now.ToShortDateString()}.xml";
 
         public MainWindow()
         {
@@ -32,10 +33,23 @@ namespace reminder
             timer.Tick += Timer_Tick;
             timer.Start();
 
+            if (!Directory.Exists("Tasks"))
+                Directory.CreateDirectory("Tasks");
+            else
+            {
+                string[] strings = new string[Directory.GetFiles("Tasks").Length];
+                strings = Directory.GetFiles("Tasks");
+                foreach (string file in strings) {
+                        string temp = file.Remove(0, 6).Remove(10, 4);
+                    if (temp != DateTime.Now.ToShortDateString())
+                        previousTasks.Add(temp);
+                }
+                previousDayMenu.ItemsSource = previousTasks;
+            }
 
             if (File.Exists(filePath))
             {
-                taskItems = DeserializeFromXml<ObservableCollection<TaskItem>>("tasks.xml");
+                taskItems = DeserializeFromXml<ObservableCollection<TaskItem>>($"Tasks/{DateTime.Now.ToShortDateString()}.xml");
                 taskBox.ItemsSource = taskItems;
             }
             else
@@ -53,7 +67,7 @@ namespace reminder
         {
             foreach (TaskItem taskItem in taskItems)
             {
-                if (DateTime.Now >= taskItem.Time && !taskItem.isReminded)
+                if (DateTime.Now >= taskItem.FirstTime && !taskItem.isReminded)
                 {
                     taskbarIcon.ShowBalloonTip(taskItem.Name, taskItem.Desсription, BalloonIcon.Info);
                     taskItem.isReminded = true;
@@ -67,17 +81,12 @@ namespace reminder
             addWindow.ShowDialog();
             if (addWindow.DialogResult == true)
             {
-                TaskItem newItem = new TaskItem
-                {
-                    Name = addWindow.TaskName,
-                    Desсription = addWindow.TaskDescription,
-                    Time = addWindow.TaskTime,
-                    TimeToShow = $"{addWindow.TaskTime.ToShortDateString()} {addWindow.TaskTime.ToShortTimeString()}",
-                    IsChecked = false,
-                    IsReminded = false
-                };
+                taskItems.Add(addWindow.newTask);
 
-                taskItems.Add(newItem);
+            }
+            else if(addWindow.DialogResult == true && addWindow.IsTimeInterval == true)
+            {
+                taskItems.Add(addWindow.newTask);
 
             }
         }
@@ -107,14 +116,12 @@ namespace reminder
             if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsChecked)
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
-                EditWindow editWindow = new EditWindow(selectedTask.Name, selectedTask.Desсription, selectedTask.Time.ToString());
+                EditWindow editWindow = new EditWindow(selectedTask);
                 editWindow.ShowDialog();
 
                 if (editWindow.DialogResult == true)
                 {
-                    selectedTask.Name = editWindow.EditedName;
-                    selectedTask.Desсription = editWindow.EditedDesk;
-                    selectedTask.Time = editWindow.EditedDate;
+                    selectedTask = editWindow.editedTask;
                 }
             }
         }
@@ -158,7 +165,7 @@ namespace reminder
                 }
                 else
                 {
-                    SerializeToXml("tasks.xml", taskItems);
+                    SerializeToXml($"Tasks/{DateTime.Now.ToShortDateString()}.xml", taskItems);
                     isClosingHandled = true;
                     e.Cancel = false;
                     this.Close();                
@@ -210,5 +217,47 @@ namespace reminder
             }
         }
 
+        private void OpenPreviousDay(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = sender as MenuItem;
+            string day = menuItem.Header.ToString();
+            WindowToThePast windowToThePast = new WindowToThePast($"Tasks/{day}.xml");
+            windowToThePast.Show();
+        }
+
+        private void AutorunOptions_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem senderButton = sender as MenuItem;
+            if (senderButton.Header.ToString() == "Add to autorun")
+            {
+                if (!autoRunManager.IsAutoStartEnabled())
+                {
+                    autoRunManager.AddToAutoStart();
+                    MessageBox.Show("The application has been added to autorun");
+                }
+                else
+                    MessageBox.Show("The application has already been added to autorun");
+            }
+            else
+            {
+                if (autoRunManager.IsAutoStartEnabled())
+                {
+                    autoRunManager.RemoveFromAutoStart();
+                    MessageBox.Show("The application has been removed from autorun");
+                }
+                else
+                    MessageBox.Show("The application is not in autorun");
+            }
+        }
+
+        private void SwitchTheme(object sender, RoutedEventArgs e)
+        {
+            MenuItem theme = sender as MenuItem;
+            Application.Current.Resources.MergedDictionaries.Clear();
+            if (theme.Header.ToString() == "Standart")
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("StandardTheme.xaml", UriKind.Relative) });
+            else if (theme.Header.ToString() == "Light")
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("LightTheme.xaml", UriKind.Relative) });
+        }
     }
 }

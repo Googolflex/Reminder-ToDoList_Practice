@@ -5,12 +5,21 @@ namespace reminder
 {
     public class TaskItem : INotifyPropertyChanged
     {
+        private static int nextId = 0;
+
+        public int id;
         public string name;
         public string description;
-        public DateTime time;
+        public DateTime firstTime;
+        public DateTime secondTime;
         public string timeToShow;
         public bool isChecked;
         public bool isReminded;
+
+        public int Id
+        {
+            get { return nextId++; }
+        }
 
         public string Name
         {
@@ -38,15 +47,28 @@ namespace reminder
             }
         }
 
-        public DateTime Time
+        public DateTime FirstTime
         {
-            get { return time; }
+            get { return firstTime; }
             set
             {
-                if (time != value)
+                if (firstTime != value)
                 {
-                    time = value;
-                    OnPropertyChanged(nameof(Time));
+                    firstTime = value;
+                    OnPropertyChanged(nameof(FirstTime));
+                }
+            }
+        }
+
+        public DateTime SecondTime
+        {
+            get { return secondTime; }
+            set
+            {
+                if (secondTime != value)
+                {
+                    secondTime = value;
+                    OnPropertyChanged(nameof(SecondTime));
                 }
             }
         }

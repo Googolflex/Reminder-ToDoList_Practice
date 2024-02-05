@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="BackgroundColorForWindow">#EAE6CA</SolidColorBrush>
+    <SolidColorBrush x:Key="BackgroundColorForMenu">#BBBBBB</SolidColorBrush>
+    <SolidColorBrush x:Key="ForegroundColorForMenu">#007FFF</SolidColorBrush>
+    <SolidColorBrush x:Key="ForegroundColorForText">#007FFF</SolidColorBrush>
+    <SolidColorBrush x:Key="BackgroundColorForOtherElements">#BBBBBB</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectedTaskColor">#90ADD8E6</SolidColorBrush>
+    <SolidColorBrush x:Key="CheckedTaskColor">#9000FF00</SolidColorBrush>
+</ResourceDictionary>

@@ -5,22 +5,34 @@ namespace reminder
 {
     public partial class EditWindow : Window
     {
-        public string EditedName { get; private set; }
-        public string EditedDesk { get; private set; }
-        public DateTime EditedDate { get; private set; }
-        public EditWindow(string initialName, string initialDesk, string initialDate)
+        public TaskItem editedTask { get; private set; }
+        public EditWindow(TaskItem task)
         {
             InitializeComponent();
-            nameBox.Text = initialName;
-            deskBox.Text = initialDesk;
-            timeBox.Text = initialDate;
+            editedTask = task;
+            nameBox.Text = task.Name;
+            deskBox.Text = task.Desсription;
+            timeBox.Text = task.FirstTime.ToString();
+            if (task.SecondTime != DateTime.MinValue)
+            {
+                timeLabel2.Visibility = Visibility.Visible;
+                timeBox2.Visibility = Visibility.Visible;
+                timeBox2.Text = task.SecondTime.ToString();
+            }
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            EditedName = nameBox.Text;
-            EditedDesk = deskBox.Text;
-            EditedDate = Convert.ToDateTime(timeBox.Text);
+            editedTask.Name = nameBox.Text;
+            editedTask.Desсription = deskBox.Text;
+            editedTask.FirstTime = Convert.ToDateTime(timeBox.Text);
+            if (Convert.ToDateTime(timeBox2.Text) != DateTime.MinValue)
+            {
+                editedTask.SecondTime = Convert.ToDateTime(timeBox2.Text);
+                editedTask.TimeToShow = $"{editedTask.FirstTime.ToShortDateString()} {editedTask.FirstTime.ToShortTimeString()} - {editedTask.SecondTime.ToShortDateString()} {editedTask.SecondTime.ToShortTimeString()}";
+            }
+            else
+                editedTask.TimeToShow = $"{editedTask.FirstTime.ToShortDateString()} {editedTask.FirstTime.ToShortTimeString()}";
             this.DialogResult = true;
         }
 
