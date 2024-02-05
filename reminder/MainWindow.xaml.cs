@@ -249,5 +249,15 @@ namespace reminder
                     MessageBox.Show("The application is not in autorun");
             }
         }
+
+        private void SwitchTheme(object sender, RoutedEventArgs e)
+        {
+            MenuItem theme = sender as MenuItem;
+            Application.Current.Resources.MergedDictionaries.Clear();
+            if (theme.Header.ToString() == "Standart")
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("StandardTheme.xaml", UriKind.Relative) });
+            else if (theme.Header.ToString() == "Light")
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("LightTheme.xaml", UriKind.Relative) });
+        }
     }
 }

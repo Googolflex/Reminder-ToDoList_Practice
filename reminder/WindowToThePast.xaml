@@ -28,14 +28,14 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20" Background="#485357" BorderBrush="#485357">
-            <MenuItem Header="Save" Foreground="#20B2AA" FontWeight="SemiBold" Click="Save_Click"/>
+        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20">
+            <MenuItem Header="Save" Click="Save_Click" Background="Transparent" BorderBrush="Transparent"/>
         </Menu>
         <ScrollViewer Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <ScrollViewer.Resources>
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
             </ScrollViewer.Resources>
-            <ListBox x:Name="taskBox" Background="#FF272727" BorderBrush="#FF272727" ItemsSource="{Binding taskItems}" SelectionMode="Single" LostFocus="taskBox_LostFocus">
+            <ListBox x:Name="taskBox" Background="{DynamicResource BackgroundColorForWindow}" BorderBrush="{DynamicResource BackgroundColorForWindow}" ItemsSource="{Binding taskItems}" SelectionMode="Single" LostFocus="taskBox_LostFocus">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="VerticalAlignment" Value="Center"/>
