@@ -14,7 +14,7 @@ namespace reminder
             appRegistryKey = registryKey;
         }
 
-        public bool IsAutoStartEnabled()
+        public bool IsAutoRunEnabled()
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
             {
@@ -22,7 +22,7 @@ namespace reminder
             }
         }
 
-        public void AddToAutoStart()
+        public void AddToAutoRun()
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
             {
@@ -30,7 +30,7 @@ namespace reminder
             }
         }
 
-        public void RemoveFromAutoStart()
+        public void RemoveFromAutoRun()
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
             {

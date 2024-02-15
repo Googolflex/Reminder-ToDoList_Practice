@@ -80,15 +80,10 @@ namespace reminder
             AddWindow addWindow = new AddWindow();
             addWindow.ShowDialog();
             if (addWindow.DialogResult == true)
-            {
                 taskItems.Add(addWindow.newTask);
 
-            }
             else if(addWindow.DialogResult == true && addWindow.IsTimeInterval == true)
-            {
                 taskItems.Add(addWindow.newTask);
-
-            }
         }
 
         private void ListBoxItem_OpenMenu(object sender, MouseButtonEventArgs e)
@@ -230,9 +225,9 @@ namespace reminder
             MenuItem senderButton = sender as MenuItem;
             if (senderButton.Header.ToString() == "Add to autorun")
             {
-                if (!autoRunManager.IsAutoStartEnabled())
+                if (!autoRunManager.IsAutoRunEnabled())
                 {
-                    autoRunManager.AddToAutoStart();
+                    autoRunManager.AddToAutoRun();
                     MessageBox.Show("The application has been added to autorun");
                 }
                 else
@@ -240,9 +235,9 @@ namespace reminder
             }
             else
             {
-                if (autoRunManager.IsAutoStartEnabled())
+                if (autoRunManager.IsAutoRunEnabled())
                 {
-                    autoRunManager.RemoveFromAutoStart();
+                    autoRunManager.RemoveFromAutoRun();
                     MessageBox.Show("The application has been removed from autorun");
                 }
                 else
