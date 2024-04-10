@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
-        Title="WindowToThePast" Height="450" Width="800">
+        Title="WindowToThePast" Height="450" Width="800"
+        Icon="/Icons/Check.ico">
     <Window.Resources>
         <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
             <Setter Property="Width" Value="10"/>

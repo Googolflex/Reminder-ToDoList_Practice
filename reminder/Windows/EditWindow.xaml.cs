@@ -6,6 +6,8 @@ namespace reminder
     public partial class EditWindow : Window
     {
         public TaskItem editedTask { get; private set; }
+
+        TasksManager tasksManager = new TasksManager();
         public EditWindow(TaskItem task)
         {
             InitializeComponent();
@@ -23,16 +25,7 @@ namespace reminder
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            editedTask.Name = nameBox.Text;
-            editedTask.Desсription = deskBox.Text;
-            editedTask.FirstTime = Convert.ToDateTime(timeBox.Text);
-            if (Convert.ToDateTime(timeBox2.Text) != DateTime.MinValue)
-            {
-                editedTask.SecondTime = Convert.ToDateTime(timeBox2.Text);
-                editedTask.TimeToShow = $"{editedTask.FirstTime.ToShortDateString()} {editedTask.FirstTime.ToShortTimeString()} - {editedTask.SecondTime.ToShortDateString()} {editedTask.SecondTime.ToShortTimeString()}";
-            }
-            else
-                editedTask.TimeToShow = $"{editedTask.FirstTime.ToShortDateString()} {editedTask.FirstTime.ToShortTimeString()}";
+            editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
             this.DialogResult = true;
         }
 

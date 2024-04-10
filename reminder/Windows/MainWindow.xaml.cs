@@ -8,19 +8,19 @@ using System.Windows.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.ComponentModel;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace reminder
 {
     public partial class MainWindow : Window
     {
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
-        ObservableCollection<String> previousTasks { get; set; } = new ObservableCollection<String>();
         AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
+        XmlManager xmlManager = new XmlManager();
+        TasksManager tasksManager = new TasksManager();
+        Path path = new Path();
         private DispatcherTimer timer;
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
-        string filePath = $"Tasks/{DateTime.Now.ToShortDateString()}.xml";
 
         public MainWindow()
         {
@@ -37,25 +37,16 @@ namespace reminder
                 Directory.CreateDirectory("Tasks");
             else
             {
-                string[] strings = new string[Directory.GetFiles("Tasks").Length];
-                strings = Directory.GetFiles("Tasks");
-                foreach (string file in strings) {
-                        string temp = file.Remove(0, 6).Remove(10, 4);
-                    if (temp != DateTime.Now.ToShortDateString())
-                        previousTasks.Add(temp);
-                }
-                previousDayMenu.ItemsSource = previousTasks;
+                previousDayMenu.ItemsSource = tasksManager.previousDaysTasks();
             }
 
-            if (File.Exists(filePath))
+            if (File.Exists(path.FilePath))
             {
-                taskItems = DeserializeFromXml<ObservableCollection<TaskItem>>($"Tasks/{DateTime.Now.ToShortDateString()}.xml");
+                taskItems = tasksManager.lodadTasksFromXml();
                 taskBox.ItemsSource = taskItems;
             }
             else
                 taskBox.ItemsSource = taskItems;
-
-
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -79,11 +70,7 @@ namespace reminder
         {
             AddWindow addWindow = new AddWindow();
             addWindow.ShowDialog();
-            if (addWindow.DialogResult == true)
-                taskItems.Add(addWindow.newTask);
-
-            else if(addWindow.DialogResult == true && addWindow.IsTimeInterval == true)
-                taskItems.Add(addWindow.newTask);
+            taskItems.Add(addWindow.newItem);
         }
 
         private void ListBoxItem_OpenMenu(object sender, MouseButtonEventArgs e)
@@ -106,7 +93,7 @@ namespace reminder
             }
         }
 
-        private void taskBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void EditTask(object sender, MouseButtonEventArgs e)
         {
             if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsChecked)
             {
@@ -124,20 +111,19 @@ namespace reminder
         private void Credits_Click(object sender, RoutedEventArgs e)
         {
             string devName = (sender as MenuItem).Header.ToString();
-            if (devName == "Googolflex")
-                System.Diagnostics.Process.Start("https://github.com/Googolflex");
+            System.Diagnostics.Process.Start($"https://github.com/{devName}");
 
         }
 
         private void taskBar_Click(object sender, RoutedEventArgs e)
         {
-            string devName = (sender as MenuItem).Header.ToString();
-            if (devName == "Close")
+            string option = (sender as MenuItem).Header.ToString();
+            if (option == "Close")
             {
                 closingFromMenuItem = true;
                 this.Close();
             }
-            else if (devName == "Show")
+            else if (option == "Show")
             {
                 this.WindowState = WindowState.Normal;
                 this.ShowInTaskbar = true;
@@ -160,7 +146,7 @@ namespace reminder
                 }
                 else
                 {
-                    SerializeToXml($"Tasks/{DateTime.Now.ToShortDateString()}.xml", taskItems);
+                    xmlManager.SerializeToXml($"Tasks/{DateTime.Now.ToShortDateString()}.xml", taskItems);
                     isClosingHandled = true;
                     e.Cancel = false;
                     this.Close();                
@@ -178,13 +164,7 @@ namespace reminder
         {
             if (taskItems != null)
             {
-                ObservableCollection<TaskItem> tasksToRemove = new ObservableCollection<TaskItem>();
-                foreach (TaskItem item in taskItems)
-                {
-                    if(item.IsChecked)
-                    tasksToRemove.Add(item);
-                }
-                foreach (TaskItem item in tasksToRemove)
+                foreach (TaskItem item in tasksManager.tasksToRemoveCollection(taskItems))
                 {
                     taskItems.Remove(item);
                 }
@@ -194,22 +174,6 @@ namespace reminder
         private void taskBox_LostFocus(object sender, RoutedEventArgs e)
         {
             taskBox.SelectedItem = null;
-        }
-        static void SerializeToXml<T>(string filePath, T data)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (TextWriter writer = new StreamWriter(filePath))
-            {
-                serializer.Serialize(writer, data);
-            }
-        }
-        static T DeserializeFromXml<T>(string filePath)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (TextReader reader = new StreamReader(filePath))
-            {
-                return (T)serializer.Deserialize(reader);
-            }
         }
 
         private void OpenPreviousDay(object sender, RoutedEventArgs e)
@@ -250,9 +214,9 @@ namespace reminder
             MenuItem theme = sender as MenuItem;
             Application.Current.Resources.MergedDictionaries.Clear();
             if (theme.Header.ToString() == "Standart")
-                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("StandardTheme.xaml", UriKind.Relative) });
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Themes/StandardTheme.xaml", UriKind.Relative) });
             else if (theme.Header.ToString() == "Light")
-                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("LightTheme.xaml", UriKind.Relative) });
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Themes/LightTheme.xaml", UriKind.Relative) });
         }
     }
 }
