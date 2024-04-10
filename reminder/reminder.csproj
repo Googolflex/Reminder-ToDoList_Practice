@@ -107,20 +107,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AutoRunManager.cs" />
+    <Compile Include="Managers\AutoRunManager.cs" />
     <Compile Include="Path.cs" />
-    <Compile Include="TasksManager.cs" />
+    <Compile Include="Managers\TasksManager.cs" />
     <Compile Include="Windows\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TaskItem.cs" />
+    <Compile Include="Models\TaskItem.cs" />
     <Compile Include="Windows\AddWindow.xaml.cs">
       <DependentUpon>AddWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WindowToThePast.xaml.cs">
       <DependentUpon>WindowToThePast.xaml</DependentUpon>
     </Compile>
-    <Compile Include="XmlManager.cs" />
+    <Compile Include="Managers\XmlManager.cs" />
     <Page Include="Windows\EditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
