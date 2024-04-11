@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace reminder
@@ -25,8 +26,19 @@ namespace reminder
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
-            this.DialogResult = true;
+            if (editedTask.SecondTime != DateTime.MinValue && Convert.ToDateTime(timeBox.Text) < Convert.ToDateTime(timeBox2.Text))
+            {
+                editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
+                this.DialogResult = true;
+            }
+            else if (editedTask.SecondTime != DateTime.MinValue && Convert.ToDateTime(timeBox.Text) > Convert.ToDateTime(timeBox2.Text))
+                MessageBox.Show("Enter the correct time interval", "Error");
+            else
+            {
+                editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
+                this.DialogResult = true;
+            }
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

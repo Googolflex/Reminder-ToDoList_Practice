@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 
 namespace reminder
 {
@@ -14,6 +9,7 @@ namespace reminder
 
         ObservableCollection<String> previousDaysCollettion = new ObservableCollection<String>();
         XmlManager xmlManager = new XmlManager();
+        DateToDayOfWeek dayOfWeek = new DateToDayOfWeek();
         Path path = new Path();
         public TaskItem CreateNewTaskItem(bool isTimeInterval, string name, string desсription, DateTime firstTime, DateTime secondTime)
         {
@@ -26,7 +22,7 @@ namespace reminder
                     Desсription = desсription,
                     FirstTime = firstTime,
                     SecondTime = secondTime,
-                    TimeToShow = $"{firstTime.ToShortDateString()} {firstTime.ToShortTimeString()} - {secondTime.ToShortDateString()} {secondTime.ToShortTimeString()}",
+                    TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(firstTime.Date)} {firstTime.ToShortTimeString()} - {dayOfWeek.InputSecondDay(firstTime.Date, secondTime.Date)} {secondTime.ToShortTimeString()}",
                     IsChecked = false,
                     IsReminded = false,
                 };
@@ -38,7 +34,7 @@ namespace reminder
                     Name = name,
                     Desсription = desсription,
                     FirstTime = firstTime,
-                    TimeToShow = $"{firstTime.ToShortDateString()} {firstTime.ToShortTimeString()}",
+                    TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(firstTime)} {firstTime.ToShortTimeString()}",
                     IsChecked = false,
                     IsReminded = false
                 };
@@ -54,11 +50,11 @@ namespace reminder
             if (editedSecTime != DateTime.MinValue)
             {
                 task.SecondTime = editedSecTime;
-                task.TimeToShow = $"{task.FirstTime.ToShortDateString()} {task.FirstTime.ToShortTimeString()} - {task.SecondTime.ToShortDateString()} {task.SecondTime.ToShortTimeString()}";
+                task.TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(task.FirstTime)} {task.FirstTime.ToShortTimeString()} - {dayOfWeek.InputSecondDay(task.FirstTime.Date, task.SecondTime.Date)} {task.SecondTime.ToShortTimeString()}";
             }
             else
             {
-                task.TimeToShow = $"{task.FirstTime.ToShortDateString()} {task.FirstTime.ToShortTimeString()}";
+                task.TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(task.FirstTime)} {task.FirstTime.ToShortTimeString()}";
             }
 
             return task;

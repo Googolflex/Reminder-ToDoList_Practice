@@ -35,7 +35,8 @@ namespace reminder
 
         public DateTime TaskTime2
         {
-            get { if (timeBox2.Text != null)
+            get { 
+                if (timeBox2.Text != null && IsTimeInterval)
                     return Convert.ToDateTime(timeBox2.Text);
                 else
                     return DateTime.MinValue;
@@ -44,13 +45,18 @@ namespace reminder
 
         public bool IsTimeInterval
         {
-            get { return Convert.ToBoolean(timeIntervalCheckBox.IsChecked); }
+            get { return (bool)timeIntervalCheckBox.IsChecked; }
         }
 
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            if (IsTimeInterval && Convert.ToDateTime(timeBox.Text) < Convert.ToDateTime(timeBox2.Text))
+                this.DialogResult = true;
+            else if (IsTimeInterval && Convert.ToDateTime(timeBox.Text) > Convert.ToDateTime(timeBox2.Text))
+                MessageBox.Show("Enter the correct time interval", "Error");
+            else
+                this.DialogResult = true;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
