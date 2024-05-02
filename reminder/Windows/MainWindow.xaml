@@ -26,6 +26,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -70,7 +71,7 @@
             <MenuItem Header="Add" Click="AddTask_Click" Background="Transparent" BorderBrush="Transparent"></MenuItem>
             <MenuItem Header="Clear Completed" Click="ClearCompleted_Click" Background="Transparent" BorderBrush="Transparent"></MenuItem>
         </Menu>
-        <ScrollViewer Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <ScrollViewer.Resources>
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
             </ScrollViewer.Resources>

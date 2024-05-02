@@ -70,7 +70,7 @@ namespace reminder
         {
             AddWindow addWindow = new AddWindow();
             addWindow.ShowDialog();
-            taskItems.Add(addWindow.newItem);
+            if (addWindow.DialogResult == true) { taskItems.Add(addWindow.newItem); }
         }
 
         private void ListBoxItem_OpenMenu(object sender, MouseButtonEventArgs e)
