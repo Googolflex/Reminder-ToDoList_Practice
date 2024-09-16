@@ -7,7 +7,8 @@
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
         Title="ToDoList" Height="450" Width="940"
-        Icon="/Icons/check.ico">
+        Icon="/Icons/check.ico"
+        Background="{DynamicResource BackgroundColorForWindow}">
     <Window.Resources>
         <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
             <Setter Property="Width" Value="10"/>
@@ -40,38 +41,21 @@
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
-        <Menu VerticalAlignment="Top" Grid.ColumnSpan="5" Height="20">
-            <MenuItem Header="File" Background="Transparent" BorderBrush="Transparent">
-                <MenuItem Header="Credits">
-                    <MenuItem Header="Googolflex" Click="Credits_Click"></MenuItem>
-                </MenuItem>
-                <MenuItem x:Name="previousDayMenu" Header="Open previous tasks" ItemsSource="{Binding previousTasks}">
-                    <MenuItem.ItemContainerStyle>
-                        <Style TargetType="MenuItem">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
-                            <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForMenu}"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="Width" Value="145"/>
-                            <EventSetter Event="Click" Handler="OpenPreviousDay"/>
-                        </Style>
-                    </MenuItem.ItemContainerStyle>
-                </MenuItem>
-                <MenuItem Header="Options" >
-                    <MenuItem Header="Autorun">
-                        <MenuItem Header="Add to autorun" Click="AutorunOptions_Click"></MenuItem>
-                        <MenuItem Header="Remove from autorun" Click="AutorunOptions_Click"></MenuItem>
-                    </MenuItem>
-                    <MenuItem Header="Themes">
-                        <MenuItem Header="Standart" Click="SwitchTheme"></MenuItem>
-                        <MenuItem Header="Light" Click="SwitchTheme"/>
-                    </MenuItem>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="Add" Click="AddTask_Click" Background="Transparent" BorderBrush="Transparent"></MenuItem>
-            <MenuItem Header="Clear Completed" Click="ClearCompleted_Click" Background="Transparent" BorderBrush="Transparent"></MenuItem>
-        </Menu>
-        <ScrollViewer Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{DynamicResource SecondMainColor}"></Border>
+        <Border Grid.Row="1" Grid.RowSpan="4" Background="{DynamicResource SecondMainColor}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <ContentControl Content="{StaticResource AllTasksSVG}"></ContentControl>
+                    <TextBlock Foreground="#FFFFFF" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0">All Tasks</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <ContentControl Content="{StaticResource TodaysTasksSVG}"></ContentControl>
+                    <TextBlock Foreground="#FFFFFF" FontSize="20" FontWeight="SemiBold" Margin="10,0,0,0">Today</TextBlock>
+                </StackPanel>
+                <TextBlock FontSize="14" Foreground="White" Margin="10,40,0,0" Opacity="0.6">Groups of tasks</TextBlock>
+            </StackPanel>
+        </Border>
+        <ScrollViewer Grid.Row="1" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <ScrollViewer.Resources>
                 <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
             </ScrollViewer.Resources>

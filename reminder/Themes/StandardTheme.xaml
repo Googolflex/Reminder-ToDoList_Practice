@@ -7,4 +7,5 @@
     <SolidColorBrush x:Key="BackgroundColorForOtherElements">#40ADD8E6</SolidColorBrush>
     <SolidColorBrush x:Key="SelectedTaskColor">#20ADD8E6</SolidColorBrush>
     <SolidColorBrush x:Key="CheckedTaskColor">#20006400</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondMainColor">#434343</SolidColorBrush>
 </ResourceDictionary>

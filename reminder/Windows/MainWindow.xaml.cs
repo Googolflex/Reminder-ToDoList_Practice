@@ -37,7 +37,7 @@ namespace reminder
                 Directory.CreateDirectory("Tasks");
             else
             {
-                previousDayMenu.ItemsSource = tasksManager.previousDaysTasks();
+                //previousDayMenu.ItemsSource = tasksManager.previousDaysTasks();
             }
 
             if (File.Exists(path.FilePath))
