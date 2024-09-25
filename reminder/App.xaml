@@ -10,37 +10,57 @@
                 <ResourceDictionary Source="Themes/StandardTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Path x:Key="AllTasksSVG" Data="M18 6C17.2044 6 16.4413 6.31607 15.8787 6.87868C15.3161 7.44129 15 8.20435 15 9H21C21 8.20435 20.6839 7.44129 20.1213
-                  6.87868C19.5587 6.31607 18.7956 6 18 6ZM14.031 4.5C15.0885 3.567 16.479 3 18 3C19.521 3 20.91 3.567 21.969 4.5H27C27.7956 4.5 28.5587 4.81607 29.1213
-                  5.37868C29.6839 5.94129 30 6.70435 30 7.5V30C30 30.7956 29.6839 31.5587 29.1213 32.1213C28.5587 32.6839 27.7956 33 27 33H9C8.20435 33 7.44129 32.6839
-                  6.87868 32.1213C6.31607 31.5587 6 30.7956 6 30V7.5C6 6.70435 6.31607 5.94129 6.87868 5.37868C7.44129 4.81607 8.20435 4.5 9 4.5H14.031ZM12.189
-                  7.5H9V30H27V7.5H23.811C23.934 7.98 24 8.4825 24 9V10.5C24 10.8978 23.842 11.2794 23.5607 11.5607C23.2794 11.842 22.8978 12 22.5 12H13.5C13.1022 12 12.7206
-                  11.842 12.4393 11.5607C12.158 11.2794 12 10.8978 12 10.5V9C12 8.4825 12.066 7.98 12.189 7.5ZM12 16.5C12 16.1022 12.158 15.7206 12.4393 15.4393C12.7206
-                  15.158 13.1022 15 13.5 15H22.5C22.8978 15 23.2794 15.158 23.5607 15.4393C23.842 15.7206 24 16.1022 24 16.5C24 16.8978 23.842 17.2794 23.5607
-                  17.5607C23.2794 17.842 22.8978 18 22.5 18H13.5C13.1022 18 12.7206 17.842 12.4393 17.5607C12.158 17.2794 12 16.8978 12 16.5ZM12 22.5C12 22.1022 12.158
-                  21.7206 12.4393 21.4393C12.7206 21.158 13.1022 21 13.5 21H18C18.3978 21 18.7794 21.158 19.0607 21.4393C19.342 21.7206 19.5 22.1022 19.5 22.5C19.5 22.8978
-                  19.342 23.2794 19.0607 23.5607C18.7794 23.842 18.3978 24 18 24H13.5C13.1022 24 12.7206 23.842 12.4393 23.5607C12.158 23.2794 12 22.8978 12 22.5Z"
+            <!--Icon for left menu. AllTasks-->
+            <Path x:Key="AllTasksSVG" Data="M7 12.5C6.44772 12.5 6 12.9477 6 13.5C6 14.0523 6.44772 14.5 7 14.5V12.5ZM6.70001 18.5C6.14773 18.5 5.70001 18.9477 5.70001 19.5C5.70001 20.0523
+                  6.14773 20.5 6.70001 20.5V18.5ZM16.6513 8.00003L16.6513 9.00003L16.6513 9.00003L16.6513 8.00003ZM7.349 8.00003L7.34896 9.00003H7.349V8.00003ZM15.668
+                  2.62737L16.3794 1.92451L15.668 2.62737ZM8.33196 2.62737L9.04328 3.33023L9.04328 3.33023L8.33196 2.62737ZM7 14.5H17V12.5H7V14.5ZM6.70001
+                  20.5H12.7V18.5H6.70001V20.5ZM14.793 3.1671C15.6316 4.00568 16.1729 5.19805 16.3477 6.15892C16.4367 6.6487 16.4112 6.97409 16.3658 7.12199C16.3453 7.18872
+                  16.3398 7.15704 16.4009 7.10187C16.4796 7.03076 16.5811 7.00003 16.6513 7.00003L16.6513 9.00003C17.0587 9.00002 17.4397 8.85865 17.7414 8.58613C18.0255
+                  8.32955 18.1866 8.00568 18.2776 7.70928C18.4553 7.13092 18.4327 6.44631 18.3154 5.80109C18.0773 4.49195 17.3687 2.91432 16.2073 1.7529L14.793 3.1671ZM16.6513
+                  7.00003H7.349V9.00003H16.6513V7.00003ZM7.34903 7.00003C7.79363 7.00004 7.84329 7.3582 7.75002 7.12058C7.69141 6.97126 7.63332 6.67137 7.66581 6.24315C7.72924
+                  5.40728 8.12745 4.24682 9.20721 3.16712L7.79303 1.75287C6.37266 3.17316 5.77088 4.7827 5.67155 6.09184C5.62266 6.73613 5.69251 7.3525 5.88829 7.85131C6.04942
+                  8.26182 6.47993 9 7.34896 9.00003L7.34903 7.00003ZM22 4V28H24V4H22ZM22 28H2V30H22V28ZM2 28V4H0V28H2ZM2 4H7.5V2H2V4ZM16.5 4H22V2H16.5V4ZM9.04328
+                  3.33023C9.54018 2.82735 10.5835 2 12 2V0C9.79584 0 8.26721 1.27014 7.62063 1.92451L9.04328 3.33023ZM12 2C13.4165 2 14.4598 2.82735 14.9567 3.33023L16.3794
+                  1.92451C15.7328 1.27014 14.2042 0 12 0V2ZM16.5 2C16.5017 2 16.4915 2.00055 16.4685 1.98993C16.4444 1.97879 16.4124 1.95789 16.3794 1.92451L14.9567
+                  3.33023C15.3263 3.70423 15.8665 4 16.5 4V2ZM7.5 4C8.13351 4 8.67374 3.70423 9.04328 3.33023L7.62063 1.92451C7.58764 1.95789 7.55556 1.97879 7.53147
+                  1.98993C7.50849 2.00055 7.4983 2 7.5 2V4ZM2 28H2H0C0 29.1046 0.895431 30 2 30V28ZM22 28V30C23.1046 30 24 29.1046 24 28H22ZM24 4C24 2.89543 23.1046 2 22
+                  2V4H24ZM2 4V4V2C0.89543 2 0 2.89543 0 4H2Z"
                   Fill="#38D0D0"></Path>
 
-            <Path x:Key="TodaysTasksSVG" Data="M9.48665 30C8.87331 30 8.36131 29.7947 7.95065 29.384C7.53998 28.9733 7.3342 28.4609 7.33331 27.8467V10.82C7.3333110.2067
-                  7.53909 9.69466 7.95065 9.284C8.3622 8.87333 8.8742 8.66755 9.48665 8.66666H11.8466V5.69333H13.2826V8.66666H22.82V5.69333H24.1533V8.66666H26.5133C27.1266
-                  8.66666 27.6386 8.87244 28.0493 9.284C28.46 9.69555 28.6658 10.2076 28.6666 10.82V27.8467C28.6666 28.46 28.4613 28.972 28.0506 29.3827C27.64 29.7933
-                  27.1275 29.9991 26.5133 30H9.48665ZM9.48665 28.6667H26.5133C26.7178 28.6667 26.9058 28.5813 27.0773 28.4107C27.2489 28.24 27.3342 28.052 27.3333
-                  27.8467V16.1533H8.66665V27.8467C8.66665 28.0511 8.75198 28.2391 8.92265 28.4107C9.09331 28.5822 9.28131 28.6676 9.48665 28.6667ZM8.66665
-                  14.82H27.3333V10.82C27.3333 10.6156 27.248 10.4276 27.0773 10.256C26.9066 10.0844 26.7186 9.99911 26.5133 10H9.48665C9.2822 10 9.0942 10.0853 8.92265
-                  10.256C8.75109 10.4267 8.66576 10.6147 8.66665 10.82V14.82Z"
+            <!--Icon for left menu. TodaysTasks-->
+            <Path x:Key="TodaysTasksSVG" Data="M2.54072 27.3333C1.85924 27.3333 1.29035 27.1052 0.834058 26.6489C0.377762 26.1926 0.14912 25.6232 0.148132
+                  24.9407V6.02222C0.148132 5.34074 0.376774 4.77185 0.834058 4.31556C1.29134 3.85926 1.86023 3.63062 2.54072
+                  3.62963H5.16295V0.325928H6.7585V3.62963H17.3555V0.325928H18.837V3.62963H21.4592C22.1407 3.62963 22.7096 3.85827 23.1659 4.31556C23.6222
+                  4.77284 23.8508 5.34173 23.8518 6.02222V24.9407C23.8518 25.6222 23.6237 26.1911 23.1674 26.6474C22.7111 27.1037 22.1417 27.3323 21.4592
+                  27.3333H2.54072ZM2.54072 25.8519H21.4592C21.6864 25.8519 21.8953 25.757 22.0859 25.5674C22.2765 25.3778 22.3713 25.1689 22.3704
+                  24.9407V11.9482H1.62961V24.9407C1.62961 25.1679 1.72443 25.3768 1.91406 25.5674C2.10369 25.758 2.31258 25.8528 2.54072 25.8519ZM1.62961
+                  10.4667H22.3704V6.02222C22.3704 5.79506 22.2755 5.58618 22.0859 5.39556C21.8963 5.20494 21.6874 5.11013 21.4592 5.11111H2.54072C2.31356
+                  5.11111 2.10468 5.20593 1.91406 5.39556C1.72344 5.58519 1.62863 5.79408 1.62961 6.02222V10.4667Z"
                   Fill="#42FF00"></Path>
-            
+
+            <!--Global background for windows-->
             <Style TargetType="Window">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
             </Style>
 
+            <!--Border style for create selected effect on left menu items-->
+            <Style x:Key="SelectableBorder" TargetType="Border">
+                <Setter Property="CornerRadius" Value="4"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--Global labels style-->
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
+            <!--Global textbox style-->
             <Style TargetType="TextBox">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForOtherElements}"/>
@@ -50,12 +70,14 @@
                 <Setter Property="Margin" Value="0,0,0,3"/>
             </Style>
 
+            <!--Special textlbocks style-->
             <Style x:Key="onlyForTextBlocks" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
+            <!--Global time picker style. As i remember it works pretty badly-->
             <Style TargetType="wpfTool:DateTimePicker">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
@@ -64,6 +86,7 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
+            <!--Global buttons style-->
             <Style TargetType="Button">
                 <Setter Property="Width" Value="70"/>
                 <Setter Property="Height" Value="25"/>
@@ -73,6 +96,7 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
+            <!--Global checkbox style-->
             <Style TargetType="CheckBox">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
@@ -81,22 +105,21 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
+            <!--Global menus style. Legacy-->
             <Style TargetType="Menu">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
+            <!--Global menuitems style. Legacy-->
             <Style TargetType="MenuItem">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForMenu}"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
-
-            <Style x:Key="ButtonPanel" TargetType="StackPanel">
-                
-            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
