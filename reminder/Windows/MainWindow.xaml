@@ -6,7 +6,9 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
-        Title="ToDoList" Height="778" Width="1095"
+        Title="ToDoList"
+        Height="778"
+        Width="1095"
         Icon="/Icons/check.ico"
         Background="{DynamicResource SecondMainColor}">
     
@@ -66,13 +68,13 @@
                 Margin="0,4,0,0" 
                 Background="{DynamicResource SecondMainColor}">
             <StackPanel>
-                
+
                 <!--Border for "menu item" to cteate selected effect-->
                 <Border Style="{StaticResource SelectableBorder}" 
-                        Margin="10,10,30,0" 
+                        Margin="10,30,30,0" 
                         Height="40" 
                         HorizontalAlignment="Stretch">
-                    
+
                     <!--"menu item"-->
                     <StackPanel Orientation="Horizontal"
                                 VerticalAlignment="Center" 
@@ -80,17 +82,16 @@
                         <ContentControl Content="{StaticResource AllTasksSVG}"></ContentControl>
                         <TextBlock Foreground="#FFFFFF"
                                    FontSize="20"
-                                   FontWeight="SemiBold"
                                    Margin="10,0,0,0">All Tasks</TextBlock>
                     </StackPanel>
                 </Border>
-                
+
                 <!--Border for "menu items" to cteate selected effect-->
                 <Border Style="{StaticResource SelectableBorder}"
                         Margin="10,10,30,0"
                         Height="40"
                         HorizontalAlignment="Stretch">
-                    
+
                     <!--"menu item"-->
                     <StackPanel Orientation="Horizontal"
                                 VerticalAlignment="Center"
@@ -98,17 +99,60 @@
                         <ContentControl Content="{StaticResource TodaysTasksSVG}"></ContentControl>
                         <TextBlock Foreground="#FFFFFF"
                                    FontSize="20"
-                                   FontWeight="SemiBold"
                                    Margin="10,0,0,0">Today</TextBlock>
                     </StackPanel>
                 </Border>
+
+                <!--Separator text and "add grop button"-->
+                <StackPanel Orientation="Horizontal" Margin="20,40,0,15">
+                    <TextBlock FontSize="16"
+                               Foreground="White"
+                               Opacity="0.6">Groups of tasks</TextBlock>
+                    <Border Margin="100,0,0,0"
+                            Style="{StaticResource SelectableBorder}"
+                            Width="25"
+                            Height="25"
+                            MouseDown="AddGroupCLick">
+                        <ContentPresenter Content="{StaticResource PlusIcon}"
+                                          Margin="0,0,0,0"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"></ContentPresenter>
+                    </Border>
+                </StackPanel>
+
+                <!--Groups list-->
+                <ListBox x:Name="GroupBox" SelectionMode="Single" ItemsSource="{Binding groupItems}" Background="Transparent" BorderBrush="Transparent">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <!--Observable collection contains two parameters color and name-->
+                                        <Border Style="{StaticResource SelectableBorder}"
+                                                Margin="0,0,0,5"
+                                                Height="40">
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                                <Ellipse Fill="{Binding GroupColor}"
+                                                         Width="13"
+                                                         Height="13"
+                                                         VerticalAlignment="Center"
+                                                         Margin="20,3.5,0,0"/>
+                                                <TextBlock Text="{Binding Name}"
+                                                           Foreground="White"
+                                                           FontSize="20"
+                                                           Margin="10,0,0,0"
+                                                           VerticalAlignment="Center"></TextBlock>
+                                            </StackPanel>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
                 
-                <!--Separator text-->
-                <TextBlock FontSize="14"
-                           Foreground="White"
-                           Margin="20,40,0,0"
-                           Opacity="0.6">Groups of tasks</TextBlock>
             </StackPanel>
+            
         </Border>
         
         <!--List of tasks-->

@@ -60,9 +60,14 @@ namespace reminder
             return task;
         }
 
-        public ObservableCollection<TaskItem> lodadTasksFromXml()
+        public ObservableCollection<GroupItem> loadGroupsFromXml()
         {
-            return xmlManager.DeserializeFromXml<ObservableCollection<TaskItem>>($"Tasks/{DateTime.Now.ToShortDateString()}.xml");
+            return xmlManager.DeserializeFromXml<ObservableCollection<GroupItem>>(path.GroupsPath);
+        }
+
+        public ObservableCollection<TaskItem> loadTasksFromXml()
+        {
+            return xmlManager.DeserializeFromXml<ObservableCollection<TaskItem>>(path.TasksPath);
         }
 
         public ObservableCollection<String> previousDaysTasks() 

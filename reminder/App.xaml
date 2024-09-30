@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              xmlns:local="clr-namespace:reminder"
+             Startup="App_Startup"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -37,6 +38,10 @@
                   10.4667H22.3704V6.02222C22.3704 5.79506 22.2755 5.58618 22.0859 5.39556C21.8963 5.20494 21.6874 5.11013 21.4592 5.11111H2.54072C2.31356
                   5.11111 2.10468 5.20593 1.91406 5.39556C1.72344 5.58519 1.62863 5.79408 1.62961 6.02222V10.4667Z"
                   Fill="#42FF00"></Path>
+            
+            <!--Icon for left menu. Plus-->
+            <Path x:Key="PlusIcon" Data="M14.7917 8.53959H8.54168V14.7896H6.45834V8.53959H0.208344V6.45625H6.45834V0.206253H8.54168V6.45625H14.7917V8.53959Z"
+                  Fill="White"></Path>
 
             <!--Global background for windows-->
             <Style TargetType="Window">

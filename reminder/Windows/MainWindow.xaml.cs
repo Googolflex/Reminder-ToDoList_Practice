@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.ComponentModel;
 using System.IO;
+using System.Windows.Media;
 
 namespace reminder
 {
@@ -15,6 +16,9 @@ namespace reminder
     {
         //Creating collection for storing tasks based on task item model
         ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
+
+        //Creating collection for storing groups
+        ObservableCollection<GroupItem> groupItems = new ObservableCollection<GroupItem>();
 
         //Creating class instance for work with autorun
         AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
@@ -48,23 +52,11 @@ namespace reminder
             timer.Tick += Timer_Tick;
             timer.Start();
 
-            /*If file directory exists and save file in it exists to
-                        then load tasks to collection from it
-                                    else create directory*/
-            if (!Directory.Exists("Tasks"))
-                Directory.CreateDirectory("Tasks");
-            else
-            {
-                //previousDayMenu.ItemsSource = tasksManager.previousDaysTasks();
-            }
+            taskItems = tasksManager.loadTasksFromXml();
+            groupItems = tasksManager.loadGroupsFromXml();
 
-            if (File.Exists(path.FilePath))
-            {
-                taskItems = tasksManager.lodadTasksFromXml();
-                taskBox.ItemsSource = taskItems;
-            }
-            else
-                taskBox.ItemsSource = taskItems;
+            taskBox.ItemsSource = taskItems;
+            GroupBox.ItemsSource = groupItems;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -175,7 +167,8 @@ namespace reminder
                 }
                 else
                 {
-                    xmlManager.SerializeToXml($"Tasks/{DateTime.Now.ToShortDateString()}.xml", taskItems);
+                    xmlManager.SerializeToXml(path.TasksPath, taskItems);
+                    xmlManager.SerializeToXml(path.GroupsPath, groupItems);
                     isClosingHandled = true;
                     e.Cancel = false;
                     this.Close();                
@@ -207,9 +200,9 @@ namespace reminder
             taskBox.SelectedItem = null;
         }
 
+        //Opens window with old task (for selected day). LEGACY! NEEDS TO BE DELETED!! 
         private void OpenPreviousDay(object sender, RoutedEventArgs e)
         {
-            //Opens window with old task (for selected day). LEGACY! NEEDS TO BE DELETED!! 
             MenuItem menuItem = sender as MenuItem;
             string day = menuItem.Header.ToString();
             WindowToThePast windowToThePast = new WindowToThePast($"Tasks/{day}.xml");
@@ -253,6 +246,20 @@ namespace reminder
                 Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Themes/StandardTheme.xaml", UriKind.Relative) });
             else if (theme.Header.ToString() == "Light")
                 Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Themes/LightTheme.xaml", UriKind.Relative) });
+        }
+
+        private void AddGroupCLick(object sender, MouseButtonEventArgs e)
+        {
+            Random r = new Random();
+            SolidColorBrush color = new SolidColorBrush(Color.FromRgb((byte)r.Next(20, 255), (byte)r.Next(20, 255), (byte)r.Next(20, 255)));
+            string name = "Test";
+            GroupItem groupItem = new GroupItem
+            {
+                GroupColor = color,
+                Name = name
+            };
+            groupItems.Add(groupItem);
+
         }
     }
 }
