@@ -10,7 +10,7 @@ namespace reminder
 
         public TaskItem newItem
         {
-            get { return tasksManager.CreateNewTaskItem(IsTimeInterval, TaskName, TaskDescription, TaskTime, TaskTime2); }
+            get { return tasksManager.CreateNewTaskItem(TaskName, TaskDescription, TaskTime); }
         }
 
         public AddWindow()
@@ -33,30 +33,10 @@ namespace reminder
             get { return Convert.ToDateTime(timeBox.Text); }
         }
 
-        public DateTime TaskTime2
-        {
-            get { 
-                if (timeBox2.Text != null && IsTimeInterval)
-                    return Convert.ToDateTime(timeBox2.Text);
-                else
-                    return DateTime.MinValue;
-            }
-        }
-
-        public bool IsTimeInterval
-        {
-            get { return (bool)timeIntervalCheckBox.IsChecked; }
-        }
-
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            if (IsTimeInterval && Convert.ToDateTime(timeBox.Text) < Convert.ToDateTime(timeBox2.Text))
-                this.DialogResult = true;
-            else if (IsTimeInterval && Convert.ToDateTime(timeBox.Text) > Convert.ToDateTime(timeBox2.Text))
-                MessageBox.Show("Enter the correct time interval", "Error");
-            else
-                this.DialogResult = true;
+            this.DialogResult = true;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

@@ -11,34 +11,19 @@ namespace reminder
         XmlManager xmlManager = new XmlManager();
         DateToDayOfWeek dayOfWeek = new DateToDayOfWeek();
         Path path = new Path();
-        public TaskItem CreateNewTaskItem(bool isTimeInterval, string name, string desсription, DateTime firstTime, DateTime secondTime)
+        public TaskItem CreateNewTaskItem( string name, string desсription, DateTime firstTime)
         {
             TaskItem newTask = new TaskItem();
-            if (isTimeInterval)
+            
+            newTask = new TaskItem
             {
-                newTask = new TaskItem
-                {
-                    Name = name,
-                    Desсription = desсription,
-                    FirstTime = firstTime,
-                    SecondTime = secondTime,
-                    TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(firstTime.Date)} {firstTime.ToShortTimeString()} - {dayOfWeek.InputSecondDay(firstTime.Date, secondTime.Date)} {secondTime.ToShortTimeString()}",
-                    IsChecked = false,
-                    IsReminded = false,
-                };
-            }
-            else
-            {
-                newTask = new TaskItem
-                {
-                    Name = name,
-                    Desсription = desсription,
-                    FirstTime = firstTime,
-                    TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(firstTime)} {firstTime.ToShortTimeString()}",
-                    IsChecked = false,
-                    IsReminded = false
-                };
-            }
+                Name = name,
+                Desсription = desсription,
+                FirstTime = firstTime,
+                TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(firstTime)} {firstTime.ToShortTimeString()}",
+                IsComplete = false,
+                IsReminded = false
+            };
             return newTask;
         }
 
@@ -47,15 +32,7 @@ namespace reminder
             task.Name = editedName;
             task.Desсription = editedDesc;
             task.FirstTime = editedFstTime;
-            if (editedSecTime != DateTime.MinValue)
-            {
-                task.SecondTime = editedSecTime;
-                task.TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(task.FirstTime)} {task.FirstTime.ToShortTimeString()} - {dayOfWeek.InputSecondDay(task.FirstTime.Date, task.SecondTime.Date)} {task.SecondTime.ToShortTimeString()}";
-            }
-            else
-            {
-                task.TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(task.FirstTime)} {task.FirstTime.ToShortTimeString()}";
-            }
+            task.TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(task.FirstTime)} {task.FirstTime.ToShortTimeString()}";
 
             return task;
         }
@@ -88,7 +65,7 @@ namespace reminder
             ObservableCollection<TaskItem> tasksToRemove = new ObservableCollection<TaskItem>();
             foreach (TaskItem item in taskItems)
             {
-                if (item.IsChecked)
+                if (item.IsComplete)
                     tasksToRemove.Add(item);
             }
             return tasksToRemove;

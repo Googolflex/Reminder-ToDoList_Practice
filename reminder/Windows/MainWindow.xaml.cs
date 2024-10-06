@@ -9,28 +9,35 @@ using Hardcodet.Wpf.TaskbarNotification;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Media;
+using System.Threading;
+using System.Windows.Controls.Primitives;
+using Xceed.Wpf.AvalonDock.Controls;
+using System.Linq;
 
 namespace reminder
 {
     public partial class MainWindow : Window
     {
         //Creating collection for storing tasks based on task item model
-        ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
+        private ObservableCollection<TaskItem> taskItems = new ObservableCollection<TaskItem>();
 
         //Creating collection for storing groups
-        ObservableCollection<GroupItem> groupItems = new ObservableCollection<GroupItem>();
+        private ObservableCollection<GroupItem> groupItems = new ObservableCollection<GroupItem>();
 
         //Creating class instance for work with autorun
-        AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
+        private AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
 
         //Creating class instance for work with xml
-        XmlManager xmlManager = new XmlManager();
+        private XmlManager xmlManager = new XmlManager();
 
         //Creating class instance for work with tasks(edit, add new)
-        TasksManager tasksManager = new TasksManager();
+        private TasksManager tasksManager = new TasksManager();
+
+        //Creating class instance for work with groups
+        private GroupsManager groupsManager = new GroupsManager();
 
         //Paths to autorun and tasks save file
-        Path path = new Path();
+        private Path path = new Path();
 
         //Timer
         private DispatcherTimer timer;
@@ -39,6 +46,9 @@ namespace reminder
             When closing invoked from taskbar first parameter sets to true*/
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
+        private bool isMaximazed = false;
+        private double workingAreaW = SystemParameters.WorkArea.Width;
+        private double workingAreaH = SystemParameters.WorkArea.Height;
 
         public MainWindow()
         {
@@ -56,7 +66,9 @@ namespace reminder
             groupItems = tasksManager.loadGroupsFromXml();
 
             taskBox.ItemsSource = taskItems;
-            GroupBox.ItemsSource = groupItems;
+            CustomGroups.ItemsSource = groupItems;
+
+            All_Tasks.IsSelected = true;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -70,15 +82,15 @@ namespace reminder
             //If time in task < time now then send an notification
             foreach (TaskItem taskItem in taskItems)
             {
-                if (DateTime.Now >= taskItem.FirstTime && !taskItem.isReminded)
+                if (DateTime.Now >= taskItem.FirstTime && (!taskItem.IsReminded && !taskItem.IsComplete))
                 {
                     taskbarIcon.ShowBalloonTip(taskItem.Name, taskItem.Desсription, BalloonIcon.Info);
-                    taskItem.isReminded = true;
+                    taskItem.IsReminded = true;
                 }
             }
         }
 
-        private void AddTask_Click(object sender, RoutedEventArgs e)
+        private void AddTask(object sender, MouseButtonEventArgs e)
         {
             //Open window for add an task. Needs to be reworked
             AddWindow addWindow = new AddWindow();
@@ -112,7 +124,7 @@ namespace reminder
         private void EditTask(object sender, MouseButtonEventArgs e)
         {
             //Opens edit window for selected task when edit button is pressed and selected task is active. Needs to be reworked
-            if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsChecked)
+            if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsComplete)
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
                 EditWindow editWindow = new EditWindow(selectedTask);
@@ -125,7 +137,7 @@ namespace reminder
             }
         }
 
-        private void Credits_Click(object sender, RoutedEventArgs e)
+        private void Credits(object sender, RoutedEventArgs e)
         {
             //Opens my github. It made this way cause earlier it was project for college practice and I made it not alone
             string devName = (sender as MenuItem).Header.ToString();
@@ -133,7 +145,7 @@ namespace reminder
 
         }
 
-        private void taskBar_Click(object sender, RoutedEventArgs e)
+        private void taskBarOptions(object sender, RoutedEventArgs e)
         {
             //Defines what option is clicked in taskbar
             string option = (sender as MenuItem).Header.ToString();
@@ -182,7 +194,7 @@ namespace reminder
             }
         }
 
-        private void ClearCompleted_Click(object sender, RoutedEventArgs e)
+        private void ClearCompleted(object sender, RoutedEventArgs e)
         {
             //Clears all completed tasks
             if (taskItems != null)
@@ -194,7 +206,7 @@ namespace reminder
             }
         }
 
-        private void taskBox_LostFocus(object sender, RoutedEventArgs e)
+        private void taskBoxLostFocus(object sender, RoutedEventArgs e)
         {
             //When user clicks away from selected task its lost focus
             taskBox.SelectedItem = null;
@@ -209,57 +221,79 @@ namespace reminder
             windowToThePast.Show();
         }
 
-        private void AutorunOptions_Click(object sender, RoutedEventArgs e)
+        //Adds app to auto run or removed app from it. Upon completion drops info message
+        private void AutorunOptions(object sender, RoutedEventArgs e)
         {
             //Defines selected autorun option and invokes it
             MenuItem senderButton = sender as MenuItem;
-            if (senderButton.Header.ToString() == "Add to autorun")
+            MessageBox.Show(autoRunManager.ManageAutorun(senderButton.Header.ToString()));
+        }
+
+        //Switches theme to selected
+        private void SwitchTheme(object sender, RoutedEventArgs e)
+        {
+            MenuItem theme = sender as MenuItem;
+            Application.Current.Resources.MergedDictionaries.RemoveAt(0);
+            //Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Insert(0, new ResourceDictionary { Source = new Uri($"Themes/{theme.Header.ToString()}Theme.xaml", UriKind.Relative) });
+        }
+
+        private void AddGroup(object sender, RoutedEventArgs e)
+        {
+            TextBox box = (TextBox)AddMenu.FindVisualChildren<TextBox>().First();
+
+            groupItems.Add(groupsManager.NewGroupItem(box.Text.ToString(), groupItems));
+        }
+
+        private void AddButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            AddMenu.IsOpen = true;
+        }
+
+        private void GroupChanged(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem item = sender as ListBoxItem;
+            HeaderText.Text = item.Tag.ToString();
+            if (item.Tag.ToString() == "All Tasks" || item.Tag.ToString() == "Today")
+                CustomGroups.SelectedItem = null;
+            else
+                DefaultGroups.SelectedItem = null;
+        }
+
+        private void TopMenu_Drag(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MaxWindow(object sender, RoutedEventArgs e)
+        {
+            if (!isMaximazed)
             {
-                //If autorun is already enabled drops message
-                if (!autoRunManager.IsAutoRunEnabled())
-                {
-                    autoRunManager.AddToAutoRun();
-                    MessageBox.Show("The application has been added to autorun");
-                }
-                else
-                    MessageBox.Show("The application has already been added to autorun");
+                this.Left = 0;
+                this.Top = 0;
+                this.Width = workingAreaW;
+                this.Height = workingAreaH;
             }
             else
             {
-                //If autorun is already disabled drops message
-                if (autoRunManager.IsAutoRunEnabled())
-                {
-                    autoRunManager.RemoveFromAutoRun();
-                    MessageBox.Show("The application has been removed from autorun");
-                }
-                else
-                    MessageBox.Show("The application is not in autorun");
+                this.Left = 180;
+                this.Top = 150;
+                this.Width = 1095;
+                this.Height = 788;
             }
+
+            isMaximazed = !isMaximazed;
         }
 
-        private void SwitchTheme(object sender, RoutedEventArgs e)
+        private void MinWindow(object sender, RoutedEventArgs e)
         {
-            //Switches theme to selected
-            MenuItem theme = sender as MenuItem;
-            Application.Current.Resources.MergedDictionaries.Clear();
-            if (theme.Header.ToString() == "Standart")
-                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Themes/StandardTheme.xaml", UriKind.Relative) });
-            else if (theme.Header.ToString() == "Light")
-                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Themes/LightTheme.xaml", UriKind.Relative) });
-        }
-
-        private void AddGroupCLick(object sender, MouseButtonEventArgs e)
-        {
-            Random r = new Random();
-            SolidColorBrush color = new SolidColorBrush(Color.FromRgb((byte)r.Next(20, 255), (byte)r.Next(20, 255), (byte)r.Next(20, 255)));
-            string name = "Test";
-            GroupItem groupItem = new GroupItem
-            {
-                GroupColor = color,
-                Name = name
-            };
-            groupItems.Add(groupItem);
-
+            this.WindowState= WindowState.Minimized;
         }
     }
 }

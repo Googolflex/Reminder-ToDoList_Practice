@@ -12,7 +12,8 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!--Icon for left menu. AllTasks-->
-            <Path x:Key="AllTasksSVG" Data="M7 12.5C6.44772 12.5 6 12.9477 6 13.5C6 14.0523 6.44772 14.5 7 14.5V12.5ZM6.70001 18.5C6.14773 18.5 5.70001 18.9477 5.70001 19.5C5.70001 20.0523
+            <Path x:Key="AllTasksSVG"
+                  Data="M7 12.5C6.44772 12.5 6 12.9477 6 13.5C6 14.0523 6.44772 14.5 7 14.5V12.5ZM6.70001 18.5C6.14773 18.5 5.70001 18.9477 5.70001 19.5C5.70001 20.0523
                   6.14773 20.5 6.70001 20.5V18.5ZM16.6513 8.00003L16.6513 9.00003L16.6513 9.00003L16.6513 8.00003ZM7.349 8.00003L7.34896 9.00003H7.349V8.00003ZM15.668
                   2.62737L16.3794 1.92451L15.668 2.62737ZM8.33196 2.62737L9.04328 3.33023L9.04328 3.33023L8.33196 2.62737ZM7 14.5H17V12.5H7V14.5ZM6.70001
                   20.5H12.7V18.5H6.70001V20.5ZM14.793 3.1671C15.6316 4.00568 16.1729 5.19805 16.3477 6.15892C16.4367 6.6487 16.4112 6.97409 16.3658 7.12199C16.3453 7.18872
@@ -26,10 +27,12 @@
                   3.33023C15.3263 3.70423 15.8665 4 16.5 4V2ZM7.5 4C8.13351 4 8.67374 3.70423 9.04328 3.33023L7.62063 1.92451C7.58764 1.95789 7.55556 1.97879 7.53147
                   1.98993C7.50849 2.00055 7.4983 2 7.5 2V4ZM2 28H2H0C0 29.1046 0.895431 30 2 30V28ZM22 28V30C23.1046 30 24 29.1046 24 28H22ZM24 4C24 2.89543 23.1046 2 22
                   2V4H24ZM2 4V4V2C0.89543 2 0 2.89543 0 4H2Z"
-                  Fill="#38D0D0"></Path>
+                  Fill="#38D0D0">
+            </Path>
 
             <!--Icon for left menu. TodaysTasks-->
-            <Path x:Key="TodaysTasksSVG" Data="M2.54072 27.3333C1.85924 27.3333 1.29035 27.1052 0.834058 26.6489C0.377762 26.1926 0.14912 25.6232 0.148132
+            <Path x:Key="TodaysTasksSVG" 
+                  Data="M2.54072 27.3333C1.85924 27.3333 1.29035 27.1052 0.834058 26.6489C0.377762 26.1926 0.14912 25.6232 0.148132
                   24.9407V6.02222C0.148132 5.34074 0.376774 4.77185 0.834058 4.31556C1.29134 3.85926 1.86023 3.63062 2.54072
                   3.62963H5.16295V0.325928H6.7585V3.62963H17.3555V0.325928H18.837V3.62963H21.4592C22.1407 3.62963 22.7096 3.85827 23.1659 4.31556C23.6222
                   4.77284 23.8508 5.34173 23.8518 6.02222V24.9407C23.8518 25.6222 23.6237 26.1911 23.1674 26.6474C22.7111 27.1037 22.1417 27.3323 21.4592
@@ -40,8 +43,25 @@
                   Fill="#42FF00"></Path>
             
             <!--Icon for left menu. Plus-->
-            <Path x:Key="PlusIcon" Data="M14.7917 8.53959H8.54168V14.7896H6.45834V8.53959H0.208344V6.45625H6.45834V0.206253H8.54168V6.45625H14.7917V8.53959Z"
+            <Path x:Key="PlusIcon"
+                  Data="M14.7917 8.53959H8.54168V14.7896H6.45834V8.53959H0.208344V6.45625H6.45834V0.206253H8.54168V6.45625H14.7917V8.53959Z"
                   Fill="White"></Path>
+            
+            <!--Min button icon-->
+            <Path x:Key="MinIcon"
+                  Data="M19.3334 2.66666H0.666687V0.666656H19.3334V2.66666Z"
+                  Fill="White"/>
+
+            <!--Close button icon-->
+            <Path x:Key="CloseIcon" 
+                  Data="M1.66669 21.5133L0.486694 20.3333L9.82003 11L0.486694 1.66666L1.66669 0.486664L11 9.82L20.3334 0.486664L21.5134 1.66666L12.18 11L21.5134
+                  20.3333L20.3334 21.5133L11 12.18L1.66669 21.5133Z"
+                  Fill="White"/>
+
+            <!--Max button icon-->
+            <Path x:Key="MaxIcon" 
+                  Data="M0.333313 21.6667V0.333344H21.6666V21.6667H0.333313ZM1.66665 20.3333H20.3333V1.66668H1.66665V20.3333Z"
+                  Fill="White"/>
 
             <!--Global background for windows-->
             <Style TargetType="Window">
@@ -58,6 +78,13 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="AddMenuBorder" TargetType="Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectedElementColor}"/>
+                <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="4"/>
+            </Style>
+
             <!--Global labels style-->
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
@@ -66,13 +93,14 @@
             </Style>
 
             <!--Global textbox style-->
-            <Style TargetType="TextBox">
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Margin" Value="0,0,0,3"/>
+            <Style TargetType="TextBox" x:Key="ochko">
+                <Setter Property="MinWidth" Value="75"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+                <Setter Property="MaxLength" Value="30"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Margin" Value="4,0,0,0"/>
             </Style>
 
             <!--Special textlbocks style-->
@@ -93,16 +121,35 @@
 
             <!--Global buttons style-->
             <Style TargetType="Button">
-                <Setter Property="Width" Value="70"/>
-                <Setter Property="Height" Value="25"/>
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{DynamicResource BackgroundColorForWindow}"
+                                    CornerRadius="4"
+                                    Height="30"
+                                    Focusable="False">
+                                <TextBlock Foreground="White"
+                                           FontWeight="SemiBold"
+                                           Focusable="False"
+                                           VerticalAlignment="Center"
+                                           Text="{TemplateBinding Tag}"
+                                           Margin="5,0,5,0"></TextBlock>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background" Value="{DynamicResource SecondMainColor}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <!--Global checkbox style-->
-            <Style TargetType="CheckBox">
+            <Style TargetType="CheckBox" x:Key="12">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForWindow}"/>
@@ -116,13 +163,95 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
+            
+            <!--ListBoxItems style for left menu-->
+            <Style x:Key="LeftMenuItems" TargetType="ListBoxItem">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border Height="40"
+                                    Margin="10,10,30,0"
+                                    CornerRadius="4"
+                                    Background="{TemplateBinding Background}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            Margin="10,0,0,0">
+                                    <ContentControl Content="{TemplateBinding Content}"
+                                                    FocusVisualStyle="{x:Null}"></ContentControl>
+                                    <TextBlock Text="{TemplateBinding Tag}"
+                                               FontSize="20"
+                                               Foreground="White"
+                                               Margin="10,0,0,0"></TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            
+            <!--Global context menu style-->
+            <!--<Style TargetType="ContextMenu" x:Key="xuy">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ContextMenu">
+                            <Border BorderBrush="{DynamicResource SelectedElementColor}"
+                                    Background="{StaticResource BackgroundColorForWindow}"
+                                    BorderThickness="1"
+                                    CornerRadius="4">
+                                
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center">
 
-            <!--Global menuitems style. Legacy-->
-            <Style TargetType="MenuItem">
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForMenu}"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <TextBox MinWidth="75"
+                                             VerticalAlignment="Center"
+                                             Background="{StaticResource BackgroundColorForWindow}"
+                                             MaxLength="30"
+                                             Foreground="White"
+                                             BorderThickness="0"
+                                             Margin="4,0,0,0">
+                                    </TextBox>
+
+                                    <Button Tag="Add"></Button>
+                                    
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+
+            <!--Window buttons style-->
+            <Style TargetType="Button"
+                   x:Key="WinButton">
+                <Setter Property="Margin" Value="0,0,15,0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderBrush="Transparent"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0">
+                                <ContentControl Content="{TemplateBinding Content}"
+                                                VerticalAlignment="Center"
+                                                Margin="5,5,5,5"></ContentControl>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
             
         </ResourceDictionary>

@@ -16,28 +16,12 @@ namespace reminder
             nameBox.Text = task.Name;
             deskBox.Text = task.Desсription;
             timeBox.Text = task.FirstTime.ToString();
-            if (task.SecondTime != DateTime.MinValue)
-            {
-                timeLabel2.Visibility = Visibility.Visible;
-                timeBox2.Visibility = Visibility.Visible;
-                timeBox2.Text = task.SecondTime.ToString();
-            }
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            if (editedTask.SecondTime != DateTime.MinValue && Convert.ToDateTime(timeBox.Text) < Convert.ToDateTime(timeBox2.Text))
-            {
-                editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
-                this.DialogResult = true;
-            }
-            else if (editedTask.SecondTime != DateTime.MinValue && Convert.ToDateTime(timeBox.Text) > Convert.ToDateTime(timeBox2.Text))
-                MessageBox.Show("Enter the correct time interval", "Error");
-            else
-            {
-                editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
-                this.DialogResult = true;
-            }
+            editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
+            this.DialogResult = true;
             
         }
 

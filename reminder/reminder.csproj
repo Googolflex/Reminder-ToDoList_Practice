@@ -107,6 +107,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Managers\GroupsManager.cs" />
     <Compile Include="Models\DateToDayOfWeek.cs" />
     <Compile Include="Managers\AutoRunManager.cs" />
     <Compile Include="Models\GroupItem.cs" />

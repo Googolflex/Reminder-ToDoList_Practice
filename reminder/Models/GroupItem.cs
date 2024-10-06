@@ -1,14 +1,17 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Media;
 
 namespace reminder
 {
     public class GroupItem : INotifyPropertyChanged
     {
-        private SolidColorBrush _groupColor;
+
+
+        private string _groupColor;
         private string _name;
 
-        public SolidColorBrush GroupColor
+        public string GroupColor
         {
             get { return _groupColor; }
             set
