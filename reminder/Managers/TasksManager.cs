@@ -7,22 +7,33 @@ namespace reminder
     public class TasksManager
     {
 
-        ObservableCollection<String> previousDaysCollettion = new ObservableCollection<String>();
-        XmlManager xmlManager = new XmlManager();
-        DateToDayOfWeek dayOfWeek = new DateToDayOfWeek();
-        Path path = new Path();
-        public TaskItem CreateNewTaskItem( string name, string desсription, DateTime firstTime)
+        public ObservableCollection<TaskItem> allTasks = new ObservableCollection<TaskItem>();
+        private XmlManager xmlManager = new XmlManager();
+        private DateToDayOfWeek dayOfWeek = new DateToDayOfWeek();
+        private Path path = new Path();
+
+
+        public void UpdateAllTasks(ObservableCollection<TaskItem> tasks)
         {
-            TaskItem newTask = new TaskItem();
-            
-            newTask = new TaskItem
+            foreach (TaskItem item in tasks)
+            {
+                if (!allTasks.Contains(item))
+                {
+                    allTasks.Add(item);
+                }
+            }
+            foreach (TaskItem item in allTasks)
+                Console.WriteLine(item.Id);
+        }
+        public TaskItem AddNewTask(string name, string desсription, DateTime firstTime, string group)
+        {
+            TaskItem newTask = new TaskItem
             {
                 Name = name,
                 Desсription = desсription,
                 FirstTime = firstTime,
                 TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(firstTime)} {firstTime.ToShortTimeString()}",
-                IsComplete = false,
-                IsReminded = false
+                Group = group
             };
             return newTask;
         }
@@ -37,27 +48,15 @@ namespace reminder
             return task;
         }
 
-        public ObservableCollection<GroupItem> loadGroupsFromXml()
-        {
-            return xmlManager.DeserializeFromXml<ObservableCollection<GroupItem>>(path.GroupsPath);
-        }
-
         public ObservableCollection<TaskItem> loadTasksFromXml()
         {
+            allTasks = xmlManager.DeserializeFromXml<ObservableCollection<TaskItem>>(path.TasksPath);
             return xmlManager.DeserializeFromXml<ObservableCollection<TaskItem>>(path.TasksPath);
         }
 
-        public ObservableCollection<String> previousDaysTasks() 
+        public void saveTasksToXml()
         {
-            string[] strings = new string[Directory.GetFiles("Tasks").Length];
-            strings = Directory.GetFiles("Tasks");
-            foreach (string file in strings)
-            {
-                string temp = file.Remove(0, 6).Remove(10, 4);
-                if (temp != DateTime.Now.ToShortDateString())
-                    previousDaysCollettion.Add(temp);
-            }
-            return previousDaysCollettion;
+            xmlManager.SerializeToXml(path.TasksPath, allTasks);
         }
 
         public ObservableCollection<TaskItem> tasksToRemoveCollection(ObservableCollection<TaskItem> taskItems)
@@ -69,6 +68,53 @@ namespace reminder
                     tasksToRemove.Add(item);
             }
             return tasksToRemove;
+        }
+
+        public ObservableCollection<TaskItem> sortTasksByGroup(string group)
+        {
+            ObservableCollection<TaskItem> temp = new ObservableCollection<TaskItem>();
+            switch(group)
+            {
+                case "All Tasks":
+                    temp = getAllTasks();
+                    break;
+                case "Today":
+                    temp = getTodaysTasks();
+                    break;
+                default:
+                    temp = getGroupTasks(group);
+                    break;
+            }
+            return temp;
+        }
+
+        private ObservableCollection<TaskItem> getAllTasks()
+        {
+            return allTasks;
+        }
+
+        private ObservableCollection<TaskItem> getTodaysTasks()
+        {
+            ObservableCollection<TaskItem> tasks = allTasks;
+            ObservableCollection<TaskItem> sorted = new ObservableCollection<TaskItem>();
+            foreach (TaskItem item in tasks)
+            {
+                if (item.FirstTime.Date == DateTime.Today)
+                    sorted.Add(item);
+            }
+            return sorted;
+        }
+
+        private ObservableCollection<TaskItem> getGroupTasks(string group)
+        {
+            ObservableCollection<TaskItem> tasks = allTasks;
+            ObservableCollection<TaskItem> sorted = new ObservableCollection<TaskItem>();
+            foreach(TaskItem item in tasks)
+            {
+                if (item.Group == group)
+                    sorted.Add(item);
+            }
+            return sorted;
         }
     }
 }

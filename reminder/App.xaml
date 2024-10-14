@@ -9,63 +9,25 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/StandardTheme.xaml"/>
+                <ResourceDictionary Source="Themes/HighlightColors.xaml"/>
+                <ResourceDictionary Source="Styles/Icons.xaml"/>
+                <ResourceDictionary Source="Styles/LeftMenuStyles.xaml"/>
+                <ResourceDictionary Source="Styles/TasksBarStyles.xaml"/>
+                <ResourceDictionary Source="Styles/AddButtonStyles.xaml"/>
+                <ResourceDictionary Source="Styles/MenuButtonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <!--Icon for left menu. AllTasks-->
-            <Path x:Key="AllTasksSVG"
-                  Data="M7 12.5C6.44772 12.5 6 12.9477 6 13.5C6 14.0523 6.44772 14.5 7 14.5V12.5ZM6.70001 18.5C6.14773 18.5 5.70001 18.9477 5.70001 19.5C5.70001 20.0523
-                  6.14773 20.5 6.70001 20.5V18.5ZM16.6513 8.00003L16.6513 9.00003L16.6513 9.00003L16.6513 8.00003ZM7.349 8.00003L7.34896 9.00003H7.349V8.00003ZM15.668
-                  2.62737L16.3794 1.92451L15.668 2.62737ZM8.33196 2.62737L9.04328 3.33023L9.04328 3.33023L8.33196 2.62737ZM7 14.5H17V12.5H7V14.5ZM6.70001
-                  20.5H12.7V18.5H6.70001V20.5ZM14.793 3.1671C15.6316 4.00568 16.1729 5.19805 16.3477 6.15892C16.4367 6.6487 16.4112 6.97409 16.3658 7.12199C16.3453 7.18872
-                  16.3398 7.15704 16.4009 7.10187C16.4796 7.03076 16.5811 7.00003 16.6513 7.00003L16.6513 9.00003C17.0587 9.00002 17.4397 8.85865 17.7414 8.58613C18.0255
-                  8.32955 18.1866 8.00568 18.2776 7.70928C18.4553 7.13092 18.4327 6.44631 18.3154 5.80109C18.0773 4.49195 17.3687 2.91432 16.2073 1.7529L14.793 3.1671ZM16.6513
-                  7.00003H7.349V9.00003H16.6513V7.00003ZM7.34903 7.00003C7.79363 7.00004 7.84329 7.3582 7.75002 7.12058C7.69141 6.97126 7.63332 6.67137 7.66581 6.24315C7.72924
-                  5.40728 8.12745 4.24682 9.20721 3.16712L7.79303 1.75287C6.37266 3.17316 5.77088 4.7827 5.67155 6.09184C5.62266 6.73613 5.69251 7.3525 5.88829 7.85131C6.04942
-                  8.26182 6.47993 9 7.34896 9.00003L7.34903 7.00003ZM22 4V28H24V4H22ZM22 28H2V30H22V28ZM2 28V4H0V28H2ZM2 4H7.5V2H2V4ZM16.5 4H22V2H16.5V4ZM9.04328
-                  3.33023C9.54018 2.82735 10.5835 2 12 2V0C9.79584 0 8.26721 1.27014 7.62063 1.92451L9.04328 3.33023ZM12 2C13.4165 2 14.4598 2.82735 14.9567 3.33023L16.3794
-                  1.92451C15.7328 1.27014 14.2042 0 12 0V2ZM16.5 2C16.5017 2 16.4915 2.00055 16.4685 1.98993C16.4444 1.97879 16.4124 1.95789 16.3794 1.92451L14.9567
-                  3.33023C15.3263 3.70423 15.8665 4 16.5 4V2ZM7.5 4C8.13351 4 8.67374 3.70423 9.04328 3.33023L7.62063 1.92451C7.58764 1.95789 7.55556 1.97879 7.53147
-                  1.98993C7.50849 2.00055 7.4983 2 7.5 2V4ZM2 28H2H0C0 29.1046 0.895431 30 2 30V28ZM22 28V30C23.1046 30 24 29.1046 24 28H22ZM24 4C24 2.89543 23.1046 2 22
-                  2V4H24ZM2 4V4V2C0.89543 2 0 2.89543 0 4H2Z"
-                  Fill="#38D0D0">
-            </Path>
-
-            <!--Icon for left menu. TodaysTasks-->
-            <Path x:Key="TodaysTasksSVG" 
-                  Data="M2.54072 27.3333C1.85924 27.3333 1.29035 27.1052 0.834058 26.6489C0.377762 26.1926 0.14912 25.6232 0.148132
-                  24.9407V6.02222C0.148132 5.34074 0.376774 4.77185 0.834058 4.31556C1.29134 3.85926 1.86023 3.63062 2.54072
-                  3.62963H5.16295V0.325928H6.7585V3.62963H17.3555V0.325928H18.837V3.62963H21.4592C22.1407 3.62963 22.7096 3.85827 23.1659 4.31556C23.6222
-                  4.77284 23.8508 5.34173 23.8518 6.02222V24.9407C23.8518 25.6222 23.6237 26.1911 23.1674 26.6474C22.7111 27.1037 22.1417 27.3323 21.4592
-                  27.3333H2.54072ZM2.54072 25.8519H21.4592C21.6864 25.8519 21.8953 25.757 22.0859 25.5674C22.2765 25.3778 22.3713 25.1689 22.3704
-                  24.9407V11.9482H1.62961V24.9407C1.62961 25.1679 1.72443 25.3768 1.91406 25.5674C2.10369 25.758 2.31258 25.8528 2.54072 25.8519ZM1.62961
-                  10.4667H22.3704V6.02222C22.3704 5.79506 22.2755 5.58618 22.0859 5.39556C21.8963 5.20494 21.6874 5.11013 21.4592 5.11111H2.54072C2.31356
-                  5.11111 2.10468 5.20593 1.91406 5.39556C1.72344 5.58519 1.62863 5.79408 1.62961 6.02222V10.4667Z"
-                  Fill="#42FF00"></Path>
-            
-            <!--Icon for left menu. Plus-->
-            <Path x:Key="PlusIcon"
-                  Data="M14.7917 8.53959H8.54168V14.7896H6.45834V8.53959H0.208344V6.45625H6.45834V0.206253H8.54168V6.45625H14.7917V8.53959Z"
-                  Fill="White"></Path>
-            
-            <!--Min button icon-->
-            <Path x:Key="MinIcon"
-                  Data="M19.3334 2.66666H0.666687V0.666656H19.3334V2.66666Z"
-                  Fill="White"/>
-
-            <!--Close button icon-->
-            <Path x:Key="CloseIcon" 
-                  Data="M1.66669 21.5133L0.486694 20.3333L9.82003 11L0.486694 1.66666L1.66669 0.486664L11 9.82L20.3334 0.486664L21.5134 1.66666L12.18 11L21.5134
-                  20.3333L20.3334 21.5133L11 12.18L1.66669 21.5133Z"
-                  Fill="White"/>
-
-            <!--Max button icon-->
-            <Path x:Key="MaxIcon" 
-                  Data="M0.333313 21.6667V0.333344H21.6666V21.6667H0.333313ZM1.66665 20.3333H20.3333V1.66668H1.66665V20.3333Z"
-                  Fill="White"/>
 
             <!--Global background for windows-->
             <Style TargetType="Window">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+            </Style>
+
+            <!--ScrollBar style-->
+            <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
+                <Setter Property="Width" Value="10"/>
+                <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForWindow}"/>
+                <Setter Property="Opacity" Value="20"/>
             </Style>
 
             <!--Border style for create selected effect on left menu items-->
@@ -78,29 +40,11 @@
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="AddMenuBorder" TargetType="Border">
-                <Setter Property="BorderBrush" Value="{DynamicResource SelectedElementColor}"/>
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="CornerRadius" Value="4"/>
-            </Style>
-
             <!--Global labels style-->
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
-            </Style>
-
-            <!--Global textbox style-->
-            <Style TargetType="TextBox" x:Key="ochko">
-                <Setter Property="MinWidth" Value="75"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
-                <Setter Property="MaxLength" Value="30"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Margin" Value="4,0,0,0"/>
             </Style>
 
             <!--Special textlbocks style-->
@@ -119,35 +63,6 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
-            <!--Global buttons style-->
-            <Style TargetType="Button">
-                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}"
-                                    BorderBrush="{DynamicResource BackgroundColorForWindow}"
-                                    CornerRadius="4"
-                                    Height="30"
-                                    Focusable="False">
-                                <TextBlock Foreground="White"
-                                           FontWeight="SemiBold"
-                                           Focusable="False"
-                                           VerticalAlignment="Center"
-                                           Text="{TemplateBinding Tag}"
-                                           Margin="5,0,5,0"></TextBlock>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Background" Value="{DynamicResource SecondMainColor}"/>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
             <!--Global checkbox style-->
             <Style TargetType="CheckBox" x:Key="12">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
@@ -163,41 +78,7 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
-            
-            <!--ListBoxItems style for left menu-->
-            <Style x:Key="LeftMenuItems" TargetType="ListBoxItem">
-                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ListBoxItem">
-                            <Border Height="40"
-                                    Margin="10,10,30,0"
-                                    CornerRadius="4"
-                                    Background="{TemplateBinding Background}">
-                                <StackPanel Orientation="Horizontal"
-                                            VerticalAlignment="Center"
-                                            Margin="10,0,0,0">
-                                    <ContentControl Content="{TemplateBinding Content}"
-                                                    FocusVisualStyle="{x:Null}"></ContentControl>
-                                    <TextBlock Text="{TemplateBinding Tag}"
-                                               FontSize="20"
-                                               Foreground="White"
-                                               Margin="10,0,0,0"></TextBlock>
-                                </StackPanel>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                    </Trigger>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-            
+
             <!--Global context menu style-->
             <!--<Style TargetType="ContextMenu" x:Key="xuy">
                 <Setter Property="Template">
@@ -230,8 +111,7 @@
             </Style>-->
 
             <!--Window buttons style-->
-            <Style TargetType="Button"
-                   x:Key="WinButton">
+            <Style x:Key="WinButton" TargetType="Button">
                 <Setter Property="Margin" Value="0,0,15,0"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -241,11 +121,13 @@
                                     BorderThickness="0">
                                 <ContentControl Content="{TemplateBinding Content}"
                                                 VerticalAlignment="Center"
+                                                FocusVisualStyle="{x:Null}"
                                                 Margin="5,5,5,5"></ContentControl>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>  
                 <Setter Property="Background" Value="Transparent"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">

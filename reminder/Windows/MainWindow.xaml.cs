@@ -13,6 +13,7 @@ using System.Threading;
 using System.Windows.Controls.Primitives;
 using Xceed.Wpf.AvalonDock.Controls;
 using System.Linq;
+using System.Windows.Media.Effects;
 
 namespace reminder
 {
@@ -23,6 +24,8 @@ namespace reminder
 
         //Creating collection for storing groups
         private ObservableCollection<GroupItem> groupItems = new ObservableCollection<GroupItem>();
+
+        private string selectedGroup;
 
         //Creating class instance for work with autorun
         private AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
@@ -46,6 +49,9 @@ namespace reminder
             When closing invoked from taskbar first parameter sets to true*/
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
+
+
+        //Parameters for work with window states
         private bool isMaximazed = false;
         private double workingAreaW = SystemParameters.WorkArea.Width;
         private double workingAreaH = SystemParameters.WorkArea.Height;
@@ -63,12 +69,12 @@ namespace reminder
             timer.Start();
 
             taskItems = tasksManager.loadTasksFromXml();
-            groupItems = tasksManager.loadGroupsFromXml();
-
-            taskBox.ItemsSource = taskItems;
-            CustomGroups.ItemsSource = groupItems;
+            groupItems = groupsManager.loadGroupsFromXml();
 
             All_Tasks.IsSelected = true;
+
+            taskBox.ItemsSource = tasksManager.allTasks;
+            CustomGroups.ItemsSource = groupItems;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -93,9 +99,18 @@ namespace reminder
         private void AddTask(object sender, MouseButtonEventArgs e)
         {
             //Open window for add an task. Needs to be reworked
-            AddWindow addWindow = new AddWindow();
+            this.Effect = new BlurEffect { Radius = 7 };
+            AddWindow addWindow = new AddWindow(selectedGroup);
+            addWindow.Closed += (s, args) => this.Effect = null;
+            addWindow.Owner = this;
+            addWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             addWindow.ShowDialog();
-            if (addWindow.DialogResult == true) { taskItems.Add(addWindow.newItem); }
+            if (addWindow.DialogResult == true)
+            {
+                tasksManager.allTasks.Add(addWindow.NewTask);
+                taskItems = tasksManager.sortTasksByGroup(selectedGroup);
+            }
+            taskBox.ItemsSource = taskItems;
         }
 
         private void ListBoxItem_OpenMenu(object sender, MouseButtonEventArgs e)
@@ -163,7 +178,7 @@ namespace reminder
             }
         }
 
-        async void MainWindow_Closing(object sender, CancelEventArgs e)
+        private async void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (closingFromMenuItem && !isClosingHandled)
             {
@@ -179,8 +194,8 @@ namespace reminder
                 }
                 else
                 {
-                    xmlManager.SerializeToXml(path.TasksPath, taskItems);
-                    xmlManager.SerializeToXml(path.GroupsPath, groupItems);
+                    tasksManager.saveTasksToXml();
+                    groupsManager.saveGroupsToXml(groupItems);
                     isClosingHandled = true;
                     e.Cancel = false;
                     this.Close();                
@@ -247,6 +262,8 @@ namespace reminder
 
         private void AddButton_Click(object sender, MouseButtonEventArgs e)
         {
+            AddMenu.PlacementTarget = (Border)sender;
+            AddMenu.Placement = PlacementMode.Right;
             AddMenu.IsOpen = true;
         }
 
@@ -258,6 +275,12 @@ namespace reminder
                 CustomGroups.SelectedItem = null;
             else
                 DefaultGroups.SelectedItem = null;
+
+            selectedGroup = item.Tag.ToString();
+
+            taskItems = tasksManager.sortTasksByGroup(selectedGroup);
+
+            taskBox.ItemsSource = taskItems;
         }
 
         private void TopMenu_Drag(object sender, MouseButtonEventArgs e)
@@ -294,6 +317,24 @@ namespace reminder
         private void MinWindow(object sender, RoutedEventArgs e)
         {
             this.WindowState= WindowState.Minimized;
+        }
+
+        private void Button_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void OpenMenu(object sender, RoutedEventArgs e)
+        {
+            OptionsMenu.PlacementTarget = MenuButton;
+            OptionsMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            MenuButton.ContextMenu.IsOpen = true;
+        }
+
+        private void TrayDoubleClick(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Normal;
+            this.ShowInTaskbar = true;
         }
     }
 }

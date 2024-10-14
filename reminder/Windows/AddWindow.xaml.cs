@@ -6,36 +6,48 @@ namespace reminder
     public partial class AddWindow : Window
     {
 
-        TasksManager tasksManager = new TasksManager();
+        private TasksManager tasksManager = new TasksManager();
+        private string _taskGroup;
 
-        public TaskItem newItem
-        {
-            get { return tasksManager.CreateNewTaskItem(TaskName, TaskDescription, TaskTime); }
-        }
-
-        public AddWindow()
+        public AddWindow(string group)
         {
             InitializeComponent();
+
+            if (group != "All Tasks" || group != "Today")
+                _taskGroup = group;
+            else
+                _taskGroup = "";
         }
 
-        public string TaskName
+        public TaskItem NewTask
+        {
+            get { return tasksManager.AddNewTask(TaskName, TaskDescription, TaskTime, Group); }
+        }
+
+        private string TaskName
         {
             get { return nameBox.Text; }
         }
 
-        public string TaskDescription
+        private string TaskDescription
         {
             get { return deskBox.Text; }
         }
 
-        public DateTime TaskTime
+        private DateTime TaskTime
         {
             get { return Convert.ToDateTime(timeBox.Text); }
+        }
+
+        private string Group
+        {
+            get { return _taskGroup; }
         }
 
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
+            tasksManager.AddNewTask(TaskName, TaskDescription, TaskTime, Group);
             this.DialogResult = true;
         }
 

@@ -11,6 +11,9 @@ namespace reminder
 {
     public class GroupsManager
     {
+
+        private XmlManager xmlManager = new XmlManager();
+        private Path path = new Path();
         public bool CheckColor(string color, ObservableCollection<GroupItem> list)
         {
             foreach (GroupItem item in list)
@@ -38,6 +41,16 @@ namespace reminder
                 GroupColor = color
             };
             return item;
+        }
+
+        public ObservableCollection<GroupItem> loadGroupsFromXml()
+        {
+            return xmlManager.DeserializeFromXml<ObservableCollection<GroupItem>>(path.GroupsPath);
+        }
+
+        public void saveGroupsToXml(ObservableCollection<GroupItem> groups)
+        {
+            xmlManager.SerializeToXml(path.GroupsPath, groups);
         }
     }
 }

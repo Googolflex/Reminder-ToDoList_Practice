@@ -7,9 +7,8 @@ namespace reminder
     public class DateToDayOfWeek
     {
         public string WhatsDayOfWeek(DateTime date)
-        {
-            DayOfWeek day = date.DayOfWeek;
-                return Today_Tomorrow_Yesterday(day);
+        { 
+            return Today_Tomorrow_Yesterday(date.DayOfWeek);
         }
 
         private string Today_Tomorrow_Yesterday(DayOfWeek day)

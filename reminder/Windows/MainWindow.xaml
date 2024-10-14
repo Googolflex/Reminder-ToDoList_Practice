@@ -13,19 +13,10 @@
         Top="150"
         WindowStyle="None"
         ResizeMode="NoResize"
+        AllowsTransparency="True"
         FocusVisualStyle="{x:Null}"
         Icon="/Icons/check.ico"
         Background="{DynamicResource BackgroundColorForWindow}">
-
-    <Window.Resources>
-        <!--ScrollBar style-->
-        <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
-            <Setter Property="Width" Value="10"/>
-            <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForWindow}"/>
-            <Setter Property="Opacity" Value="20"/>
-        </Style>
-    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -36,7 +27,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="38"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="80"/>
             <RowDefinition/>
             <RowDefinition/>
@@ -44,7 +35,9 @@
         </Grid.RowDefinitions>
 
         <!--Taskbar hidden icon-->
-        <tb:TaskbarIcon x:Name="taskbarIcon" IconSource="/Icons/check.ico">
+        <tb:TaskbarIcon x:Name="taskbarIcon"
+                            IconSource="/Icons/check.ico"
+                            TrayMouseDoubleClick="TrayDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Close" Click="taskBarOptions">
@@ -55,99 +48,138 @@
         </tb:TaskbarIcon>
 
         <!--Top menu-->
-        <Border Grid.Row="0" Grid.Column="0" 
-                Grid.ColumnSpan="5" 
-                Background="{DynamicResource SecondMainColor}"
-                Panel.ZIndex="1"
-                MouseDown="TopMenu_Drag">
-            <Border.Effect>
+        <Grid Grid.Row="0" Grid.Column="0" 
+                    Grid.ColumnSpan="5" 
+                    Background="{DynamicResource SecondMainColor}"
+                    Panel.ZIndex="1"
+                    MouseDown="TopMenu_Drag">
+            <Grid.Effect>
                 <DropShadowEffect Color="Black" 
-                                  Direction="270" 
-                                  BlurRadius="4" 
-                                  Opacity="0.3" 
-                                  ShadowDepth="2"></DropShadowEffect>
-            </Border.Effect>
+                                      Direction="270" 
+                                      BlurRadius="4" 
+                                      Opacity="0.3" 
+                                      ShadowDepth="2"></DropShadowEffect>
+            </Grid.Effect>
+
+            <Button x:Name="MenuButton"
+                        Style="{StaticResource WinButton}"
+                        Content="{StaticResource MenuIcon}"
+                        HorizontalAlignment="Left"
+                        Margin="12,0,0,0"
+                        ContextMenuService.IsEnabled="False"
+                        Click="OpenMenu">
+
+                <Button.ContextMenu>
+                    <ContextMenu x:Name="OptionsMenu"
+                                     StaysOpen="False"
+                                     Style="{StaticResource MenuButtonContextMenu}">
+                        <MenuItem ItemStringFormat="Options"
+                                      Icon="{StaticResource SettingsIcon}"
+                                      Style="{StaticResource OptionStyle}"></MenuItem>
+                        <MenuItem ItemStringFormat="Themes"
+                                      Icon="{StaticResource ThemesIcon}"
+                                      Style="{StaticResource OptionStyle}"></MenuItem>
+
+                        <ContextMenu.Effect>
+                            <DropShadowEffect BlurRadius="2" ShadowDepth="2" Opacity="0.45"></DropShadowEffect>
+                        </ContextMenu.Effect>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
 
             <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        Width="138" HorizontalAlignment="Right">
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
 
                 <Button Style="{StaticResource WinButton}"
-                        Content="{StaticResource MinIcon}"
-                        Click="MinWindow"/>
+                            Content="{StaticResource NotificationIcon}"/>
+
+                <!--Spacer-->
+                <Line X1="0"
+                          X2="0"
+                          Y1="0"
+                          Y2="32"
+                          Stroke="{DynamicResource SelectedElementColor}"
+                          StrokeThickness="1"
+                          VerticalAlignment="Center"
+                          Margin="0,0,20,0"></Line>
 
                 <Button Style="{StaticResource WinButton}"
-                        Content="{StaticResource MaxIcon}"
-                        Click="MaxWindow"/>
+                            Content="{StaticResource MinIcon}"
+                            Click="MinWindow"/>
 
                 <Button Style="{StaticResource WinButton}"
-                        Content="{StaticResource CloseIcon}"
-                        Click="CloseWindow"/>
+                            Content="{StaticResource MaxIcon}"
+                            Click="MaxWindow"/>
+
+                <Button Style="{StaticResource WinButton}"
+                            Content="{StaticResource CloseIcon}"
+                            Click="CloseWindow"/>
 
             </StackPanel>
 
-        </Border>
+        </Grid>
 
 
         <!--Header text for tasks-->
         <Border Grid.Row="1"
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
-                Background="{StaticResource BackgroundColorForWindow}"
-                Panel.ZIndex="1">
+                    Grid.Column="1"
+                    Grid.ColumnSpan="4"
+                    Background="{StaticResource BackgroundColorForWindow}"
+                    Panel.ZIndex="1">
 
             <TextBlock x:Name="HeaderText"
-               FontSize="36"
-               Foreground="White"
-               FontFamily="Inter"
-               FontWeight="SemiBold"
-               VerticalAlignment="Bottom"
-               Margin="45,0,0,0"></TextBlock>
+                   FontSize="36"
+                   Foreground="{DynamicResource ForegroundColorForText}"
+                   FontFamily="Inter"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Bottom"
+                   Margin="45,0,0,0"></TextBlock>
 
         </Border>
 
         <!--Left menu-->
         <Border Grid.Row="1" 
-                Grid.RowSpan="4"
-                Margin="0,0,0,0" 
-                Background="{DynamicResource SecondMainColor}"
-                Panel.ZIndex="0">
+                    Grid.RowSpan="4" 
+                    Background="{DynamicResource SecondMainColor}"
+                    Panel.ZIndex="0">
 
             <StackPanel>
 
                 <ListBox x:Name="DefaultGroups"
-                         Background="Transparent"
-                         BorderBrush="Transparent"
-                         Margin="0,30,0,0">
+                             Background="Transparent"
+                             BorderBrush="Transparent"
+                             Margin="0,30,0,0">
 
                     <ListBoxItem x:Name="All_Tasks"
-                                 Style="{StaticResource LeftMenuItems}"
-                                 Content="{StaticResource AllTasksSVG}"
-                                 Tag="All Tasks"
-                                 Selected="GroupChanged">
+                                     Style="{StaticResource LeftMenuItems}"
+                                     Content="{StaticResource AllTasksSVG}"
+                                     Tag="All Tasks"
+                                     Selected="GroupChanged">
                     </ListBoxItem>
                     <ListBoxItem x:Name="Todays_Tasks"
-                                 Style="{StaticResource LeftMenuItems}"
-                                 Content="{StaticResource TodaysTasksSVG}"
-                                 Tag="Today"
-                                 Selected="GroupChanged"></ListBoxItem>
+                                     Style="{StaticResource LeftMenuItems}"
+                                     Content="{StaticResource TodaysTasksSVG}"
+                                     Tag="Today"
+                                     Selected="GroupChanged"></ListBoxItem>
                 </ListBox>
 
                 <!--Separator text and "add group button"-->
                 <StackPanel Orientation="Horizontal" Margin="20,40,0,15">
                     <TextBlock FontSize="16"
-                               Foreground="White"
-                               Opacity="0.6">Groups of tasks</TextBlock>
+                                   Foreground="{DynamicResource ForegroundColorForText}"
+                                   Opacity="0.6">Groups of tasks</TextBlock>
                     <Border Margin="100,0,0,0"
-                            Style="{StaticResource SelectableBorder}"
-                            Width="25"
-                            Height="25"
-                            MouseDown="AddButton_Click">
+                                Style="{StaticResource SelectableBorder}"
+                                Width="25"
+                                Height="25"
+                                MouseDown="AddButton_Click">
                         <ContentPresenter Content="{StaticResource PlusIcon}"
-                                          Margin="0,0,0,0"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"></ContentPresenter>
+                                              Margin="0,0,0,0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"></ContentPresenter>
                         <Border.ContextMenu>
+
                             <!--Add group menu-->
                             <ContextMenu x:Name="AddMenu">
                                 <ContextMenu.Style>
@@ -158,13 +190,13 @@
                                                     <Border Style="{StaticResource AddMenuBorder}">
 
                                                         <StackPanel Orientation="Horizontal"
-                                                                    VerticalAlignment="Center">
+                                                                        VerticalAlignment="Center">
 
                                                             <TextBox x:Name="GroupNameBox"
-                                                                     Style="{StaticResource ochko}"/>
+                                                                         Style="{StaticResource AddMenuTextBox}"/>
 
                                                             <Button Tag="Add"
-                                                                    Click="AddGroup"></Button>
+                                                                        Click="AddGroup"></Button>
 
                                                         </StackPanel>
                                                     </Border>
@@ -181,10 +213,10 @@
 
                 <!--Groups list-->
                 <ListBox x:Name="CustomGroups"
-                         SelectionMode="Single"
-                         ItemsSource="{Binding groupItems}"
-                         Background="Transparent"
-                         BorderBrush="Transparent">
+                             SelectionMode="Single"
+                             ItemsSource="{Binding groupItems}"
+                             Background="Transparent"
+                             BorderBrush="Transparent">
 
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
@@ -195,21 +227,21 @@
                                     <ControlTemplate>
                                         <!--Observable collection contains two parameters color and name-->
                                         <Border Margin="10,0,30,5"
-                                                Height="40"
-                                                CornerRadius="4"
-                                                Background="{TemplateBinding Background}">
+                                                    Height="40"
+                                                    CornerRadius="4"
+                                                    Background="{TemplateBinding Background}">
 
                                             <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
                                                 <Ellipse Fill="{Binding GroupColor}"
-                                                         Width="13"
-                                                         Height="13"
-                                                         VerticalAlignment="Center"
-                                                         Margin="10,3.5,0,0"/>
+                                                             Width="13"
+                                                             Height="13"
+                                                             VerticalAlignment="Center"
+                                                             Margin="10,3.5,0,0"/>
                                                 <TextBlock Text="{Binding Name}"
-                                                           Foreground="White"
-                                                           FontSize="20"
-                                                           Margin="10,0,0,0"
-                                                           VerticalAlignment="Center"></TextBlock>
+                                                               Foreground="{DynamicResource ForegroundColorForText}"
+                                                               FontSize="20"
+                                                               Margin="10,0,0,0"
+                                                               VerticalAlignment="Center"></TextBlock>
                                             </StackPanel>
                                         </Border>
                                     </ControlTemplate>
@@ -233,12 +265,7 @@
         </Border>
 
         <!--List of tasks-->
-        <ScrollViewer Grid.Row="2"
-                      Grid.RowSpan="4"
-                      Grid.Column="1"
-                      Grid.ColumnSpan="4"
-                      HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Style="{StaticResource TasksScroll}">
 
             <!--Changing scroll-->
             <ScrollViewer.Resources>
@@ -247,131 +274,68 @@
 
             <!--Container for tasks-->
             <ListBox x:Name="taskBox"
-                     Background="{DynamicResource BackgroundColorForWindow}"
-                     BorderBrush="{DynamicResource BackgroundColorForWindow}" 
-                     ItemsSource="{Binding taskItems}"
-                     SelectionMode="Single"
-                     MouseDoubleClick="EditTask" 
-                     LostFocus="taskBoxLostFocus"
-                     FocusVisualStyle="{x:Null}"
-                     Margin="0,10,0,0">
+                         Style="{StaticResource Tasks}"
+                         ItemsSource="{Binding taskItems}"
+                         MouseDoubleClick="EditTask" 
+                         LostFocus="taskBoxLostFocus">
 
                 <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Margin" Value="0,2"/>
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Style TargetType="ListBoxItem"
+                               BasedOn="{StaticResource TaskItem}">
                         <Setter Property="Template">
                             <Setter.Value>
 
                                 <ControlTemplate TargetType="ListBoxItem">
 
-                                    <Border Background="{TemplateBinding Background}"
-                                            BorderBrush="{DynamicResource SelectedElementColor}"
-                                            BorderThickness="0"
-                                            CornerRadius="4"
-                                            Margin="25,0,20,0">
+                                    <Border Style="{StaticResource TaskBorder}"
+                                                Background="{TemplateBinding Background}">
                                         <Grid>
 
-                                            <!--Container for listitem elements-->
-                                            <StackPanel Orientation="Horizontal"
-                                                        VerticalAlignment="Center"
-                                                        Margin="0,0,0,0">
+                                            <StackPanel>
 
-                                                <!--Button for completing the task-->
-                                                <CheckBox Checked="TaskComplete"
-                                                          IsChecked="{Binding IsComplete, Mode=TwoWay}"
-                                                          HorizontalAlignment="Right"
-                                                          Width="50"
-                                                          Height="25">
+                                                <!--Container for listitem elements-->
+                                                <DockPanel Style="{StaticResource DockPanelForTask}">
 
-                                                    <CheckBox.Style>
-                                                        <Style TargetType="CheckBox">
+                                                    <!--Button for completing the task-->
+                                                    <CheckBox Checked="TaskComplete"
+                                                                  IsChecked="{Binding IsComplete, Mode=TwoWay}"
+                                                                  Style="{StaticResource TaskCheckBox}"/>
 
-                                                            <Setter Property="Template">
-                                                                <Setter.Value>
-                                                                    <ControlTemplate TargetType="CheckBox">
-                                                                        <BulletDecorator>
-                                                                            <Border BorderBrush="#D9D9D9"
-                                                                                    CornerRadius="15"
-                                                                                    BorderThickness="1.3"
-                                                                                    Width="15"
-                                                                                    Height="15"
-                                                                                    Background="{TemplateBinding Background}"></Border>
-                                                                        </BulletDecorator>
-                                                                    </ControlTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                            <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+                                                    <!--Task Name-->
+                                                    <TextBlock Text="{Binding Name}"
+                                                                   Style="{StaticResource TasksText}"
+                                                                   MaxWidth="200"
+                                                                   Margin="0,0,20,0"/>
 
-                                                            <!--Trigger. Task can be completed only one time-->
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsComplete}" Value="True">
-                                                                    <Setter Property="Visibility" Value="Hidden"></Setter>
-                                                                </DataTrigger>
-                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                    <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                                                                </Trigger>
-                                                            </Style.Triggers>
+                                                    <!--Description text-->
+                                                    <TextBlock Text="{Binding Desсription}"
+                                                                   Style="{StaticResource TasksText}"
+                                                                   MaxWidth="350"
+                                                                   Margin="40,0,0,0"/>
 
-                                                        </Style>
-                                                    </CheckBox.Style>
-                                                </CheckBox>
+                                                    <!--Task time-->
+                                                    <TextBlock Text="{Binding TimeToShow}"
+                                                                   Style="{StaticResource TasksText}"
+                                                                   Margin="0,0,20,0"
+                                                                   HorizontalAlignment="Right"/>
+                                                </DockPanel>
 
-                                                <!--Task Name-->
-                                                <TextBlock Text="{Binding Name}"
-                                                           MaxWidth="200"
-                                                           Margin="14,0,20,0">
-                                                    
-                                                    <!--Changing text font-->
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
-                                                            <Setter Property="FontSize" Value="16"/>
-                                                            <Setter Property="FontWeight" Value="SemiBold"/>
-                                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                                <StackPanel Orientation="Horizontal">
 
-                                                            <!--Trigger. When task is selected its text can wrap-->
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                                                                    <Setter Property="TextWrapping" Value="Wrap"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
+                                                    <!--Task time-->
+                                                    <TextBlock Text="{Binding TimeToShow}"
+                                                                   Style="{StaticResource TasksText}"
+                                                                   FontSize="13"
+                                                                   Margin="50,0,0,0"/>
 
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
+                                                </StackPanel>
 
-                                                <!--Description text-->
-                                                <TextBlock Text="{Binding Desсription}"
-                                                           MaxWidth="350"
-                                                           Margin="0,0,20,0">
-                                                    
-                                                    <!--Changing text font-->
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
-                                                            <Setter Property="FontSize" Value="16"/>
-                                                            <Setter Property="FontWeight" Value="SemiBold"/>
-                                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                                <Line X1="20"
+                                                          X2="717"
+                                                          Margin="0,20,0,0"
+                                                          Stroke="{DynamicResource SecondMainColor}"
+                                                          StrokeThickness="2"></Line>
 
-                                                            <!--Trigger. When task is selected its text can wrap-->
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                                                                    <Setter Property="TextWrapping" Value="Wrap"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-
-                                                <!--Task time-->
-                                                <TextBlock Text="{Binding TimeToShow}"
-                                                           Style="{StaticResource onlyForTextBlocks}"
-                                                           Height="25"
-                                                           Margin="0,0,20,0"/>
                                             </StackPanel>
 
                                             <Grid.ContextMenu>
@@ -389,6 +353,7 @@
                         </Setter>
 
                         <Style.Triggers>
+
                             <!--Trigger. When task is completed its background changes and it cannot be selected anymore-->
                             <DataTrigger Binding="{Binding IsComplete}" Value="True">
                                 <Setter Property="Background" Value="{DynamicResource CheckedTaskColor}"/>
@@ -408,51 +373,21 @@
         </ScrollViewer>
 
         <Grid Grid.Row="4"
-              Grid.Column="4"
-              Margin="0,0,20,20"
-              MouseDown="AddTask"
-              VerticalAlignment="Bottom"
-              HorizontalAlignment="Right">
+                  Grid.Column="4"
+                  Margin="0,0,20,20"
+                  MouseDown="AddTask"
+                  VerticalAlignment="Bottom"
+                  HorizontalAlignment="Right">
 
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Panel.ZIndex="1" IsHitTestVisible="False">
-                <Line X1="0" Y1="20" X2="40" Y2="20" StrokeThickness="6">
-                    <Line.Stroke>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#42FF00" Offset="0"/>
-                            <GradientStop Color="#38D0D0" Offset="0.5"/>
-                            <GradientStop Color="#8000FF" Offset="0.9"/>
-                        </LinearGradientBrush>
-                    </Line.Stroke>
-                </Line>
-                <Line X1="20" Y1="0" X2="20" Y2="40" StrokeThickness="6">
-                    <Line.Stroke>
-                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
-                            <GradientStop Color="#42FF00" Offset="0"/>
-                            <GradientStop Color="#38D0D0" Offset="0.63"/>
-                            <GradientStop Color="#8000FF" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Line.Stroke>
-                </Line>
+            <Grid Style="{StaticResource PlusGrid}">
+                <Line Style="{StaticResource HorizontalLine}"/>
+                <Line Style="{StaticResource VerticalLine}"/>
             </Grid>
 
-            <Ellipse Height="90"
-                     Width="90"
-                     Panel.ZIndex="0">
-
-                <Ellipse.Style>
-                    <Style TargetType="Ellipse">
-                        <Setter Property="Fill" Value="{DynamicResource SecondMainColor}"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseDirectlyOver" Value="True">
-                                <Setter Property="Fill" Value="{DynamicResource SelectedElementColor}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Ellipse.Style>
-
-            </Ellipse>
+            <Ellipse Style="{StaticResource ButtonEllupse}"/>
 
         </Grid>
 
     </Grid>
+    
 </Window>

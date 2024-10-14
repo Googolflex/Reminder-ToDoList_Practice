@@ -24,7 +24,6 @@ namespace reminder
         public T DeserializeFromXml<T>(string filePath)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
-            FileInfo fileInfo = new FileInfo(filePath);
             using (TextReader reader = new StreamReader(filePath))
             {
                 return (T)serializer.Deserialize(reader);

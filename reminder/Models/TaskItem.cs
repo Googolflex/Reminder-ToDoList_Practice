@@ -11,8 +11,9 @@ namespace reminder
         private string description;
         private DateTime firstTime;
         private string timeToShow;
-        private bool isComplete;
-        private bool isReminded;
+        private string group = "";
+        private bool isComplete = false;
+        private bool isReminded = false;
 
         public int Id
         {
@@ -71,6 +72,18 @@ namespace reminder
             }
         }
 
+        public string Group
+        {
+            get { return group; }
+            set
+            {
+                if (group != value)
+                {
+                    group = value;
+                    OnPropertyChanged(nameof(Group));
+                }
+            }
+        }
 
         public bool IsComplete
         {

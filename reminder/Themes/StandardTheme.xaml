@@ -7,14 +7,14 @@
     
     <SolidColorBrush x:Key="ForegroundColorForMenu">#20B2AA</SolidColorBrush>
     
-    <SolidColorBrush x:Key="ForegroundColorForText">#008B8B</SolidColorBrush>
+    <SolidColorBrush x:Key="ForegroundColorForText">#FFFFFF</SolidColorBrush>
     
     <SolidColorBrush x:Key="BackgroundColorForOtherElements">#40ADD8E6</SolidColorBrush>
     
     <SolidColorBrush x:Key="SelectedElementColor">#565555</SolidColorBrush>
     
     <SolidColorBrush x:Key="CheckedTaskColor">#20006400</SolidColorBrush>
-    
+
     <SolidColorBrush x:Key="SecondMainColor">#434343</SolidColorBrush>
-    
+
 </ResourceDictionary>
