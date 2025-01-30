@@ -5,9 +5,6 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace reminder
@@ -36,6 +33,14 @@ namespace reminder
                 ObservableCollection<GroupItem> temp = new ObservableCollection<GroupItem>();
                 xmlManager.SerializeToXml(path.GroupsPath, temp);
             }
+
+            ApplyTheme(reminder.Properties.Settings.Default.Theme);
+        }
+
+        private static void ApplyTheme(string theme)
+        {
+            Application.Current.Resources.MergedDictionaries.RemoveAt(0);
+            Application.Current.Resources.MergedDictionaries.Insert(0, new ResourceDictionary { Source = new Uri($"Themes/{ reminder.Properties.Settings.Default.Theme}.xaml", UriKind.Relative) });
         }
     }
 }

@@ -20,7 +20,7 @@
     <Border BorderBrush="{DynamicResource SecondMainColor}"
             Background="{DynamicResource BackgroundColorForWindow}"
             BorderThickness="0.7"
-            CornerRadius="4"
+            CornerRadius="10"
             Padding="6">
 
         <Grid>

@@ -16,73 +16,82 @@
         AllowsTransparency="True"
         FocusVisualStyle="{x:Null}"
         Icon="/Icons/check.ico"
-        Background="{DynamicResource BackgroundColorForWindow}">
+        Background="Transparent">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="310"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Border BorderBrush="{DynamicResource SecondMainColor}"
+        Background="{DynamicResource BackgroundColorForWindow}"
+        BorderThickness="0.7"
+        CornerRadius="10"
+        Padding="0">
 
-        <!--Taskbar hidden icon-->
-        <tb:TaskbarIcon x:Name="taskbarIcon"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="310"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--Taskbar hidden icon-->
+            <tb:TaskbarIcon x:Name="taskbarIcon"
                             IconSource="/Icons/check.ico"
                             TrayMouseDoubleClick="TrayDoubleClick">
-            <tb:TaskbarIcon.ContextMenu>
-                <ContextMenu>
-                    <ContextMenu.Style>
-                        <Style TargetType="ContextMenu">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ContextMenu">
+                <tb:TaskbarIcon.ContextMenu>
+                    <ContextMenu>
+                        <ContextMenu.Style>
+                            <Style TargetType="ContextMenu">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ContextMenu">
 
-                                        <Border Style="{StaticResource TrayMenuBorder}">
+                                            <Border Style="{StaticResource TrayMenuBorder}">
 
-                                            <StackPanel>
-                                                <MenuItem Style="{StaticResource TrayMenuItem}"
+                                                <StackPanel>
+                                                    <MenuItem Style="{StaticResource TrayMenuItem}"
                                                           HeaderStringFormat="Close"
                                                           Click="taskBarOptions"/>
-                                                <MenuItem Style="{StaticResource TrayMenuItem}"
+                                                    <MenuItem Style="{StaticResource TrayMenuItem}"
                                                           HeaderStringFormat="Show"
                                                           Click="taskBarOptions"/>
-                                            </StackPanel>
+                                                </StackPanel>
 
-                                        </Border>
+                                            </Border>
 
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ContextMenu.Style>
-                </ContextMenu>
-            </tb:TaskbarIcon.ContextMenu>
-        </tb:TaskbarIcon>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ContextMenu.Style>
+                    </ContextMenu>
+                </tb:TaskbarIcon.ContextMenu>
+            </tb:TaskbarIcon>
 
-        <!--Top menu-->
-        <Grid Grid.Row="0" Grid.Column="0" 
+            <!--Top menu-->
+            <Grid Grid.Row="0" Grid.Column="0" 
                     Grid.ColumnSpan="5" 
-                    Background="{DynamicResource SecondMainColor}"
+                    Background="{x:Null}"
                     Panel.ZIndex="1"
                     MouseDown="TopMenu_Drag">
-            <Grid.Effect>
-                <DropShadowEffect Color="Black" 
+                <Grid.Effect>
+                    <DropShadowEffect Color="Black" 
                                       Direction="270" 
                                       BlurRadius="4" 
                                       Opacity="0.3" 
                                       ShadowDepth="2"></DropShadowEffect>
-            </Grid.Effect>
+                </Grid.Effect>
 
-            <Button x:Name="MenuButton"
+                <Border Background="{DynamicResource SecondMainColor}"
+                        CornerRadius="10,10,0,0"/>
+
+                <Button x:Name="MenuButton"
                         Style="{StaticResource WinButton}"
                         Content="{StaticResource MenuIcon}"
                         HorizontalAlignment="Left"
@@ -90,36 +99,40 @@
                         ContextMenuService.IsEnabled="False"
                         Click="OpenMenu">
 
-                <Button.ContextMenu>
-                    <ContextMenu x:Name="OptionsMenu"
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="OptionsMenu"
                                      StaysOpen="False"
                                      Style="{StaticResource MenuButtonContextMenu}">
-                        <MenuItem ItemStringFormat="Options"
+                            <MenuItem ItemStringFormat="Options"
                                       Icon="{StaticResource SettingsIcon}"
                                       Style="{StaticResource OptionStyle}"
                                       Click="SettingsClick"/>
-                        <MenuItem ItemStringFormat="Themes"
+                            <MenuItem ItemStringFormat="Themes"
                                       Icon="{StaticResource ThemesIcon}"
                                       Style="{StaticResource OptionStyle}"
                                       Click="SettingsClick"/>
+                            <MenuItem ItemStringFormat="Credits"
+                                      Icon="{StaticResource CredIcon}"
+                                      Style="{StaticResource OptionStyle}"
+                                      Click="SettingsClick"/>
 
-                        <ContextMenu.Effect>
-                            <DropShadowEffect BlurRadius="2" ShadowDepth="2" Opacity="0.45"></DropShadowEffect>
-                        </ContextMenu.Effect>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
+                            <ContextMenu.Effect>
+                                <DropShadowEffect BlurRadius="2" ShadowDepth="2" Opacity="0.45"></DropShadowEffect>
+                            </ContextMenu.Effect>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
 
-            <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right">
 
-                <Button Style="{StaticResource WinButton}"
+                        <Button Style="{StaticResource WinButton}"
                             Content="{StaticResource NotificationIcon}">
-                </Button>
+                        </Button>
 
-                <!--Spacer-->
-                <Line X1="0"
+                        <!--Spacer-->
+                        <Line X1="0"
                           X2="0"
                           Y1="0"
                           Y2="32"
@@ -128,166 +141,167 @@
                           VerticalAlignment="Center"
                           Margin="0,0,20,0"></Line>
 
-                <Button Style="{StaticResource WinButton}"
+                        <Button Style="{StaticResource WinButton}"
                             Content="{StaticResource MinIcon}"
                             Click="MinWindow"/>
 
-                <Button Style="{StaticResource WinButton}"
+                        <Button Style="{StaticResource WinButton}"
                             Content="{StaticResource MaxIcon}"
                             Click="MaxWindow"/>
 
-                <Button Style="{StaticResource WinButton}"
+                        <Button Style="{StaticResource WinButton}"
                             Content="{StaticResource CloseIcon}"
                             Click="CloseWindow"/>
 
-            </StackPanel>
+                    </StackPanel>
 
-        </Grid>
+            </Grid>
 
-        <!--Left menu-->
-        <Border Grid.Row="1" 
+            <!--Left menu-->
+            <Border Grid.Row="1" 
                     Grid.RowSpan="4" 
                     Background="{DynamicResource SecondMainColor}"
+                    CornerRadius="0,0,0,10"
                     Panel.ZIndex="0">
 
-            <StackPanel>
+                <StackPanel>
 
-                <ListBox x:Name="DefaultGroups"
+                    <ListBox x:Name="DefaultGroups"
                              Background="Transparent"
                              BorderBrush="Transparent"
                              Margin="0,30,0,0">
 
-                    <ListBoxItem x:Name="All_Tasks"
+                        <ListBoxItem x:Name="All_Tasks"
                                      Style="{StaticResource LeftMenuItems}"
                                      Content="{StaticResource AllTasksSVG}"
                                      Tag="All Tasks"
                                      Selected="GroupChanged">
-                    </ListBoxItem>
-                    <ListBoxItem x:Name="Todays_Tasks"
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="Todays_Tasks"
                                      Style="{StaticResource LeftMenuItems}"
                                      Content="{StaticResource TodaysTasksSVG}"
                                      Tag="Today"
                                      Selected="GroupChanged"></ListBoxItem>
-                </ListBox>
+                    </ListBox>
 
-                <!--Separator text and "add group button"-->
-                <StackPanel Orientation="Horizontal" Margin="20,40,0,15">
-                    <TextBlock FontSize="16"
+                    <!--Separator text and "add group button"-->
+                    <StackPanel Orientation="Horizontal" Margin="20,40,0,15">
+                        <TextBlock FontSize="16"
                                    Foreground="{DynamicResource ForegroundColorForText}"
                                    Opacity="0.6">Groups of tasks</TextBlock>
-                    <Border Margin="100,0,0,0"
+                        <Border Margin="100,0,0,0"
                                 Style="{StaticResource SelectableBorder}"
                                 Width="25"
                                 Height="25"
                                 MouseDown="AddButton_Click">
-                        <ContentPresenter Content="{StaticResource PlusIcon}"
+                            <ContentPresenter Content="{StaticResource PlusIcon}"
                                               Margin="0,0,0,0"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"></ContentPresenter>
-                        <Border.ContextMenu>
+                            <Border.ContextMenu>
 
-                            <!--Add group menu-->
-                            <ContextMenu x:Name="AddMenu">
-                                <ContextMenu.Style>
-                                    <Style TargetType="ContextMenu">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ContextMenu">
-                                                    <Border Style="{StaticResource AddMenuBorder}">
+                                <!--Add group menu-->
+                                <ContextMenu x:Name="AddMenu">
+                                    <ContextMenu.Style>
+                                        <Style TargetType="ContextMenu">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ContextMenu">
+                                                        <Border Style="{StaticResource AddMenuBorder}">
 
-                                                        <StackPanel Orientation="Horizontal"
+                                                            <StackPanel Orientation="Horizontal"
                                                                         VerticalAlignment="Center">
 
-                                                            <TextBox x:Name="GroupNameBox"
+                                                                <TextBox x:Name="GroupNameBox"
                                                                          Style="{StaticResource AddMenuTextBox}"/>
 
-                                                            <Button Tag="Add"
+                                                                <Button Tag="Add"
                                                                         Click="AddGroup"></Button>
 
-                                                        </StackPanel>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ContextMenu.Style>
-                            </ContextMenu>
+                                                            </StackPanel>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ContextMenu.Style>
+                                </ContextMenu>
 
-                        </Border.ContextMenu>
-                    </Border>
-                </StackPanel>
+                            </Border.ContextMenu>
+                        </Border>
+                    </StackPanel>
 
-                <!--Groups list-->
-                <ListBox x:Name="CustomGroups"
+                    <!--Groups list-->
+                    <ListBox x:Name="CustomGroups"
                              SelectionMode="Single"
                              ItemsSource="{Binding groupItems}"
                              Background="Transparent"
                              BorderBrush="Transparent">
 
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                            <Setter Property="Tag" Value="{Binding Name}"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate>
-                                        <!--Observable collection contains two parameters color and name-->
-                                        <Border Margin="10,0,30,5"
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Tag" Value="{Binding Name}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <!--Observable collection contains two parameters color and name-->
+                                            <Border Margin="10,0,30,5"
                                                     Height="40"
                                                     CornerRadius="4"
                                                     Background="{TemplateBinding Background}">
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                                                <Ellipse Fill="{Binding GroupColor}"
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                                    <Ellipse Fill="{Binding GroupColor}"
                                                              Width="13"
                                                              Height="13"
                                                              VerticalAlignment="Center"
                                                              Margin="10,3.5,0,0"/>
-                                                <TextBlock Text="{Binding Name}"
+                                                    <TextBlock Text="{Binding Name}"
                                                                Foreground="{DynamicResource ForegroundColorForText}"
                                                                FontSize="20"
                                                                Margin="10,0,0,0"
                                                                VerticalAlignment="Center"></TextBlock>
-                                            </StackPanel>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <EventSetter Event="Selected" Handler="GroupChanged"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                                </Trigger>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
+                                                </StackPanel>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <EventSetter Event="Selected" Handler="GroupChanged"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
 
-            </StackPanel>
+                </StackPanel>
 
-        </Border>
+            </Border>
 
-        <!--List of tasks-->
-        <ScrollViewer Style="{StaticResource TasksScroll}"
+            <!--List of tasks-->
+            <ScrollViewer Style="{StaticResource TasksScroll}"
                       PreviewMouseWheel="ScrollWhenMouseOver">
 
-            <!--Changing scroll-->
-            <ScrollViewer.Resources>
-                <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
-            </ScrollViewer.Resources>
+                <!--Changing scroll-->
+                <ScrollViewer.Resources>
+                    <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
+                </ScrollViewer.Resources>
 
-            <StackPanel>
+                <StackPanel>
 
-            <!--Header text for tasks-->
-            <Border Background="{StaticResource BackgroundColorForWindow}"
+                    <!--Header text for tasks-->
+                    <Border Background="{DynamicResource BackgroundColorForWindow}"
                     Panel.ZIndex="1"
                     VerticalAlignment="Top"
                     Margin="0,0,0,20">
 
-                <TextBlock x:Name="HeaderText"
+                        <TextBlock x:Name="HeaderText"
                            FontSize="36"
                            Foreground="{DynamicResource ForegroundColorForText}"
                            FontFamily="Inter"
@@ -295,127 +309,129 @@
                            VerticalAlignment="Bottom"
                            Margin="45,0,0,0"></TextBlock>
 
-            </Border>
+                    </Border>
 
-                <!--Container for tasks-->
-                <ListBox x:Name="taskBox"
+                    <!--Container for tasks-->
+                    <ListBox x:Name="taskBox"
                              Style="{StaticResource Tasks}"
                              ItemsSource="{Binding taskItems}"
                              MouseDoubleClick="EditTask" 
                              LostFocus="taskBoxLostFocus">
 
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem"
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem"
                                    BasedOn="{StaticResource TaskItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
+                                <Setter Property="Template">
+                                    <Setter.Value>
 
-                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <ControlTemplate TargetType="ListBoxItem">
 
-                                        <Border Style="{StaticResource TaskBorder}"
+                                            <Border Style="{StaticResource TaskBorder}"
                                                 Background="{TemplateBinding Background}">
-                                            <Grid>
+                                                <Grid>
 
-                                                <StackPanel>
+                                                    <StackPanel>
 
-                                                    <!--Container for listitem elements-->
-                                                    <DockPanel Style="{StaticResource DockPanelForTask}">
+                                                        <!--Container for listitem elements-->
+                                                        <DockPanel Style="{StaticResource DockPanelForTask}">
 
-                                                        <!--Button for completing the task-->
-                                                        <CheckBox Checked="TaskComplete"
+                                                            <!--Button for completing the task-->
+                                                            <CheckBox Checked="TaskComplete"
                                                                       IsChecked="{Binding IsComplete, Mode=TwoWay}"
                                                                       Style="{StaticResource TaskCheckBox}"/>
 
-                                                        <!--Task Name-->
-                                                        <TextBlock Text="{Binding Name}"
+                                                            <!--Task Name-->
+                                                            <TextBlock Text="{Binding Name}"
                                                                        Style="{StaticResource TasksText}"
                                                                        MaxWidth="200"
                                                                        Margin="0,0,20,0"/>
 
-                                                        <!--Description text-->
-                                                        <TextBlock Text="{Binding Desсription}"
+                                                            <!--Description text-->
+                                                            <TextBlock Text="{Binding Desсription}"
                                                                        Style="{StaticResource TasksText}"
                                                                        MaxWidth="350"
                                                                        Margin="40,0,0,0"/>
 
-                                                        <!--Task time-->
-                                                        <TextBlock Text="{Binding TimeToShow}"
+                                                            <!--Task time-->
+                                                            <TextBlock Text="{Binding TimeToShow}"
                                                                        Style="{StaticResource TasksText}"
                                                                        Margin="0,0,20,0"
                                                                        HorizontalAlignment="Right"/>
-                                                    </DockPanel>
+                                                        </DockPanel>
 
-                                                    <StackPanel Orientation="Horizontal">
+                                                        <StackPanel Orientation="Horizontal">
 
-                                                        <!--Task time-->
-                                                        <TextBlock Text="{Binding TimeToShow}"
+                                                            <!--Task time-->
+                                                            <TextBlock Text="{Binding TimeToShow}"
                                                                        Style="{StaticResource TasksText}"
                                                                        FontSize="13"
                                                                        Margin="50,0,0,0"/>
 
-                                                    </StackPanel>
+                                                        </StackPanel>
 
-                                                    <Line X1="20"
+                                                        <Line X1="20"
                                                               X2="717"
                                                               Margin="0,20,0,0"
                                                               Stroke="{DynamicResource SecondMainColor}"
                                                               StrokeThickness="2"></Line>
 
-                                                </StackPanel>
+                                                    </StackPanel>
 
-                                                <Grid.ContextMenu>
+                                                    <Grid.ContextMenu>
 
-                                                    <!--Delete task button-->
-                                                    <ContextMenu>
-                                                        <MenuItem Header="Delete" Click="DeleteTask"></MenuItem>
-                                                    </ContextMenu>
+                                                        <!--Delete task button-->
+                                                        <ContextMenu>
+                                                            <MenuItem Header="Delete" Click="DeleteTask"></MenuItem>
+                                                        </ContextMenu>
 
-                                                </Grid.ContextMenu>
-                                            </Grid>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
+                                                    </Grid.ContextMenu>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
 
-                            <Style.Triggers>
+                                <Style.Triggers>
 
-                                <!--Trigger. When task is completed its background changes and it cannot be selected anymore-->
-                                <DataTrigger Binding="{Binding IsComplete}" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource CheckedTaskColor}"/>
-                                    <Setter Property="IsEnabled" Value="False"></Setter>
-                                </DataTrigger>
+                                    <!--Trigger. When task is completed its background changes and it cannot be selected anymore-->
+                                    <DataTrigger Binding="{Binding IsComplete}" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource CheckedTaskColor}"/>
+                                        <Setter Property="IsEnabled" Value="False"></Setter>
+                                    </DataTrigger>
 
-                                <!--Trigger. When task is selected its background changes-->
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                                </Trigger>
+                                    <!--Trigger. When task is selected its background changes-->
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                                    </Trigger>
 
-                            </Style.Triggers>
+                                </Style.Triggers>
 
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
 
-            </StackPanel>
+                </StackPanel>
 
-        </ScrollViewer>
+            </ScrollViewer>
 
-        <Grid Grid.Row="4"
+            <Grid Grid.Row="4"
                   Grid.Column="4"
                   Margin="0,0,20,20"
                   MouseDown="AddTask"
                   VerticalAlignment="Bottom"
                   HorizontalAlignment="Right">
 
-            <Grid Style="{StaticResource PlusGrid}">
-                <Line Style="{StaticResource HorizontalLine}"/>
-                <Line Style="{StaticResource VerticalLine}"/>
-            </Grid>
+                <Grid Style="{StaticResource PlusGrid}">
+                    <Line Style="{StaticResource HorizontalLine}"/>
+                    <Line Style="{StaticResource VerticalLine}"/>
+                </Grid>
 
-            <Ellipse Style="{StaticResource ButtonEllupse}"/>
+                <Ellipse Style="{StaticResource ButtonEllupse}"/>
+
+            </Grid>
 
         </Grid>
 
-    </Grid>
-    
+    </Border>
+
 </Window>

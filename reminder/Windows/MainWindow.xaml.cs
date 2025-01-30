@@ -29,9 +29,6 @@ namespace reminder
 
         private string selectedGroup;
 
-        //Creating class instance for work with autorun
-        private AutoRunManager autoRunManager = new AutoRunManager("ToDoList");
-
         //Creating class instance for work with xml
         private XmlManager xmlManager = new XmlManager();
 
@@ -231,28 +228,13 @@ namespace reminder
             windowToThePast.Show();
         }
 
-        //Adds app to auto run or removed app from it. Upon completion drops info message
-        private void AutorunOptions(object sender, RoutedEventArgs e)
-        {
-            //Defines selected autorun option and invokes it
-            MenuItem senderButton = sender as MenuItem;
-            MessageBox.Show(autoRunManager.ManageAutorun(senderButton.Header.ToString()));
-        }
-
-        //Switches theme to selected
-        private void SwitchTheme(object sender, RoutedEventArgs e)
-        {
-            MenuItem theme = sender as MenuItem;
-            Application.Current.Resources.MergedDictionaries.RemoveAt(0);
-            //Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Insert(0, new ResourceDictionary { Source = new Uri($"Themes/{theme.Header.ToString()}Theme.xaml", UriKind.Relative) });
-        }
-
         private void AddGroup(object sender, RoutedEventArgs e)
         {
             TextBox box = (TextBox)AddMenu.FindVisualChildren<TextBox>().First();
-
             groupItems.Add(groupsManager.NewGroupItem(box.Text.ToString(), groupItems));
+
+            box.Clear();
+            AddMenu.IsOpen = false;
         }
 
         private void AddButton_Click(object sender, MouseButtonEventArgs e)
@@ -335,13 +317,21 @@ namespace reminder
         private void SettingsClick(object sender, RoutedEventArgs e)
         {
             var option = (MenuItem)sender;
-            if (option.ItemStringFormat == "Options")
+            switch (option.ItemStringFormat)
             {
-                //Open settings window
-            }
-            else
-            {
-                //Open themes select window
+                case "Options":
+                    SettingsWindow window = new SettingsWindow();
+                    window.ShowDialog();
+                    break;
+                case "Themes":
+                    //Legacy
+                    break;
+                case "Credits":
+                    //Open infoWin
+                    break;
+                default:
+                    MessageWindow message = new MessageWindow("Unexpected error", MessageValues.MessageIcon.ERROR);
+                    break;
             }
         }
 

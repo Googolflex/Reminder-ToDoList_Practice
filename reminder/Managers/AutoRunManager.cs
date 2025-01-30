@@ -16,19 +16,19 @@ namespace reminder
             appRegistryKey = registryKey;
         }
 
-        public string ManageAutorun(string option)
+        public bool ManageAutorun(bool option)
         {
-            string message;
-            if (option == "Add to autorun")
+            bool res;
+            if (option == true)
             {
                 //If autorun is already enabled drops message
                 if (!IsAutoRunEnabled())
                 {
                     AddToAutoRun();
-                    message = "The application has been added to autorun";
+                    res = true;
                 }
                 else
-                    message = "The application has already been added to autorun";
+                    res = false;
             }
             else
             {
@@ -36,12 +36,12 @@ namespace reminder
                 if (IsAutoRunEnabled())
                 {
                     RemoveFromAutoRun();
-                    message = "The application has been removed from autorun";
+                    res = true;
                 }
                 else
-                    message = "The application is not in autorun";
+                    res = false;
             }
-            return message;
+            return res;
         }
 
         private bool IsAutoRunEnabled()
