@@ -15,6 +15,9 @@
                 <ResourceDictionary Source="Styles/TasksBarStyles.xaml"/>
                 <ResourceDictionary Source="Styles/AddButtonStyles.xaml"/>
                 <ResourceDictionary Source="Styles/MenuButtonStyles.xaml"/>
+                <ResourceDictionary Source="Styles/OrdinaryButtonsStyle.xaml"/>
+                <ResourceDictionary Source="Styles/PlaceholderTextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TrayContextMenuStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!--Global background for windows-->

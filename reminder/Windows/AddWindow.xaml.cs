@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
+using System.Windows.Media.Effects;
 
 namespace reminder
 {
@@ -12,6 +14,11 @@ namespace reminder
         public AddWindow(string group)
         {
             InitializeComponent();
+
+            this.Owner = Application.Current.MainWindow;
+            this.Owner.Effect = new BlurEffect { Radius = 7 };
+
+            timeBox.Text = DateTime.Now.ToString();
 
             if (group != "All Tasks" || group != "Today")
                 _taskGroup = group;
@@ -56,19 +63,10 @@ namespace reminder
             this.DialogResult= false;
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            timeBox2.Visibility = Visibility.Visible;
-            timeLabel2.Visibility = Visibility.Visible;
-            timeLabel1.Content = "From:";
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            timeLabel1.Content = "Task Time:";
-            timeBox2.Text = string.Empty;
-            timeBox2.Visibility = Visibility.Hidden;
-            timeLabel2.Visibility = Visibility.Hidden;
+            this.Owner.Effect = null;
+            Thread.Sleep(30);
         }
     }
 }

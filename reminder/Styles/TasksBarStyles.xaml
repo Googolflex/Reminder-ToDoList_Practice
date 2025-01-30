@@ -6,6 +6,7 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
     </Style>
 
     <Style TargetType="Border" x:Key="TaskBorder">
@@ -21,7 +22,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Margin" Value="0,2"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/> 
     </Style>
 
     <Style TargetType="DockPanel" x:Key="DockPanelForTask">
@@ -82,13 +83,13 @@
     </Style>
 
     <Style TargetType="ScrollViewer" x:Key="TasksScroll">
-        <Setter Property="Grid.Row" Value="2"/>
+        <Setter Property="Grid.Row" Value="1"/>
         <Setter Property="Grid.RowSpan" Value="4"/>
         <Setter Property="Grid.Column" Value="1"/>
         <Setter Property="Grid.ColumnSpan" Value="4"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="Margin" Value="0,10,0,0"/>
+        <Setter Property="Margin" Value="0,40,0,0"/>
         <Setter Property="Focusable" Value="False"/>
     </Style>
     

@@ -6,25 +6,64 @@
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
-        Title="Edit" Height="360" Width="260"
-        Background="{DynamicResource BackgroundColorForWindow}"
+        Title="Edit"
+        Height="280"
+        Width="300"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Closing="Window_Closing"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent"
         Icon="/Icons/create.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="290"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <StackPanel Margin="0,10,0,0">
-            <Label>Task Name:</Label>
-            <TextBox x:Name="nameBox"></TextBox>
-            <Label>Task Description:</Label>
-            <TextBox x:Name="deskBox"></TextBox>
-            <Label>Task Time:</Label>
-            <wpfTool:DateTimePicker x:Name="timeBox"></wpfTool:DateTimePicker>
-            <Label x:Name="timeLabel2" Visibility="Hidden">To:</Label>
-            <wpfTool:DateTimePicker x:Name="timeBox2" Visibility="Hidden"></wpfTool:DateTimePicker>
-        </StackPanel>
-        <Button Grid.Row="1" IsDefault="True" Click="Accept_Click" HorizontalAlignment="Left" VerticalAlignment="Top">Edit</Button>
-        <Button Grid.Row="1" IsCancel="True" Click="Cancel_Click"  HorizontalAlignment="Right" VerticalAlignment="Top">Cancel</Button>
-    </Grid>
+
+    <Border BorderBrush="{DynamicResource SecondMainColor}"
+            Background="{DynamicResource BackgroundColorForWindow}"
+            BorderThickness="0.7"
+            CornerRadius="4"
+            Padding="6">
+
+        <Grid>
+
+            <TextBlock Style="{StaticResource TasksText}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,0,0,0">Edit</TextBlock>
+            
+            <StackPanel Margin="0,30,0,0">
+
+                <Label>Task Name:</Label>
+                <TextBox x:Name="nameBox"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         Uid="Enter edited name"/>
+
+                <Label>Task Description:</Label>
+                <TextBox x:Name="deskBox"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         Uid="Enter edited description"/>
+
+                <Label>Task Time:</Label>
+                <wpfTool:DateTimePicker x:Name="timeBox"
+                                        Background="{DynamicResource SecondMainColor}"
+                                        Foreground="{DynamicResource ForegroundColorForText}"
+                                        ShowButtonSpinner="False"
+                                        TextAlignment="Center"
+                                        BorderThickness="0"/>
+
+            </StackPanel>
+            <Button Style="{StaticResource OrdinaryButtonStyle}"
+                    ContentStringFormat="Edit"
+                    IsDefault="True"
+                    Click="Accept_Click"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"/>
+            <Button Style="{StaticResource OrdinaryButtonStyle}"
+                    ContentStringFormat="Cancel"
+                    IsCancel="True"
+                    Click="Cancel_Click" 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"/>
+        </Grid>
+        
+    </Border>
 </Window>

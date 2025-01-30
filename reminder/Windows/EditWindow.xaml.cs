@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Effects;
 
 namespace reminder
 {
@@ -12,6 +14,10 @@ namespace reminder
         public EditWindow(TaskItem task)
         {
             InitializeComponent();
+
+            this.Owner = Application.Current.MainWindow;
+            this.Owner.Effect = new BlurEffect { Radius = 7 };
+
             editedTask = task;
             nameBox.Text = task.Name;
             deskBox.Text = task.Desсription;
@@ -20,7 +26,7 @@ namespace reminder
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text), Convert.ToDateTime(timeBox2.Text));
+            editedTask = tasksManager.editTask(editedTask, nameBox.Text, deskBox.Text, Convert.ToDateTime(timeBox.Text));
             this.DialogResult = true;
             
         }
@@ -29,6 +35,12 @@ namespace reminder
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Owner.Effect = null;
+            Thread.Sleep(30);
         }
     }
 }

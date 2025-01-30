@@ -38,7 +38,7 @@ namespace reminder
             return newTask;
         }
 
-        public TaskItem editTask(TaskItem task, string editedName, string editedDesc, DateTime editedFstTime, DateTime editedSecTime)
+        public TaskItem editTask(TaskItem task, string editedName, string editedDesc, DateTime editedFstTime)
         {
             task.Name = editedName;
             task.Desсription = editedDesc;

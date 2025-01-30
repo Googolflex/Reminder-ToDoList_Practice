@@ -110,6 +110,7 @@
     <Compile Include="Managers\DateToDayOfWeek.cs" />
     <Compile Include="Managers\AutoRunManager.cs" />
     <Compile Include="Models\GroupItem.cs" />
+    <Compile Include="Values\MessageValues.cs" />
     <Compile Include="Values\Path.cs" />
     <Compile Include="Managers\TasksManager.cs" />
     <Compile Include="Windows\EditWindow.xaml.cs">
@@ -118,6 +119,9 @@
     <Compile Include="Models\TaskItem.cs" />
     <Compile Include="Windows\AddWindow.xaml.cs">
       <DependentUpon>AddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WindowToThePast.xaml.cs">
       <DependentUpon>WindowToThePast.xaml</DependentUpon>
@@ -139,7 +143,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\OrdinaryButtonsStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\PlaceholderTextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\TasksBarStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TrayContextMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\StandardTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

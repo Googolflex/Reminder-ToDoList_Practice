@@ -14,6 +14,8 @@ using System.Windows.Controls.Primitives;
 using Xceed.Wpf.AvalonDock.Controls;
 using System.Linq;
 using System.Windows.Media.Effects;
+using reminder.Windows;
+using reminder.Values;
 
 namespace reminder
 {
@@ -96,14 +98,10 @@ namespace reminder
             }
         }
 
+        //Open window for add an task. Needs to be reworked
         private void AddTask(object sender, MouseButtonEventArgs e)
         {
-            //Open window for add an task. Needs to be reworked
-            this.Effect = new BlurEffect { Radius = 7 };
             AddWindow addWindow = new AddWindow(selectedGroup);
-            addWindow.Closed += (s, args) => this.Effect = null;
-            addWindow.Owner = this;
-            addWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             addWindow.ShowDialog();
             if (addWindow.DialogResult == true)
             {
@@ -163,7 +161,7 @@ namespace reminder
         private void taskBarOptions(object sender, RoutedEventArgs e)
         {
             //Defines what option is clicked in taskbar
-            string option = (sender as MenuItem).Header.ToString();
+            string option = (sender as MenuItem).HeaderStringFormat.ToString();
             if (option == "Close")
             {
                 //Invokes closing from taskbar
@@ -178,19 +176,17 @@ namespace reminder
             }
         }
 
-        private async void MainWindow_Closing(object sender, CancelEventArgs e)
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (closingFromMenuItem && !isClosingHandled)
             {
                 e.Cancel = true;
-                MessageBoxResult result = await Task.Run(() =>
-                {
-                    return MessageBox.Show("Do you want to close ToDoList?", "Reminder", MessageBoxButton.YesNo);
-                });
-                if (result == MessageBoxResult.No)
+                MessageWindow message = new MessageWindow(MessageValues.OnClosingQuestionText, MessageValues.MessageIcon.QUESTION);
+                message.ShowDialog();
+                bool result = (bool)message.DialogResult;
+                if (result == false)
                 {
                     closingFromMenuItem = false;
-                    e.Cancel = true;
                 }
                 else
                 {
@@ -198,10 +194,9 @@ namespace reminder
                     groupsManager.saveGroupsToXml(groupItems);
                     isClosingHandled = true;
                     e.Cancel = false;
-                    this.Close();                
                 }
             }
-            else if (!closingFromMenuItem)
+            else
             {
                 this.WindowState = WindowState.Minimized;
                 this.ShowInTaskbar = false;
@@ -327,7 +322,7 @@ namespace reminder
         private void OpenMenu(object sender, RoutedEventArgs e)
         {
             OptionsMenu.PlacementTarget = MenuButton;
-            OptionsMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            OptionsMenu.Placement = PlacementMode.Bottom;
             MenuButton.ContextMenu.IsOpen = true;
         }
 
@@ -335,6 +330,29 @@ namespace reminder
         {
             this.WindowState = WindowState.Normal;
             this.ShowInTaskbar = true;
+        }
+
+        private void SettingsClick(object sender, RoutedEventArgs e)
+        {
+            var option = (MenuItem)sender;
+            if (option.ItemStringFormat == "Options")
+            {
+                //Open settings window
+            }
+            else
+            {
+                //Open themes select window
+            }
+        }
+
+        private void ScrollWhenMouseOver(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scroll = (ScrollViewer)sender;
+            if (scroll != null)
+            {
+                scroll.ScrollToVerticalOffset(scroll.VerticalOffset - e.Delta);
+                e.Handled = true;
+            }
         }
     }
 }

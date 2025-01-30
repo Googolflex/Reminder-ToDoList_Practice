@@ -1,0 +1,74 @@
+﻿<Window x:Class="reminder.Windows.MessageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:reminder.Windows"
+        mc:Ignorable="d"
+        Title="MessageWindow" 
+        Height="180"
+        Width="300"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        BorderBrush="Transparent"
+        Closing="Window_Closing">
+
+    <Border Background="{DynamicResource BackgroundColorForWindow}"
+            BorderBrush="{DynamicResource SelectedElementColor}"
+            BorderThickness="0.7"
+            CornerRadius="4"
+            Padding="6">
+        
+        <Grid Background="Transparent">
+
+            <Grid Background="Transparent">
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,10,0"
+                            VerticalAlignment="Top"
+                            MinWidth="250">
+
+                    <ContentPresenter Name="WindowIcon"></ContentPresenter>
+                    
+                    <TextBlock x:Name="Header"
+                               Style="{StaticResource TasksText}"
+                               Text="ToDoList"
+                               Margin="10,0,0,0"></TextBlock>
+
+                </StackPanel>
+
+                <TextBlock x:Name="Body"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Style="{StaticResource TasksText}"
+                           MinWidth="250"
+                           TextWrapping="WrapWithOverflow"
+                           Margin="20,0,10,0"></TextBlock>
+
+                <Button x:Name="YesButton"
+                        Style="{StaticResource OrdinaryButtonStyle}"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        IsEnabled="False"
+                        Visibility="Hidden"
+                        Margin="20,0,0,0"
+                        IsDefault="True"
+                        ContentStringFormat="Yes"
+                        Click="YesButton_Click"/>
+
+                <Button x:Name="NoOrOkButton"
+                        Style="{StaticResource OrdinaryButtonStyle}"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        IsCancel="True"
+                        ContentStringFormat="Ok"
+                        Click="NoOrOkButton_Click"/>
+
+            </Grid>
+            
+        </Grid>
+    </Border>
+</Window>

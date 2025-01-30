@@ -6,39 +6,57 @@
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:reminder"
         mc:Ignorable="d"
-        Title="Add" Height="360" Width="260"
+        Title="Add"
+        Height="280"
+        Width="300"
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize"
+        Closing="Window_Closing"
+        WindowStartupLocation="CenterOwner"
         Background="Transparent"
         Icon="/Icons/create.ico">
     
-    <Border BorderBrush="{DynamicResource SecondMainColor}" BorderThickness="0.5" CornerRadius="4" Padding="6" Background="{DynamicResource BackgroundColorForWindow}">
+    <Border BorderBrush="{DynamicResource SecondMainColor}"
+            BorderThickness="0.7"
+            CornerRadius="4"
+            Padding="6"
+            Background="{DynamicResource BackgroundColorForWindow}">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="290"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            
             <StackPanel Margin="0,10,0,0">
             
                 <Label>Task Name:</Label>
-                <TextBox x:Name="nameBox"></TextBox>
+                <TextBox x:Name="nameBox"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         Uid="Enter task name"></TextBox>
             
                 <Label >Task Description:</Label>
-                <TextBox x:Name="deskBox"></TextBox>
+                <TextBox x:Name="deskBox"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         Uid="Enter description (optional)"></TextBox>
 
                 <Label x:Name="timeLabel1">Task Time:</Label>
-                <wpfTool:DateTimePicker x:Name="timeBox" ></wpfTool:DateTimePicker>
-            
-                <Label x:Name="timeLabel2" Visibility="Hidden">To:</Label>
-                <wpfTool:DateTimePicker x:Name="timeBox2" Visibility="Hidden"></wpfTool:DateTimePicker>
-            
-            
-            
-                <CheckBox x:Name="timeIntervalCheckBox" VerticalContentAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">Time interval</CheckBox>
+                <wpfTool:DateTimePicker x:Name="timeBox"
+                                        Background="{DynamicResource SecondMainColor}"
+                                        Foreground="{DynamicResource ForegroundColorForText}"
+                                        ShowButtonSpinner="False"
+                                        TextAlignment="Center"
+                                        BorderThickness="0"/>
+
             </StackPanel>
-            <Button Content="Add" Grid.Row="1" IsDefault="True" Click="Accept_Click" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-            <Button Content="Cancel" Grid.Row="1" IsCancel="True" Click="Cancel_Click" HorizontalAlignment="Right" VerticalAlignment="Top"></Button>
+            <Button Style="{StaticResource OrdinaryButtonStyle}"
+                    ContentStringFormat="Add"
+                    IsDefault="True"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Click="Accept_Click"></Button>
+            <Button Style="{StaticResource OrdinaryButtonStyle}"
+                    ContentStringFormat="Cancel"
+                    IsCancel="True"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Click="Cancel_Click"></Button>
         </Grid>
     </Border>
 </Window>
