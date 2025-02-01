@@ -1,0 +1,79 @@
+﻿<Window x:Class="reminder.Windows.CreditsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:reminder.Windows"
+        mc:Ignorable="d"
+        Title="CreditsWindow"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        FocusVisualStyle="{x:Null}"
+        Background="Transparent"
+        WindowStartupLocation="CenterOwner"
+        Height="225" Width="400"
+        Closing="Window_Closing">
+    <Grid>
+
+        <Border BorderBrush="{DynamicResource SecondMainColor}"
+                Background="{DynamicResource BackgroundColorForWindow}"
+                BorderThickness="0.7"
+                CornerRadius="10"
+                Padding="0">
+
+            <Grid>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="20,20,0,0"
+                            VerticalAlignment="Top">
+
+                    <Image Source="/Icons/Check.ico"
+                           Height="20"
+                           Width="20"/>
+
+                    <TextBlock Style="{StaticResource TasksText}"
+                               Text="Credits"
+                               Margin="10,0,0,0"
+                               VerticalAlignment="Center"/>
+
+                </StackPanel>
+
+                <Button x:Name="CloseButton"
+                        Style="{StaticResource WinButton}"
+                        Content="{StaticResource CloseIcon}"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Margin="0,15,20,0"
+                        Click="CloseButton_Click"></Button>
+
+                <StackPanel HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="50,0,0,10">
+
+                    <TextBlock x:Name="TitleText"
+                               Style="{StaticResource onlyForTextBlocks}"
+                               Margin="0,0,0,5"/>
+
+                    <TextBlock x:Name="VerText"
+                               Style="{StaticResource onlyForTextBlocks}"/>
+
+                </StackPanel>
+
+                <TextBlock x:Name="CopyText"
+                           Style="{StaticResource onlyForTextBlocks}"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Left"
+                           Margin="50,0,0,20">
+                    <Hyperlink x:Name="Link"
+                               NavigateUri="https://www.github.com/Googolflex"
+                               RequestNavigate="Hyperlink_RequestNavigate"
+                               FocusVisualStyle="{x:Null}"></Hyperlink>
+                </TextBlock>
+
+            </Grid>
+
+        </Border>
+        
+    </Grid>
+</Window>

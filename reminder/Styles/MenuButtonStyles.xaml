@@ -40,7 +40,7 @@
                             <ContentPresenter Content="{TemplateBinding Icon}"
                                               VerticalAlignment="Center"
                                               Margin="0,0,10,0"/>
-                            <TextBlock Text="{TemplateBinding ItemStringFormat}"
+                            <TextBlock Text="{TemplateBinding Header}"
                                        Foreground="{TemplateBinding Foreground}"
                                        FontSize="{TemplateBinding FontSize}"
                                        VerticalAlignment="Center"/>

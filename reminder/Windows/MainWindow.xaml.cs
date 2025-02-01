@@ -16,6 +16,7 @@ using System.Linq;
 using System.Windows.Media.Effects;
 using reminder.Windows;
 using reminder.Values;
+using reminder.CustomControls;
 
 namespace reminder
 {
@@ -49,6 +50,9 @@ namespace reminder
         private bool closingFromMenuItem = false;
         private bool isClosingHandled = false;
 
+
+        //Number of unviewed notifications to display in the notification icon
+        private int unseenNotify = 0;
 
         //Parameters for work with window states
         private bool isMaximazed = false;
@@ -89,8 +93,16 @@ namespace reminder
             {
                 if (DateTime.Now >= taskItem.FirstTime && (!taskItem.IsReminded && !taskItem.IsComplete))
                 {
+                    unseenNotify++;
+
+                    //Send windows notify
                     taskbarIcon.ShowBalloonTip(taskItem.Name, taskItem.Desсription, BalloonIcon.Info);
                     taskItem.IsReminded = true;
+
+                    //Send in app notify
+                    NotificationItem notify = new NotificationItem();
+                    notify.Header = taskItem.Name;
+                    NotTable.AddNotification(notify);
                 }
             }
         }
@@ -102,7 +114,8 @@ namespace reminder
             addWindow.ShowDialog();
             if (addWindow.DialogResult == true)
             {
-                tasksManager.allTasks.Add(addWindow.NewTask);
+                taskItems.Add(addWindow.NewTask);
+                tasksManager.UpdateAllTasks(taskItems);
                 taskItems = tasksManager.sortTasksByGroup(selectedGroup);
             }
             taskBox.ItemsSource = taskItems;
@@ -311,26 +324,29 @@ namespace reminder
         private void TrayDoubleClick(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Normal;
+            this.Activate();
             this.ShowInTaskbar = true;
         }
 
         private void SettingsClick(object sender, RoutedEventArgs e)
         {
             var option = (MenuItem)sender;
-            switch (option.ItemStringFormat)
+            switch (option.Header)
             {
                 case "Options":
-                    SettingsWindow window = new SettingsWindow();
-                    window.ShowDialog();
+                    SettingsWindow setWindow = new SettingsWindow();
+                    setWindow.ShowDialog();
                     break;
                 case "Themes":
                     //Legacy
                     break;
                 case "Credits":
-                    //Open infoWin
+                    CreditsWindow credWindow = new CreditsWindow();
+                    credWindow.ShowDialog();
                     break;
                 default:
                     MessageWindow message = new MessageWindow("Unexpected error", MessageValues.MessageIcon.ERROR);
+                    message.ShowDialog();
                     break;
             }
         }
@@ -343,6 +359,19 @@ namespace reminder
                 scroll.ScrollToVerticalOffset(scroll.VerticalOffset - e.Delta);
                 e.Handled = true;
             }
+        }
+
+        private void NotButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotTable.IsOpened()) { NotTable.Visibility = Visibility.Collapsed; NotTable.ChangeVisibility(); NotTable.IsEnabled = false; } 
+            else { NotTable.Visibility = Visibility.Visible; NotTable.ChangeVisibility(); NotTable.IsEnabled = true; unseenNotify = 0; }
+        }
+
+        private void NotButton_LostFocus(object sender, RoutedEventArgs e)
+        {
+            NotTable.Visibility = Visibility.Collapsed;
+            NotTable.IsEnabled = false;
+            NotTable.ChangeVisibility();
         }
     }
 }

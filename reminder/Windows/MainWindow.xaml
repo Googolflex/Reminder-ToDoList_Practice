@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:reminder"
+        xmlns:custom="clr-namespace:reminder.CustomControls"
         mc:Ignorable="d"
         Title="ToDoList"
         Height="778"
@@ -29,7 +30,7 @@
                 <ColumnDefinition Width="310"/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="158"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -39,6 +40,16 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1"
+                        Grid.RowSpan="4"
+                        Grid.Column="4"
+                        MinHeight="50"
+                        Panel.ZIndex="10">
+            
+            <custom:NotificationTable x:Name="NotTable" Visibility="Collapsed" IsEnabled="False"/>
+
+            </StackPanel>
 
             <!--Taskbar hidden icon-->
             <tb:TaskbarIcon x:Name="taskbarIcon"
@@ -103,15 +114,15 @@
                         <ContextMenu x:Name="OptionsMenu"
                                      StaysOpen="False"
                                      Style="{StaticResource MenuButtonContextMenu}">
-                            <MenuItem ItemStringFormat="Options"
+                            <MenuItem Header="Options"
                                       Icon="{StaticResource SettingsIcon}"
                                       Style="{StaticResource OptionStyle}"
                                       Click="SettingsClick"/>
-                            <MenuItem ItemStringFormat="Themes"
+                            <MenuItem Header="Themes"
                                       Icon="{StaticResource ThemesIcon}"
                                       Style="{StaticResource OptionStyle}"
                                       Click="SettingsClick"/>
-                            <MenuItem ItemStringFormat="Credits"
+                            <MenuItem Header="Credits"
                                       Icon="{StaticResource CredIcon}"
                                       Style="{StaticResource OptionStyle}"
                                       Click="SettingsClick"/>
@@ -123,13 +134,16 @@
                     </Button.ContextMenu>
                 </Button>
 
-                    <StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right">
 
-                        <Button Style="{StaticResource WinButton}"
-                            Content="{StaticResource NotificationIcon}">
-                        </Button>
+                    <Button x:Name="NotButton"
+                                Style="{StaticResource NotificationButton}"
+                                Content="{StaticResource NotificationIcon}"
+                                ContextMenuService.IsEnabled="False"
+                                Click="NotButton_Click"
+                                LostFocus="NotButton_LostFocus"/>
 
                         <!--Spacer-->
                         <Line X1="0"

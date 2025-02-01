@@ -33,8 +33,7 @@
             
                 <Label >Task Description:</Label>
                 <TextBox x:Name="deskBox"
-                         Style="{StaticResource PlaceholderTextBox}"
-                         Uid="Enter description (optional)"></TextBox>
+                         Style="{StaticResource AddMenuTextBox}"></TextBox>
 
                 <Label x:Name="timeLabel1">Task Time:</Label>
                 <wpfTool:DateTimePicker x:Name="timeBox"
