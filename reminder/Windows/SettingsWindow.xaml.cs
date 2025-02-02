@@ -28,6 +28,9 @@ namespace reminder.Windows
 
             this.Owner = Application.Current.MainWindow;
             this.Owner.Effect = new BlurEffect { Radius = 7 };
+
+            MainSettingsBut.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            MainSettingsBut.Focus();
         }
 
         private void MainSettings_Click(object sender, RoutedEventArgs e)

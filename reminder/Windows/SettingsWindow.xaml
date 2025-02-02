@@ -36,7 +36,7 @@
             <TextBlock x:Name="Header"
                        Style="{StaticResource TasksText}"
                        Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}"
-                       Margin="20,11,0,0"
+                       Margin="20,-5,0,0"
                        VerticalAlignment="Center"/>
 
             <StackPanel x:Name="SettingsCategories"

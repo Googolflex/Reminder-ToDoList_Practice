@@ -118,10 +118,6 @@
                                       Icon="{StaticResource SettingsIcon}"
                                       Style="{StaticResource OptionStyle}"
                                       Click="SettingsClick"/>
-                            <MenuItem Header="Themes"
-                                      Icon="{StaticResource ThemesIcon}"
-                                      Style="{StaticResource OptionStyle}"
-                                      Click="SettingsClick"/>
                             <MenuItem Header="Credits"
                                       Icon="{StaticResource CredIcon}"
                                       Style="{StaticResource OptionStyle}"

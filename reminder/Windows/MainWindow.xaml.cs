@@ -160,14 +160,6 @@ namespace reminder
             }
         }
 
-        private void Credits(object sender, RoutedEventArgs e)
-        {
-            //Opens my github. It made this way cause earlier it was project for college practice and I made it not alone
-            string devName = (sender as MenuItem).Header.ToString();
-            System.Diagnostics.Process.Start($"https://github.com/{devName}");
-
-        }
-
         private void taskBarOptions(object sender, RoutedEventArgs e)
         {
             //Defines what option is clicked in taskbar
@@ -230,15 +222,6 @@ namespace reminder
         {
             //When user clicks away from selected task its lost focus
             taskBox.SelectedItem = null;
-        }
-
-        //Opens window with old task (for selected day). LEGACY! NEEDS TO BE DELETED!! 
-        private void OpenPreviousDay(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = sender as MenuItem;
-            string day = menuItem.Header.ToString();
-            WindowToThePast windowToThePast = new WindowToThePast($"Tasks/{day}.xml");
-            windowToThePast.Show();
         }
 
         private void AddGroup(object sender, RoutedEventArgs e)
@@ -336,9 +319,6 @@ namespace reminder
                 case "Options":
                     SettingsWindow setWindow = new SettingsWindow();
                     setWindow.ShowDialog();
-                    break;
-                case "Themes":
-                    //Legacy
                     break;
                 case "Credits":
                     CreditsWindow credWindow = new CreditsWindow();

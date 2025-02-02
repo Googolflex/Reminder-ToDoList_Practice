@@ -111,6 +111,7 @@
     <Compile Include="CustomControls\NotificationTable.xaml.cs">
       <DependentUpon>NotificationTable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\PlaceholderTextBox.cs" />
     <Compile Include="Managers\GroupsManager.cs" />
     <Compile Include="Managers\DateToDayOfWeek.cs" />
     <Compile Include="Managers\AutoRunManager.cs" />
@@ -140,9 +141,6 @@
     </Compile>
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\WindowToThePast.xaml.cs">
-      <DependentUpon>WindowToThePast.xaml</DependentUpon>
     </Compile>
     <Compile Include="Managers\XmlManager.cs" />
     <Page Include="CustomControls\NotificationTable.xaml">
@@ -238,10 +236,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SettingsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\WindowToThePast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

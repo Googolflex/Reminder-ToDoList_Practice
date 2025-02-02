@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:reminder"
+        xmlns:custom="clr-namespace:reminder.CustomControls"
         mc:Ignorable="d"
         Title="Edit"
         Height="280"
@@ -33,14 +34,12 @@
             <StackPanel Margin="0,30,0,0">
 
                 <Label>Task Name:</Label>
-                <TextBox x:Name="nameBox"
-                         Style="{StaticResource PlaceholderTextBox}"
-                         Uid="Enter edited name"/>
+                <custom:PlaceholderTextBox x:Name="nameBox"
+                                           Placeholder="Enter edited name"/>
 
                 <Label>Task Description:</Label>
-                <TextBox x:Name="deskBox"
-                         Style="{StaticResource PlaceholderTextBox}"
-                         Uid="Enter edited description"/>
+                <custom:PlaceholderTextBox x:Name="deskBox"
+                                           Placeholder="Enter edited description"/>
 
                 <Label>Task Time:</Label>
                 <wpfTool:DateTimePicker x:Name="timeBox"
