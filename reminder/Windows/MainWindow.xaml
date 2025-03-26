@@ -396,6 +396,11 @@
 
                                                     </Grid.ContextMenu>
                                                 </Grid>
+                                                <Border.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Delete" Click="DeleteTask"></MenuItem>
+                                                    </ContextMenu>
+                                                </Border.ContextMenu>
                                             </Border>
                                         </ControlTemplate>
                                     </Setter.Value>
