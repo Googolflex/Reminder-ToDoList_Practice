@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.AvalonDock.Controls;
 
 namespace reminder.CustomControls
 {
@@ -51,6 +52,11 @@ namespace reminder.CustomControls
                 scroll.ScrollToVerticalOffset(scroll.VerticalOffset - e.Delta);
                 e.Handled = true;
             }
+        }
+
+        private void ClearNotifies(object sender, RoutedEventArgs e)
+        {
+            NotiTable.Children.Clear();
         }
     }
 }

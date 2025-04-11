@@ -117,7 +117,7 @@
             </Style>-->
 
             <!--Window buttons style-->
-            <Style x:Key="WinButton" TargetType="Button">
+            <Style x:Key="IconButton" TargetType="Button">
                 <Setter Property="Margin" Value="0,0,15,0"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -139,21 +139,24 @@
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
                     </Trigger>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
                 </Style.Triggers>
             </Style>
 
             <Style x:Key="NotificationButton" TargetType="Button">
                 <Setter Property="Margin" Value="0,0,15,0"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectedElementColor}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border BorderBrush="Transparent"
-                        Background="{TemplateBinding Background}"
-                        BorderThickness="0">
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0">
                                 <ContentControl Content="{TemplateBinding Content}"
-                                    VerticalAlignment="Center"
-                                    FocusVisualStyle="{x:Null}"
-                                    Margin="5,5,5,5"></ContentControl>
+                                                VerticalAlignment="Center"
+                                                FocusVisualStyle="{x:Null}"></ContentControl>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
@@ -162,10 +165,10 @@
                 <Setter Property="Background" Value="Transparent"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource SecondMainColor}"/>
                     </Trigger>
                     <Trigger Property="IsFocused" Value="True">
-                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource SecondMainColor}"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -173,6 +176,9 @@
             <Style x:Key="TextButton" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="MinWidth" Value="50"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -181,13 +187,14 @@
                                     Background="{TemplateBinding Background}"
                                     BorderThickness="0"
                                     CornerRadius="4"
-                                    Margin="10,0,0,0"
-                                    Padding="10"
-                                    MinWidth="50"
+                                    Margin="{TemplateBinding Margin}"
+                                    Padding="{TemplateBinding Padding}"
+                                    MinWidth="{TemplateBinding MinWidth}"
                                     HorizontalAlignment="Left">
 
                                 <TextBlock Style="{StaticResource TasksText}"
                                            Text="{TemplateBinding ContentStringFormat}"
+                                           Foreground="{TemplateBinding Foreground}"
                                            HorizontalAlignment="Center"/>
 
                             </Border>
@@ -206,7 +213,45 @@
                 </Style.Triggers>
 
             </Style>
-            
+
+
+            <Style x:Key="ClearButton" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="#e8181c"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+
+                            <Border BorderBrush="Transparent"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0"
+                                    CornerRadius="4"
+                                    Margin="{TemplateBinding Margin}"
+                                    Padding="{TemplateBinding Padding}"
+                                    MinWidth="{TemplateBinding MinWidth}"
+                                    HorizontalAlignment="Left">
+
+                                <TextBlock Style="{StaticResource TasksText}"
+                                           Text="{TemplateBinding Content}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           HorizontalAlignment="Center"/>
+
+                            </Border>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#ce181b"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

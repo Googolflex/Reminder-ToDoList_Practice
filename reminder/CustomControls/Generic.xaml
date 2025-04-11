@@ -10,6 +10,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource SecondMainColor}"/>
         <Setter Property="BorderThickness" Value="0.7"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0, 5, 0, 0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:NotificationItem}">
@@ -21,7 +22,7 @@
                             UseLayoutRounding="True"
                             Focusable="False"
                             HorizontalAlignment="Stretch"
-                            Margin="0,0,0,5">
+                            Margin="0,0,0,0">
 
                         <Grid>
 
@@ -81,33 +82,36 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:PlaceholderTextBox}">
-                    <Border Background="{DynamicResource SecondMainColor}"
-                            BorderThickness="0"
+                    <Border x:Name="Border"
+                            Background="{DynamicResource SecondMainColor}"
+                            BorderBrush="Transparent"
+                            BorderThickness="2"
                             CornerRadius="4">
 
                         <Grid>
 
                             <TextBox x:Name="Box"
-                                     Margin="1"
-                                     Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
-                                     BorderThickness="0"
-                                     Background="Transparent"
-                                     VerticalAlignment="Center"
-                                     Padding="5"
-                                     Foreground="{DynamicResource ForegroundColorForText}"
-                                     FontSize="16"
-                                     FontWeight="SemiBold"
-                                     CaretBrush="DarkGray"
-                                     TextAlignment="Center"/>
+                                         Margin="1"
+                                         Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         VerticalAlignment="Center"
+                                         Padding="5"
+                                         Foreground="{DynamicResource ForegroundColorForText}"
+                                         FontSize="{TemplateBinding FontSize}"
+                                         FontWeight="SemiBold"
+                                         CaretBrush="DarkGray"
+                                         TextWrapping="{TemplateBinding AllowWrapping}"
+                                         TextAlignment="Center"/>
 
                             <TextBlock IsHitTestVisible="False"
-                                       Text="{TemplateBinding Placeholder}"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       Margin="10,0,0,0"
-                                       FontSize="16"
-                                       FontWeight="SemiBold"
-                                       Foreground="DarkGray">
+                                           Text="{TemplateBinding Placeholder}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Margin="10,0,0,0"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           FontWeight="SemiBold"
+                                           Foreground="DarkGray">
 
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
@@ -128,6 +132,22 @@
                         </Grid>
 
                     </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsTextTooLong" Value = "True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Name="FlashBorder">
+                                    <Storyboard RepeatBehavior="1x" AutoReverse="True" FillBehavior="Stop">
+                                        <ColorAnimation Storyboard.TargetName="Border"
+                                                        Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                        To="Red"
+                                                        Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

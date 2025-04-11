@@ -226,17 +226,18 @@ namespace reminder
 
         private void AddGroup(object sender, RoutedEventArgs e)
         {
-            TextBox box = (TextBox)AddMenu.FindVisualChildren<TextBox>().First();
-            groupItems.Add(groupsManager.NewGroupItem(box.Text.ToString(), groupItems));
+            PlaceholderTextBox box = (PlaceholderTextBox)AddMenu.FindVisualChildren<PlaceholderTextBox>().First();
+            groupItems.Add(groupsManager.NewGroupItem(box.Text, groupItems));
 
             box.Clear();
+
             AddMenu.IsOpen = false;
         }
 
         private void AddButton_Click(object sender, MouseButtonEventArgs e)
         {
             AddMenu.PlacementTarget = (Border)sender;
-            AddMenu.Placement = PlacementMode.Right;
+            AddMenu.Placement = PlacementMode.Bottom;
             AddMenu.IsOpen = true;
         }
 
@@ -347,11 +348,21 @@ namespace reminder
             else { NotTable.Visibility = Visibility.Visible; NotTable.ChangeVisibility(); NotTable.IsEnabled = true; unseenNotify = 0; }
         }
 
-        private void NotButton_LostFocus(object sender, RoutedEventArgs e)
+        private async void NotButton_LostFocus(object sender, RoutedEventArgs e)
         {
+            await Task.Delay(1000);
+
             NotTable.Visibility = Visibility.Collapsed;
             NotTable.IsEnabled = false;
             NotTable.ChangeVisibility();
+        }
+
+        private async void AddMenu_LostFocus(object sender, RoutedEventArgs e)
+        {
+            await Task.Delay(2000);
+            PlaceholderTextBox gpBox = (PlaceholderTextBox)AddMenu.FindVisualChildren<PlaceholderTextBox>().First();
+
+            gpBox.Clear();
         }
     }
 }

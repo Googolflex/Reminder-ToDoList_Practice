@@ -35,11 +35,15 @@
 
                 <Label>Task Name:</Label>
                 <custom:PlaceholderTextBox x:Name="nameBox"
-                                           Placeholder="Enter edited name"/>
+                                           Placeholder="Enter edited name"
+                                           MaxLength="50"
+                                           FontSize="16"/>
 
                 <Label>Task Description:</Label>
                 <custom:PlaceholderTextBox x:Name="deskBox"
-                                           Placeholder="Enter edited description"/>
+                                           Placeholder="Enter edited description"
+                                           MaxLength="200"
+                                           FontSize="16"/>
 
                 <Label>Task Time:</Label>
                 <wpfTool:DateTimePicker x:Name="timeBox"

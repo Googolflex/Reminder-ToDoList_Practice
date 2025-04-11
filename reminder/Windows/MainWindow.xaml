@@ -103,7 +103,7 @@
                         CornerRadius="10,10,0,0"/>
 
                 <Button x:Name="MenuButton"
-                        Style="{StaticResource WinButton}"
+                        Style="{StaticResource IconButton}"
                         Content="{StaticResource MenuIcon}"
                         HorizontalAlignment="Left"
                         Margin="12,0,0,0"
@@ -135,7 +135,7 @@
                             HorizontalAlignment="Right">
 
                     <Button x:Name="NotButton"
-                                Style="{StaticResource NotificationButton}"
+                                Style="{StaticResource IconButton}"
                                 Content="{StaticResource NotificationIcon}"
                                 ContextMenuService.IsEnabled="False"
                                 Click="NotButton_Click"
@@ -151,15 +151,15 @@
                           VerticalAlignment="Center"
                           Margin="0,0,20,0"></Line>
 
-                        <Button Style="{StaticResource WinButton}"
+                        <Button Style="{StaticResource IconButton}"
                             Content="{StaticResource MinIcon}"
                             Click="MinWindow"/>
 
-                        <Button Style="{StaticResource WinButton}"
+                        <Button Style="{StaticResource IconButton}"
                             Content="{StaticResource MaxIcon}"
                             Click="MaxWindow"/>
 
-                        <Button Style="{StaticResource WinButton}"
+                        <Button Style="{StaticResource IconButton}"
                             Content="{StaticResource CloseIcon}"
                             Click="CloseWindow"/>
 
@@ -211,7 +211,7 @@
                             <Border.ContextMenu>
 
                                 <!--Add group menu-->
-                                <ContextMenu x:Name="AddMenu">
+                                <ContextMenu x:Name="AddMenu" LostFocus="AddMenu_LostFocus">
                                     <ContextMenu.Style>
                                         <Style TargetType="ContextMenu">
                                             <Setter Property="Template">
@@ -222,8 +222,13 @@
                                                             <StackPanel Orientation="Horizontal"
                                                                         VerticalAlignment="Center">
 
-                                                                <TextBox x:Name="GroupNameBox"
-                                                                         Style="{StaticResource AddMenuTextBox}"/>
+                                                                <custom:PlaceholderTextBox x:Name="GroupNameBox"
+                                                                                           Margin="0"
+                                                                                           Width="210"
+                                                                                           FontSize="13"
+                                                                                           MaxLength="50"
+                                                                                           AllowWrapping="Wrap"
+                                                                                           Placeholder="Enter group name"/>
 
                                                                 <Button Tag="Add"
                                                                         Click="AddGroup"></Button>
@@ -311,13 +316,28 @@
                     VerticalAlignment="Top"
                     Margin="0,0,0,20">
 
+                        <DockPanel Margin="45,0,0,0">
+                        
                         <TextBlock x:Name="HeaderText"
                            FontSize="36"
                            Foreground="{DynamicResource ForegroundColorForText}"
                            FontFamily="Inter"
                            FontWeight="SemiBold"
-                           VerticalAlignment="Bottom"
-                           Margin="45,0,0,0"></TextBlock>
+                           VerticalAlignment="Bottom"></TextBlock>
+
+                            <Button Style="{StaticResource NotificationButton}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,50,0">
+                                <Path Data="{StaticResource TaskOptionsIcon}"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+                                      FocusVisualStyle="{x:Null}"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                      Margin="3"></Path>
+                            </Button>
+
+                        </DockPanel>
 
                     </Border>
 

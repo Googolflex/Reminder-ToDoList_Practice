@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -67,7 +68,6 @@ namespace reminder
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.Owner.Effect = null;
-            Thread.Sleep(30);
         }
     }
 }

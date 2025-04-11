@@ -55,7 +55,8 @@ namespace reminder.CustomControls
 
         // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(PlaceholderTextBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("Text", typeof(string), typeof(PlaceholderTextBox),
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTextChanged));
 
         public string Placeholder
         {
@@ -67,11 +68,56 @@ namespace reminder.CustomControls
         public static readonly DependencyProperty PlaceholderProperty =
             DependencyProperty.Register("Placeholder", typeof(string), typeof(PlaceholderTextBox), new PropertyMetadata(string.Empty));
 
+        public int MaxLength
+        {
+            get { return (int)GetValue(MaxLengthProperty); }
+            set { SetValue(MaxLengthProperty, value); }
+        }
 
+        public static readonly DependencyProperty MaxLengthProperty =
+            DependencyProperty.Register("MaxLength", typeof(int), typeof(PlaceholderTextBox), new PropertyMetadata(10000));
+
+        public TextWrapping AllowWrapping
+        {
+            get { return (TextWrapping)GetValue(AllowWrappingProperty); }
+            set { SetValue(AllowWrappingProperty, value); }
+        }
+
+        public static readonly DependencyProperty AllowWrappingProperty =
+            DependencyProperty.Register("AllowWrapping", typeof(TextWrapping), typeof(PlaceholderTextBox), new PropertyMetadata(TextWrapping.NoWrap));
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (PlaceholderTextBox)d;
+            var newText = e.NewValue as string ?? string.Empty;
+
+            int maxLength = control.MaxLength;
+
+            control.IsTextTooLong = control.Text?.Length > maxLength;
+            if (control.IsTextTooLong)
+            {
+                control.Text = newText.Substring(0, maxLength);
+            }
+            control.IsTextTooLong = control.Text?.Length > maxLength;
+        }
+
+        public bool IsTextTooLong
+        {
+            get { return (bool)GetValue(IsTextTooLongProperty); }
+            set { SetValue(IsTextTooLongProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsTextTooLongProperty =
+            DependencyProperty.Register("IsTextTooLong", typeof(bool), typeof(PlaceholderTextBox), new PropertyMetadata(false));
 
         static PlaceholderTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PlaceholderTextBox), new FrameworkPropertyMetadata(typeof(PlaceholderTextBox)));
+        }
+
+        public void Clear()
+        {
+           Text = string.Empty;
         }
     }
 }

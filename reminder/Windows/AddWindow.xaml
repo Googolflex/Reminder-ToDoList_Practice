@@ -29,14 +29,18 @@
             
                 <Label>Task Name:</Label>
                 <custom:PlaceholderTextBox x:Name="nameBox"
-                                           Placeholder="Enter task name"/>
+                                           Placeholder="Enter task name"
+                                           MaxLength="50"
+                                           FontSize="16"/>
                 <!--<TextBox x:Name="nameBox"
                          Style="{StaticResource PlaceholderTextBox}"
                          Uid="Enter task name"></TextBox>-->
             
                 <Label >Task Description:</Label>
                 <custom:PlaceholderTextBox x:Name="deskBox"
-                                           Placeholder="Enter description(optional)"/>
+                                           Placeholder="Enter description(optional)"
+                                           MaxLength="200"
+                                           FontSize="16"/>
                 <!--<TextBox x:Name="deskBox"
                          Style="{StaticResource PlaceholderTextBox}"
                          Uid="Enter description(optional)"></TextBox>-->
@@ -47,7 +51,8 @@
                                         Foreground="{DynamicResource ForegroundColorForText}"
                                         ShowButtonSpinner="False"
                                         TextAlignment="Center"
-                                        BorderThickness="0"/>
+                                        BorderThickness="0"
+                                        FontSize="16"/>
 
             </StackPanel>
             <Button Style="{StaticResource OrdinaryButtonStyle}"

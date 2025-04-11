@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:reminder.CustomControls"
              mc:Ignorable="d" MinHeight="50" MinWidth="120" MaxHeight="500"
-             Margin="0,0,5,0">
+             Margin="0,0,0,0">
 
     <Border Background="{DynamicResource BackgroundColorForWindow}"
             BorderBrush="{DynamicResource SecondMainColor}"
@@ -24,15 +24,27 @@
 
                 <ScrollViewer.Resources>
                     <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}">
-                        <Setter Property="Margin" Value="5,5,0,5"/>
+                        <Setter Property="Margin" Value="5,5,0,0"/>
                     </Style>
                 </ScrollViewer.Resources>
 
-                <StackPanel x:Name="NotiTable"
+                <StackPanel>
+                    <DockPanel VerticalAlignment="Top" Margin="5,2,5,0">
+                        <Label HorizontalAlignment="Left"
+                               VerticalAlignment="Center">Notifications</Label>
+                        <Button VerticalAlignment="Center"
+                                HorizontalAlignment="Right"
+                                Content="Clear"
+                                Style="{StaticResource ClearButton}"
+                                Click="ClearNotifies">
+                        </Button>
+                    </DockPanel>
+                    <StackPanel x:Name="NotiTable"
                             VerticalAlignment="Top"
                             Margin="0,0,0,0">
-                </StackPanel>
+                    </StackPanel>
 
+                </StackPanel>
             </ScrollViewer>
         </Grid>
 
