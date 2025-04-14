@@ -8,15 +8,17 @@
         xmlns:custom="clr-namespace:reminder.CustomControls"
         mc:Ignorable="d"
         Title="Edit"
-        Height="280"
-        Width="300"
+        MinHeight="340"
+        SizeToContent="Height"
+        Width="340"
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize"
         Closing="Window_Closing"
         WindowStartupLocation="CenterOwner"
         Background="Transparent"
-        Icon="/Icons/create.ico">
+        Icon="/Icons/create.ico"
+        MouseDown="Window_MouseDown">
 
     <Border BorderBrush="{DynamicResource SecondMainColor}"
             Background="{DynamicResource BackgroundColorForWindow}"
@@ -26,25 +28,44 @@
 
         <Grid>
 
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="72"/>
+            </Grid.RowDefinitions>
+
             <TextBlock Style="{StaticResource TasksText}"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"
                        Margin="5,0,0,0">Edit</TextBlock>
             
-            <StackPanel Margin="0,30,0,0">
+            <StackPanel Margin="0,30,0,0"
+                        Grid.Row="0">
 
                 <Label>Task Name:</Label>
                 <custom:PlaceholderTextBox x:Name="nameBox"
                                            Placeholder="Enter edited name"
                                            MaxLength="50"
-                                           FontSize="16"/>
+                                           FontSize="16"
+                                           TextExceededMaxLength="InputExceededMaxLength"/>
+                <Label x:Name="nameWarning"
+                       Content="Name too long"
+                       FontSize="12"
+                       Foreground="#e8181c"
+                       Visibility="Hidden"/>
 
                 <Label>Task Description:</Label>
                 <custom:PlaceholderTextBox x:Name="deskBox"
                                            Placeholder="Enter edited description"
                                            MaxLength="200"
-                                           FontSize="16"/>
-
+                                           FontSize="16"
+                                           TextExceededMaxLength="InputExceededMaxLength"
+                                           AllowWrapping="Wrap"/>
+                <Label x:Name="descriptionWarning"
+                       Content="Description too long"
+                       FontSize="12"
+                       Foreground="#e8181c"
+                       Visibility="Hidden"/>
+                
                 <Label>Task Time:</Label>
                 <wpfTool:DateTimePicker x:Name="timeBox"
                                         Background="{DynamicResource SecondMainColor}"
@@ -54,18 +75,23 @@
                                         BorderThickness="0"/>
 
             </StackPanel>
+
+            <DockPanel VerticalAlignment="Bottom"
+                       Grid.Row="1">
+            
             <Button Style="{StaticResource OrdinaryButtonStyle}"
                     ContentStringFormat="Edit"
                     IsDefault="True"
                     Click="Accept_Click"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"/>
+                    HorizontalAlignment="Left"/>
             <Button Style="{StaticResource OrdinaryButtonStyle}"
                     ContentStringFormat="Cancel"
                     IsCancel="True"
                     Click="Cancel_Click" 
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"/>
+                    HorizontalAlignment="Right"/>
+                
+            </DockPanel>
+            
         </Grid>
         
     </Border>

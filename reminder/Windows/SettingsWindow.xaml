@@ -47,13 +47,14 @@
                         Style="{StaticResource TextButton}"
                         ContentStringFormat="Main settings"
                         Click="MainSettings_Click"
-                        Margin="0,0,0,5">
+                        Margin="5,0,0,5">
                 </Button>
 
                 <Button x:Name="ThemesBut"
                         Style="{StaticResource TextButton}"
                         ContentStringFormat="Themes"
-                        Click="ThemesBut_Click"></Button>
+                        Click="ThemesBut_Click"
+                        Margin="5,0,0,5"></Button>
 
             </StackPanel>
 

@@ -22,6 +22,8 @@ namespace reminder.CustomControls
     public partial class NotificationTable : UserControl
     {
 
+        public event EventHandler Closed;
+
         private bool opened = false;
 
         public NotificationTable()
@@ -42,6 +44,16 @@ namespace reminder.CustomControls
         public void ChangeVisibility()
         {
             opened = !opened;
+            if (!opened)
+            {
+                CastClosedEvent();
+            }
+
+        }
+
+        protected virtual void CastClosedEvent()
+        {
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
         private void ScrollWhenMouseOver(object sender, MouseWheelEventArgs e)

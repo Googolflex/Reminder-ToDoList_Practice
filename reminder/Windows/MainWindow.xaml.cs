@@ -76,7 +76,7 @@ namespace reminder
 
             All_Tasks.IsSelected = true;
 
-            taskBox.ItemsSource = tasksManager.allTasks;
+            taskBox.ItemsSource = tasksManager.getAllTasks();
             CustomGroups.ItemsSource = groupItems;
         }
 
@@ -103,6 +103,12 @@ namespace reminder
                     NotificationItem notify = new NotificationItem();
                     notify.Header = taskItem.Name;
                     NotTable.AddNotification(notify);
+                    notiCount.Text = unseenNotify.ToString();
+
+                    if(notiCounterEllipse.Visibility != Visibility.Visible)
+                    {
+                        notiCounterEllipse.Visibility = Visibility.Visible;
+                    }
                 }
             }
         }
@@ -229,6 +235,14 @@ namespace reminder
             PlaceholderTextBox box = (PlaceholderTextBox)AddMenu.FindVisualChildren<PlaceholderTextBox>().First();
             groupItems.Add(groupsManager.NewGroupItem(box.Text, groupItems));
 
+            if(box.Text.ToLower() == "add 10")
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    groupItems.Add(groupsManager.NewGroupItem("", groupItems));
+                }
+            }
+
             box.Clear();
 
             AddMenu.IsOpen = false;
@@ -254,6 +268,8 @@ namespace reminder
 
             taskItems = tasksManager.sortTasksByGroup(selectedGroup);
 
+            SearchBox.ClearInput();
+
             taskBox.ItemsSource = taskItems;
         }
 
@@ -276,6 +292,9 @@ namespace reminder
                 this.Top = 0;
                 this.Width = workingAreaW;
                 this.Height = workingAreaH;
+                WindowBorder.CornerRadius = new CornerRadius(0);
+                LeftMenuBorder.CornerRadius = new CornerRadius(0);
+                TopMenuBorder.CornerRadius = new CornerRadius(0);
             }
             else
             {
@@ -283,6 +302,9 @@ namespace reminder
                 this.Top = 150;
                 this.Width = 1095;
                 this.Height = 788;
+                WindowBorder.CornerRadius = new CornerRadius(10);
+                LeftMenuBorder.CornerRadius = new CornerRadius(0, 0, 0, 10);
+                TopMenuBorder.CornerRadius = new CornerRadius(10, 10, 0, 0);
             }
 
             isMaximazed = !isMaximazed;
@@ -344,13 +366,24 @@ namespace reminder
 
         private void NotButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NotTable.IsOpened()) { NotTable.Visibility = Visibility.Collapsed; NotTable.ChangeVisibility(); NotTable.IsEnabled = false; } 
-            else { NotTable.Visibility = Visibility.Visible; NotTable.ChangeVisibility(); NotTable.IsEnabled = true; unseenNotify = 0; }
+            if (NotTable.IsOpened()) 
+            {
+                NotTable.Visibility = Visibility.Collapsed;
+                NotTable.ChangeVisibility();
+            } 
+            else 
+            {
+                NotTable.Visibility = Visibility.Visible;
+                NotTable.ChangeVisibility();
+                NotTable.IsEnabled = true;
+                unseenNotify = 0;
+                notiCounterEllipse.Visibility = Visibility.Collapsed;
+            }
         }
 
         private async void NotButton_LostFocus(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(1000);
+            await Task.Delay(200);
 
             NotTable.Visibility = Visibility.Collapsed;
             NotTable.IsEnabled = false;
@@ -363,6 +396,53 @@ namespace reminder
             PlaceholderTextBox gpBox = (PlaceholderTextBox)AddMenu.FindVisualChildren<PlaceholderTextBox>().First();
 
             gpBox.Clear();
+        }
+
+        private void TasksOptionsMenuOpen(object sender, RoutedEventArgs e)
+        {
+            Button but = (Button)sender;
+            but.ContextMenu.PlacementTarget = but;
+            but.ContextMenu.Placement = PlacementMode.Bottom;
+            but.ContextMenu.IsOpen = true;
+        }
+
+        private void ClearCompletedTasks(object sender, RoutedEventArgs e)
+        {
+            var temp = new ObservableCollection<TaskItem>();
+            foreach (TaskItem task in taskItems)
+            {
+                if(task.IsComplete)
+                {
+                    temp.Add(task);
+                }
+            }
+            foreach (TaskItem task in temp)
+            {
+                taskItems.Remove(task);
+            }
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SearchBox.Text != "" || SearchBox.Text != string.Empty)
+            {
+                taskItems = tasksManager.searchInTasks(SearchBox.Text, selectedGroup);
+                taskBox.ItemsSource = taskItems;
+            }
+            else
+            {
+                taskItems = tasksManager.sortTasksByGroup(selectedGroup);
+                taskBox.ItemsSource = taskItems;
+            }
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.ClearFocus();
+            if (NotTable.IsOpened())
+            {
+                NotTable.Visibility = Visibility.Collapsed;
+                NotTable.ChangeVisibility();
+            }
         }
     }
 }

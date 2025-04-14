@@ -17,7 +17,7 @@ namespace reminder.Values
             QUESTION
         }
 
-        public static string ErrorText = "Application failed with unknown error";
+        public static string ErrorText = "An unknown error occurred";
         public static string OnClosingQuestionText = "Are you sure you want to close ToDoList?";
         public static string WarningText = "";
         public static string InfoText = "";

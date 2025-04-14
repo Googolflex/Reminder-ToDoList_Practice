@@ -8,15 +8,17 @@
         xmlns:custom="clr-namespace:reminder.CustomControls"
         mc:Ignorable="d"
         Title="Add"
-        Height="280"
-        Width="300"
+        MinHeight="340"
+        SizeToContent="Height"
+        Width="340"
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize"
         Closing="Window_Closing"
         WindowStartupLocation="CenterOwner"
         Background="Transparent"
-        Icon="/Icons/create.ico">
+        Icon="/Icons/create.ico"
+        MouseDown="Window_MouseDown">
     
     <Border BorderBrush="{DynamicResource SecondMainColor}"
             BorderThickness="0.7"
@@ -24,26 +26,45 @@
             Padding="6"
             Background="{DynamicResource BackgroundColorForWindow}">
         <Grid>
-            
-            <StackPanel Margin="0,10,0,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="72"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource TasksText}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,0,0,0">Add</TextBlock>
+
+            <StackPanel VerticalAlignment="Top"
+                        Margin="0,30,0,0"
+                        Grid.Row="0">
             
                 <Label>Task Name:</Label>
                 <custom:PlaceholderTextBox x:Name="nameBox"
                                            Placeholder="Enter task name"
                                            MaxLength="50"
-                                           FontSize="16"/>
-                <!--<TextBox x:Name="nameBox"
-                         Style="{StaticResource PlaceholderTextBox}"
-                         Uid="Enter task name"></TextBox>-->
-            
-                <Label >Task Description:</Label>
+                                           FontSize="16"
+                                           TextExceededMaxLength="InputExceededMaxLength"/>
+                <Label x:Name="nameWarning"
+                       Content="Name too long"
+                       FontSize="12"
+                       Foreground="#e8181c"
+                       Visibility="Hidden"/>
+
+                <Label>Task Description:</Label>
                 <custom:PlaceholderTextBox x:Name="deskBox"
                                            Placeholder="Enter description(optional)"
                                            MaxLength="200"
-                                           FontSize="16"/>
-                <!--<TextBox x:Name="deskBox"
-                         Style="{StaticResource PlaceholderTextBox}"
-                         Uid="Enter description(optional)"></TextBox>-->
+                                           FontSize="16"
+                                           TextExceededMaxLength="InputExceededMaxLength"
+                                           AllowWrapping="Wrap"/>
+                <Label x:Name="descriptionWarning"
+                       Content="Description too long"
+                       FontSize="12"
+                       Foreground="#e8181c"
+                       Visibility="Hidden"/>
 
                 <Label x:Name="timeLabel1">Task Time:</Label>
                 <wpfTool:DateTimePicker x:Name="timeBox"
@@ -55,18 +76,23 @@
                                         FontSize="16"/>
 
             </StackPanel>
+
+            <DockPanel VerticalAlignment="Bottom"
+                       Grid.Row="1">
+            
             <Button Style="{StaticResource OrdinaryButtonStyle}"
                     ContentStringFormat="Add"
                     IsDefault="True"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                    Click="Accept_Click"></Button>
+                    Click="Accept_Click"/>
             <Button Style="{StaticResource OrdinaryButtonStyle}"
                     ContentStringFormat="Cancel"
                     IsCancel="True"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Click="Cancel_Click"></Button>
+                    Click="Cancel_Click"/>
+
+            </DockPanel>
+            
         </Grid>
     </Border>
 </Window>

@@ -6,6 +6,7 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:reminder"
         xmlns:custom="clr-namespace:reminder.CustomControls"
+        xmlns:converter="clr-namespace:reminder.Styles"
         mc:Ignorable="d"
         Title="ToDoList"
         Height="778"
@@ -17,13 +18,19 @@
         AllowsTransparency="True"
         FocusVisualStyle="{x:Null}"
         Icon="/Icons/check.ico"
-        Background="Transparent">
+        Background="Transparent"
+        MouseDown="Window_MouseDown">
 
-    <Border BorderBrush="{DynamicResource SecondMainColor}"
-        Background="{DynamicResource BackgroundColorForWindow}"
-        BorderThickness="0.7"
-        CornerRadius="10"
-        Padding="0">
+    <Window.Resources>
+        <converter:WidthMinusConverter x:Key="WidthMinusConverter"/>
+    </Window.Resources>
+
+    <Border x:Name="WindowBorder"
+            BorderBrush="{DynamicResource SecondMainColor}"
+            Background="{DynamicResource BackgroundColorForWindow}"
+            BorderThickness="0.7"
+            CornerRadius="10"
+            Padding="0">
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -36,7 +43,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="80"/>
-                <RowDefinition/>
+                <RowDefinition Height="134"/>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -46,8 +53,10 @@
                         Grid.Column="4"
                         MinHeight="50"
                         Panel.ZIndex="10">
-            
-            <custom:NotificationTable x:Name="NotTable" Visibility="Collapsed" IsEnabled="False"/>
+
+                <custom:NotificationTable x:Name="NotTable"
+                                      Visibility="Collapsed"
+                                      IsEnabled="False"/>
 
             </StackPanel>
 
@@ -99,47 +108,94 @@
                                       ShadowDepth="2"></DropShadowEffect>
                 </Grid.Effect>
 
-                <Border Background="{DynamicResource SecondMainColor}"
+                <Border x:Name="TopMenuBorder"
+                        Background="{DynamicResource SecondMainColor}"
                         CornerRadius="10,10,0,0"/>
 
-                <Button x:Name="MenuButton"
-                        Style="{StaticResource IconButton}"
-                        Content="{StaticResource MenuIcon}"
-                        HorizontalAlignment="Left"
-                        Margin="12,0,0,0"
-                        ContextMenuService.IsEnabled="False"
-                        Click="OpenMenu">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left" 
+                            Margin="12,0,0,0">
+                
+                    <Button x:Name="MenuButton"
+                            Style="{StaticResource IconButton}"
+                            Content="{StaticResource MenuIcon}"
+                            ContextMenuService.IsEnabled="False"
+                            Click="OpenMenu">
 
-                    <Button.ContextMenu>
-                        <ContextMenu x:Name="OptionsMenu"
-                                     StaysOpen="False"
-                                     Style="{StaticResource MenuButtonContextMenu}">
-                            <MenuItem Header="Options"
-                                      Icon="{StaticResource SettingsIcon}"
-                                      Style="{StaticResource OptionStyle}"
-                                      Click="SettingsClick"/>
-                            <MenuItem Header="Credits"
-                                      Icon="{StaticResource CredIcon}"
-                                      Style="{StaticResource OptionStyle}"
-                                      Click="SettingsClick"/>
+                        <Button.ContextMenu>
+                            <ContextMenu x:Name="OptionsMenu"
+                                         StaysOpen="False"
+                                         Style="{StaticResource ButtonContextMenu}">
+                                <MenuItem Header="Options"
+                                          Icon="{StaticResource SettingsIcon}"
+                                          Style="{StaticResource OptionStyle}"
+                                          BorderThickness="0"
+                                          Click="SettingsClick"/>
+                                <MenuItem Header="Credits"
+                                          Icon="{StaticResource CredIcon}"
+                                          Style="{StaticResource OptionStyle}"
+                                          BorderThickness="0"
+                                          Margin="0,3,0,0"
+                                          Click="SettingsClick"/>
 
-                            <ContextMenu.Effect>
-                                <DropShadowEffect BlurRadius="2" ShadowDepth="2" Opacity="0.45"></DropShadowEffect>
-                            </ContextMenu.Effect>
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
+                                <ContextMenu.Effect>
+                                    <DropShadowEffect BlurRadius="2" ShadowDepth="2" Opacity="0.45"></DropShadowEffect>
+                                </ContextMenu.Effect>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+
+                    <custom:PlaceholderSearchBox x:Name="SearchBox"
+                                                 InputChanged="SearchBox_TextChanged"
+                                                 Margin="10,2,0,2"/>
+
+                </StackPanel>
 
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <Image Source="/Icons/Check.ico"
+                           Height="20"
+                           Width="20"/>
+                    <Label Content="ToDoList"
+                           Foreground="Black"
+                           FontWeight="Normal"
+                           Margin="5,0,0,0"/>
+                </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
                             HorizontalAlignment="Right">
 
-                    <Button x:Name="NotButton"
+                    <Grid>
+
+                        <Button x:Name="NotButton"
                                 Style="{StaticResource IconButton}"
                                 Content="{StaticResource NotificationIcon}"
                                 ContextMenuService.IsEnabled="False"
                                 Click="NotButton_Click"
-                                LostFocus="NotButton_LostFocus"/>
+                                LostFocus="NotButton_LostFocus">
+
+                        </Button>
+
+                        <Border x:Name="notiCounterEllipse"
+                                Background="Red"
+                                CornerRadius="10"
+                                Height="15"
+                                Width="15"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Visibility="Collapsed"
+                                Margin="0,0,17,0">
+
+                            <TextBlock x:Name="notiCount"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ForegroundColorForText}"></TextBlock>
+                            
+                        </Border>
+
+                    </Grid>
 
                         <!--Spacer-->
                         <Line X1="0"
@@ -149,31 +205,45 @@
                           Stroke="{DynamicResource SelectedElementColor}"
                           StrokeThickness="1"
                           VerticalAlignment="Center"
-                          Margin="0,0,20,0"></Line>
+                          Margin="0,0,28,0"></Line>
 
                         <Button Style="{StaticResource IconButton}"
-                            Content="{StaticResource MinIcon}"
-                            Click="MinWindow"/>
+                                Content="{StaticResource MinIcon}"
+                                Padding="10,5,10,5"
+                                Margin="0"
+                                Click="MinWindow"/>
 
                         <Button Style="{StaticResource IconButton}"
-                            Content="{StaticResource MaxIcon}"
-                            Click="MaxWindow"/>
+                                Content="{StaticResource MaxIcon}"
+                                Padding="10,5,10,5"
+                                Margin="0"
+                                Click="MaxWindow"/>
 
                         <Button Style="{StaticResource IconButton}"
-                            Content="{StaticResource CloseIcon}"
-                            Click="CloseWindow"/>
+                                Content="{StaticResource CloseIcon}"
+                                Padding="10,5,10,5"
+                                Margin="0,0,10,0"
+                                Click="CloseWindow"/>
 
                     </StackPanel>
 
             </Grid>
 
             <!--Left menu-->
-            <Border Grid.Row="1" 
+            <Border x:Name="LeftMenuBorder"
+                    Grid.Row="1" 
                     Grid.RowSpan="4" 
                     Background="{DynamicResource SecondMainColor}"
                     CornerRadius="0,0,0,10"
                     Panel.ZIndex="0">
 
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="210"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
                 <StackPanel>
 
                     <ListBox x:Name="DefaultGroups"
@@ -246,7 +316,28 @@
                         </Border>
                     </StackPanel>
 
-                    <!--Groups list-->
+                </StackPanel>
+
+                <!--Groups list-->
+                <ScrollViewer Style="{StaticResource ScrollViewStyle}"
+                              PreviewMouseWheel="ScrollWhenMouseOver"
+                              Margin="0"
+                              VerticalAlignment="Stretch"
+                              Grid.Row="1">
+
+                        <ScrollViewer.Resources>
+                            <Style TargetType="ScrollBar" BasedOn="{StaticResource ScrollBarStyle}">
+                                <Setter Property="Foreground" Value="{DynamicResource BackgroundColorForWindow}"/>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource SelectedElementColor}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                                
+                            </Style>
+                        </ScrollViewer.Resources>
+
                     <ListBox x:Name="CustomGroups"
                              SelectionMode="Single"
                              ItemsSource="{Binding groupItems}"
@@ -262,21 +353,21 @@
                                         <ControlTemplate>
                                             <!--Observable collection contains two parameters color and name-->
                                             <Border Margin="10,0,30,5"
-                                                    Height="40"
-                                                    CornerRadius="4"
-                                                    Background="{TemplateBinding Background}">
+                                    Height="40"
+                                    CornerRadius="4"
+                                    Background="{TemplateBinding Background}">
 
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
                                                     <Ellipse Fill="{Binding GroupColor}"
-                                                             Width="13"
-                                                             Height="13"
-                                                             VerticalAlignment="Center"
-                                                             Margin="10,3.5,0,0"/>
+                                             Width="13"
+                                             Height="13"
+                                             VerticalAlignment="Center"
+                                             Margin="10,3.5,0,0"/>
                                                     <TextBlock Text="{Binding Name}"
-                                                               Foreground="{DynamicResource ForegroundColorForText}"
-                                                               FontSize="20"
-                                                               Margin="10,0,0,0"
-                                                               VerticalAlignment="Center"></TextBlock>
+                                               Foreground="{DynamicResource ForegroundColorForText}"
+                                               FontSize="20"
+                                               Margin="10,0,0,0"
+                                               VerticalAlignment="Center"></TextBlock>
                                                 </StackPanel>
                                             </Border>
                                         </ControlTemplate>
@@ -295,17 +386,32 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
 
-                </StackPanel>
+                </ScrollViewer>
+
+                </Grid>
 
             </Border>
 
             <!--List of tasks-->
-            <ScrollViewer Style="{StaticResource TasksScroll}"
-                      PreviewMouseWheel="ScrollWhenMouseOver">
+            <ScrollViewer Style="{StaticResource ScrollViewStyle}"
+                          PreviewMouseWheel="ScrollWhenMouseOver"
+                          Grid.Row="1" Grid.RowSpan="4"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="4">
 
                 <!--Changing scroll-->
                 <ScrollViewer.Resources>
-                    <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
+                    <Style TargetType="ScrollBar" BasedOn="{StaticResource ScrollBarStyle}">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondMainColor}"/>
+                        <Setter Property="Margin" Value="0,67,0,5"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource SelectedElementColor}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                        
+                    </Style>
                 </ScrollViewer.Resources>
 
                 <StackPanel>
@@ -325,16 +431,41 @@
                            FontWeight="SemiBold"
                            VerticalAlignment="Bottom"></TextBlock>
 
-                            <Button Style="{StaticResource NotificationButton}"
+                            <Button x:Name="TasksOptionsButton"
+                                    Style="{StaticResource GeometryIconButton}"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Right"
-                                    Margin="0,0,50,0">
+                                    ContextMenuService.IsEnabled="False"
+                                    Margin="0,0,50,0"
+                                    Click="TasksOptionsMenuOpen">
                                 <Path Data="{StaticResource TaskOptionsIcon}"
                                       VerticalAlignment="Center"
                                       HorizontalAlignment="Center"
                                       FocusVisualStyle="{x:Null}"
                                       Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
                                       Margin="3"></Path>
+                                <Button.ContextMenu>
+                                    <ContextMenu x:Name="TasksOptionsMenu"
+                                                 StaysOpen="False"
+                                                 Style="{StaticResource ButtonContextMenu}"
+                                                 BorderBrush="{DynamicResource SecondMainColor}"
+                                                 BorderThickness="1"
+                                                 Background="{DynamicResource BackgroundColorForWindow}">
+                                        <MenuItem x:Name="ClearCompTasks"
+                                                  Header="Clear completed"
+                                                  Height="50"
+                                                  FontWeight="SemiBold"
+                                                  BorderThickness="0"
+                                                  Icon="{StaticResource ClearCompIcon}"
+                                                  Click="ClearCompletedTasks">
+                                            <MenuItem.Style>
+                                                <Style TargetType="MenuItem" BasedOn="{StaticResource OptionStyle}">
+                                                    <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+                                                </Style>
+                                            </MenuItem.Style>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
                             </Button>
 
                         </DockPanel>
@@ -392,33 +523,42 @@
                                                         <StackPanel Orientation="Horizontal">
 
                                                             <!--Task time-->
-                                                            <TextBlock Text="{Binding TimeToShow}"
+                                                            <TextBlock Text="{Binding FirstTime, StringFormat={}{0:dd/MM/yy HH/mm   }}"
                                                                        Style="{StaticResource TasksText}"
                                                                        FontSize="13"
                                                                        Margin="50,0,0,0"/>
 
                                                         </StackPanel>
 
-                                                        <Line X1="20"
-                                                              X2="717"
-                                                              Margin="0,20,0,0"
-                                                              Stroke="{DynamicResource SecondMainColor}"
-                                                              StrokeThickness="2"></Line>
+                                                        <Grid Margin="0,20,0,0">
+
+                                                            <Line X1="15"
+                                                                  Stroke="{DynamicResource SecondMainColor}"
+                                                                  StrokeThickness="2">
+
+                                                                <Line.X2>
+                                                                    <MultiBinding Converter="{StaticResource WidthMinusConverter}" ConverterParameter="17">
+                                                                        <Binding RelativeSource="{RelativeSource AncestorType=Grid}" Path="ActualWidth"/>
+                                                                    </MultiBinding>
+                                                                </Line.X2>
+                                                                
+                                                            </Line>
+
+                                                        </Grid>
 
                                                     </StackPanel>
 
-                                                    <Grid.ContextMenu>
-
-                                                        <!--Delete task button-->
-                                                        <ContextMenu>
-                                                            <MenuItem Header="Delete" Click="DeleteTask"></MenuItem>
-                                                        </ContextMenu>
-
-                                                    </Grid.ContextMenu>
                                                 </Grid>
+                                                
+                                                <!--Delete button for task-->
                                                 <Border.ContextMenu>
-                                                    <ContextMenu>
-                                                        <MenuItem Header="Delete" Click="DeleteTask"></MenuItem>
+                                                    <ContextMenu Style="{StaticResource ButtonContextMenu}"
+                                                                 BorderThickness="0.7"
+                                                                 BorderBrush="{DynamicResource BackgroundColorForWindow}"
+                                                                 Padding="2">
+                                                        <MenuItem Header="Delete"
+                                                                  Style="{StaticResource TaskConMenuItem}"
+                                                                  Click="DeleteTask"></MenuItem>
                                                     </ContextMenu>
                                                 </Border.ContextMenu>
                                             </Border>

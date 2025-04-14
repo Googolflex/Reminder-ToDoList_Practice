@@ -47,6 +47,9 @@ namespace reminder.CustomControls
     public class PlaceholderTextBox : Control
     {
 
+        public event TextChangedEventHandler TextChanged;
+        public event EventHandler TextExceededMaxLength;
+
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -97,8 +100,23 @@ namespace reminder.CustomControls
             if (control.IsTextTooLong)
             {
                 control.Text = newText.Substring(0, maxLength);
+                control.CastOnTextExceededMaxLength();
             }
+
             control.IsTextTooLong = control.Text?.Length > maxLength;
+
+            control.CastOnTextChangedEvent();
+
+        }
+
+        protected virtual void CastOnTextChangedEvent()
+        {
+            TextChanged?.Invoke(this, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None));
+        }
+
+        protected virtual void CastOnTextExceededMaxLength()
+        {
+            TextExceededMaxLength?.Invoke(this, EventArgs.Empty);
         }
 
         public bool IsTextTooLong

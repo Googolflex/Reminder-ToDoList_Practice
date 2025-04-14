@@ -7,7 +7,7 @@ namespace reminder
     public class TasksManager
     {
 
-        public ObservableCollection<TaskItem> allTasks = new ObservableCollection<TaskItem>();
+        private ObservableCollection<TaskItem> allTasks = new ObservableCollection<TaskItem>();
         private XmlManager xmlManager = new XmlManager();
         private DateToDayOfWeek dayOfWeek = new DateToDayOfWeek();
         private Path path = new Path();
@@ -32,7 +32,7 @@ namespace reminder
                 Name = name,
                 Desсription = desсription,
                 FirstTime = firstTime,
-                TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(firstTime)} {firstTime.ToShortTimeString()}",
+                TimeToShow = dayOfWeek.GetDayOfWeekAndTime(firstTime),
                 Group = group
             };
             return newTask;
@@ -43,9 +43,18 @@ namespace reminder
             task.Name = editedName;
             task.Desсription = editedDesc;
             task.FirstTime = editedFstTime;
-            task.TimeToShow = $"{dayOfWeek.WhatsDayOfWeek(task.FirstTime)} {task.FirstTime.ToShortTimeString()}";
+            task.TimeToShow = dayOfWeek.GetDayOfWeekAndTime(task.FirstTime);
 
             return task;
+        }
+
+        public ObservableCollection<TaskItem> correctTasksShowTime(ObservableCollection<TaskItem> tasks)
+        {
+            foreach (TaskItem item in tasks)
+            {
+                item.TimeToShow = dayOfWeek.GetDayOfWeekAndTime(item.FirstTime);
+            }
+            return tasks;
         }
 
         public ObservableCollection<TaskItem> loadTasksFromXml()
@@ -88,7 +97,23 @@ namespace reminder
             return temp;
         }
 
-        private ObservableCollection<TaskItem> getAllTasks()
+        public ObservableCollection<TaskItem> searchInTasks(string request, string group)
+        {
+            ObservableCollection<TaskItem> temp = sortTasksByGroup(group);
+            ObservableCollection <TaskItem> searchResult = new ObservableCollection<TaskItem>();
+
+            foreach (TaskItem item in temp)
+            {
+                if (item.Name.ToLower().Contains(request.ToLower()) || item.Desсription.ToLower().Contains(request.ToLower()))
+                {
+                    searchResult.Add(item);
+                }
+            }
+
+            return searchResult;
+        }
+
+        public ObservableCollection<TaskItem> getAllTasks()
         {
             return allTasks;
         }

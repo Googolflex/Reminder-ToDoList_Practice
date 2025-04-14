@@ -20,6 +20,8 @@
                 <ResourceDictionary Source="Styles/PlaceholderTextBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TrayContextMenuStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TasksContextMenuStyles.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollStyles.xaml"/>
                 <ResourceDictionary Source="CustomControls/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
@@ -78,47 +80,10 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
-            <!--Global menus style. Legacy-->
-            <Style TargetType="Menu">
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-            </Style>
-
-            <!--Global context menu style-->
-            <!--<Style TargetType="ContextMenu" x:Key="xuy">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ContextMenu">
-                            <Border BorderBrush="{DynamicResource SelectedElementColor}"
-                                    Background="{StaticResource BackgroundColorForWindow}"
-                                    BorderThickness="1"
-                                    CornerRadius="4">
-                                
-                                <StackPanel Orientation="Horizontal"
-                                            VerticalAlignment="Center">
-
-                                    <TextBox MinWidth="75"
-                                             VerticalAlignment="Center"
-                                             Background="{StaticResource BackgroundColorForWindow}"
-                                             MaxLength="30"
-                                             Foreground="White"
-                                             BorderThickness="0"
-                                             Margin="4,0,0,0">
-                                    </TextBox>
-
-                                    <Button Tag="Add"></Button>
-                                    
-                                </StackPanel>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>-->
-
-            <!--Window buttons style-->
+            <!--Icon buttons style-->
             <Style x:Key="IconButton" TargetType="Button">
                 <Setter Property="Margin" Value="0,0,15,0"/>
+                <Setter Property="Padding" Value="5,5,5,5"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -128,7 +93,7 @@
                                 <ContentControl Content="{TemplateBinding Content}"
                                                 VerticalAlignment="Center"
                                                 FocusVisualStyle="{x:Null}"
-                                                Margin="5,5,5,5"></ContentControl>
+                                                Margin="{TemplateBinding Padding}"></ContentControl>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
@@ -139,13 +104,10 @@
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
                     </Trigger>
-                    <Trigger Property="IsFocused" Value="True">
-                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
-                    </Trigger>
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="NotificationButton" TargetType="Button">
+            <Style x:Key="GeometryIconButton" TargetType="Button">
                 <Setter Property="Margin" Value="0,0,15,0"/>
                 <Setter Property="Foreground" Value="{DynamicResource SelectedElementColor}"/>
                 <Setter Property="Template">
@@ -179,6 +141,7 @@
                 <Setter Property="MinWidth" Value="50"/>
                 <Setter Property="Padding" Value="10"/>
                 <Setter Property="Margin" Value="10,0,0,0"/>
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -213,7 +176,6 @@
                 </Style.Triggers>
 
             </Style>
-
 
             <Style x:Key="ClearButton" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>

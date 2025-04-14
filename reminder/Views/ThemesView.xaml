@@ -22,6 +22,7 @@
                     Style="{StaticResource TextButton}"
                     ContentStringFormat="Light theme"
                     HorizontalAlignment="Left"
+                    Margin="0,0,0,5"
                     Click="LghtTheme_Click"/>
 
         </StackPanel>

@@ -18,6 +18,8 @@ namespace reminder
         {
             Path path = new Path();
             XmlManager xmlManager = new XmlManager();
+            TasksManager tasksManager = new TasksManager();
+            ObservableCollection<TaskItem> tasks = new ObservableCollection<TaskItem>();
 
             if(!Directory.Exists("Data"))
                 Directory.CreateDirectory("Data");
@@ -33,6 +35,11 @@ namespace reminder
                 ObservableCollection<GroupItem> temp = new ObservableCollection<GroupItem>();
                 xmlManager.SerializeToXml(path.GroupsPath, temp);
             }
+
+            tasks = tasksManager.loadTasksFromXml();
+            tasks = tasksManager.correctTasksShowTime(tasks);
+
+            xmlManager.SerializeToXml(path.TasksPath, tasks);
 
             ApplyTheme(reminder.Properties.Settings.Default.Theme);
         }

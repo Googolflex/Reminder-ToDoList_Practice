@@ -6,22 +6,34 @@ namespace reminder
 {
     public class DateToDayOfWeek
     {
-        public string WhatsDayOfWeek(DateTime date)
+        public string GetDayOfWeekAndTime(DateTime date)
         { 
-            return Today_Tomorrow_Yesterday(date.DayOfWeek);
+            return Today_Tomorrow_Yesterday(date);
         }
 
-        private string Today_Tomorrow_Yesterday(DayOfWeek day)
+        private string Today_Tomorrow_Yesterday(DateTime day)
         {
-            string dayOfWeek = Convert.ToString(day);
-            if (dayOfWeek == Convert.ToString(DateTime.Today.DayOfWeek))
-                dayOfWeek = "Today";
-            else if (dayOfWeek == Convert.ToString(DateTime.Today.AddDays(+1).DayOfWeek))
-                dayOfWeek = "Tomorrow";
+            string dayOfWeek = Convert.ToString(day.DayOfWeek);
+            if((day - DateTime.Today).TotalDays <= 2)
+            {
+                if (dayOfWeek == Convert.ToString(DateTime.Today.DayOfWeek))
+                    dayOfWeek = $"Today {day.ToShortTimeString()}";
+                else if (dayOfWeek == Convert.ToString(DateTime.Today.AddDays(+1).DayOfWeek))
+                    dayOfWeek = $"Tomorrow {day.ToShortTimeString()}";
+                else if (dayOfWeek == Convert.ToString(DateTime.Today.AddDays(-1).DayOfWeek))
+                {
+                    dayOfWeek = $"Yesterday {day.ToShortTimeString()}";
+                }
+            }
+            else
+            {
+                dayOfWeek += $" {day.ToShortTimeString()}"; //\n({day.ToString("dd/MM")}
+            }
+
             return dayOfWeek;
         }
 
-        public string InputSecondDay(DateTime date1, DateTime date2)
+        /*public string InputSecondDay(DateTime date1, DateTime date2)
         {
             string dayOfWeek;
             DayOfWeek day = date2.DayOfWeek;
@@ -44,6 +56,6 @@ namespace reminder
                 dayOfWeek = Today_Tomorrow_Yesterday(day) + $"({date2.ToString("dd/MM")})";
             }
             return dayOfWeek;
-        }
+        }*/
     }
 }

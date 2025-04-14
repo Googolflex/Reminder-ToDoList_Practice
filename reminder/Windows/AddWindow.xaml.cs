@@ -1,8 +1,12 @@
-﻿using System;
+﻿using reminder.CustomControls;
+using reminder.Values;
+using reminder.Windows;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Effects;
 
 namespace reminder
@@ -68,6 +72,31 @@ namespace reminder
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.Owner.Effect = null;
+        }
+
+        private async void InputExceededMaxLength(object sender, EventArgs e)
+        {
+            if (sender == nameBox)
+            {
+                nameWarning.Visibility = Visibility.Visible;
+                await Task.Delay(600);
+                nameWarning.Visibility = Visibility.Hidden;
+            }
+            else if (sender == deskBox)
+            {
+                descriptionWarning.Visibility = Visibility.Visible;
+                await Task.Delay(600);
+                descriptionWarning.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                MessageWindow erWin = new MessageWindow(MessageValues.ErrorText, MessageValues.MessageIcon.ERROR);
+            }
+        }
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Keyboard.ClearFocus();
         }
     }
 }
