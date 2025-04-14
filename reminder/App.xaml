@@ -3,38 +3,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              xmlns:local="clr-namespace:reminder"
-             StartupUri="MainWindow.xaml">
+             xmlns:Properties="clr-namespace:reminder.Properties"
+             Startup="App_Startup"
+             StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="StandardTheme.xaml"/>
+                <ResourceDictionary Source="Themes/StandardTheme.xaml"/>
+                <ResourceDictionary Source="Themes/HighlightColors.xaml"/>
+                <ResourceDictionary Source="Styles/Icons.xaml"/>
+                <ResourceDictionary Source="Styles/LeftMenuStyles.xaml"/>
+                <ResourceDictionary Source="Styles/TasksBarStyles.xaml"/>
+                <ResourceDictionary Source="Styles/AddButtonStyles.xaml"/>
+                <ResourceDictionary Source="Styles/MenuButtonStyles.xaml"/>
+                <ResourceDictionary Source="Styles/OrdinaryButtonsStyle.xaml"/>
+                <ResourceDictionary Source="Styles/PlaceholderTextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TrayContextMenuStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TasksContextMenuStyles.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollStyles.xaml"/>
+                <ResourceDictionary Source="CustomControls/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <!--Global background for windows-->
             <Style TargetType="Window">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
             </Style>
 
+            <!--ScrollBar style-->
+            <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
+                <Setter Property="Width" Value="10"/>
+                <Setter Property="Background" Value="{DynamicResource BackgroundColorForWindow}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForWindow}"/>
+                <Setter Property="Opacity" Value="20"/>
+            </Style>
+
+            <!--Border style for create selected effect on left menu items-->
+            <Style x:Key="SelectableBorder" TargetType="Border">
+                <Setter Property="CornerRadius" Value="4"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--Global labels style-->
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
-            <Style TargetType="TextBox">
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Margin" Value="0,0,0,3"/>
-            </Style>
-
+            <!--Special textlbocks style-->
             <Style x:Key="onlyForTextBlocks" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"></Setter>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
+            <!--Global time picker style. As i remember it works pretty badly-->
             <Style TargetType="wpfTool:DateTimePicker">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
@@ -43,16 +71,8 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
-            <Style TargetType="Button">
-                <Setter Property="Width" Value="70"/>
-                <Setter Property="Height" Value="25"/>
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForOtherElements}"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-            </Style>
-
-            <Style TargetType="CheckBox">
+            <!--Global checkbox style-->
+            <Style TargetType="CheckBox" x:Key="12">
                 <Setter Property="Background" Value="{DynamicResource BackgroundColorForOtherElements}"/>
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForWindow}"/>
@@ -60,17 +80,139 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
 
-            <Style TargetType="Menu">
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
+            <!--Icon buttons style-->
+            <Style x:Key="IconButton" TargetType="Button">
+                <Setter Property="Margin" Value="0,0,15,0"/>
+                <Setter Property="Padding" Value="5,5,5,5"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderBrush="Transparent"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0">
+                                <ContentControl Content="{TemplateBinding Content}"
+                                                VerticalAlignment="Center"
+                                                FocusVisualStyle="{x:Null}"
+                                                Margin="{TemplateBinding Padding}"></ContentControl>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>  
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
-            <Style TargetType="MenuItem">
-                <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColorForMenu}"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForMenu}"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
+            <Style x:Key="GeometryIconButton" TargetType="Button">
+                <Setter Property="Margin" Value="0,0,15,0"/>
+                <Setter Property="Foreground" Value="{DynamicResource SelectedElementColor}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderBrush="Transparent"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0">
+                                <ContentControl Content="{TemplateBinding Content}"
+                                                VerticalAlignment="Center"
+                                                FocusVisualStyle="{x:Null}"></ContentControl>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondMainColor}"/>
+                    </Trigger>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondMainColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="TextButton" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="MinWidth" Value="50"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundColorForText}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+
+                            <Border BorderBrush="Transparent"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0"
+                                    CornerRadius="4"
+                                    Margin="{TemplateBinding Margin}"
+                                    Padding="{TemplateBinding Padding}"
+                                    MinWidth="{TemplateBinding MinWidth}"
+                                    HorizontalAlignment="Left">
+
+                                <TextBlock Style="{StaticResource TasksText}"
+                                           Text="{TemplateBinding ContentStringFormat}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           HorizontalAlignment="Center"/>
+
+                            </Border>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+
+            </Style>
+
+            <Style x:Key="ClearButton" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="#e8181c"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+
+                            <Border BorderBrush="Transparent"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0"
+                                    CornerRadius="4"
+                                    Margin="{TemplateBinding Margin}"
+                                    Padding="{TemplateBinding Padding}"
+                                    MinWidth="{TemplateBinding MinWidth}"
+                                    HorizontalAlignment="Left">
+
+                                <TextBlock Style="{StaticResource TasksText}"
+                                           Text="{TemplateBinding Content}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           HorizontalAlignment="Center"/>
+
+                            </Border>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#ce181b"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

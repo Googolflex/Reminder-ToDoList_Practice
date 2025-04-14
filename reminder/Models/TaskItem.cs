@@ -5,20 +5,19 @@ namespace reminder
 {
     public class TaskItem : INotifyPropertyChanged
     {
-        private static int nextId = 0;
+        private static int id = 0;
 
-        public int id;
-        public string name;
-        public string description;
-        public DateTime firstTime;
-        public DateTime secondTime;
-        public string timeToShow;
-        public bool isChecked;
-        public bool isReminded;
+        private string name;
+        private string description;
+        private DateTime firstTime;
+        private string timeToShow;
+        private string group = "";
+        private bool isComplete = false;
+        private bool isReminded = false;
 
         public int Id
         {
-            get { return nextId++; }
+            get { return id++; }
         }
 
         public string Name
@@ -60,19 +59,6 @@ namespace reminder
             }
         }
 
-        public DateTime SecondTime
-        {
-            get { return secondTime; }
-            set
-            {
-                if (secondTime != value)
-                {
-                    secondTime = value;
-                    OnPropertyChanged(nameof(SecondTime));
-                }
-            }
-        }
-
         public string TimeToShow
         {
             get { return timeToShow; }
@@ -86,16 +72,28 @@ namespace reminder
             }
         }
 
-
-        public bool IsChecked
+        public string Group
         {
-            get { return isChecked; }
+            get { return group; }
             set
             {
-                if (isChecked != value)
+                if (group != value)
                 {
-                    isChecked = value;
-                    OnPropertyChanged(nameof(IsChecked));
+                    group = value;
+                    OnPropertyChanged(nameof(Group));
+                }
+            }
+        }
+
+        public bool IsComplete
+        {
+            get { return isComplete; }
+            set
+            {
+                if (isComplete != value)
+                {
+                    isComplete = value;
+                    OnPropertyChanged(nameof(isComplete));
                 }
             }
         }
