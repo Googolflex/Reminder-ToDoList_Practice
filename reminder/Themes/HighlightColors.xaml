@@ -1,10 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="HighlightGreen">#42FF00</Color>
+    <Color x:Key="HighlightGreenColor">#42FF00</Color>
+    <Color x:Key="HighlightBlueColor">#38D0D0</Color>
+    <Color x:Key="HighlightPurpleColor">#8000FF</Color>
+    <Color x:Key="HighlightRedColor">#e8181c</Color>
 
-    <Color x:Key="HighlightBlue">#38D0D0</Color>
+    <Color x:Key="HighlightBlueHoverColor">#33a6a6</Color>
+    <Color x:Key="HighlightRedHoverColor">#ce181b</Color>
 
-    <Color x:Key="HighlightPurple">#8000FF</Color>
-    
+    <SolidColorBrush x:Key="HighlightGreen" Color="{StaticResource HighlightGreenColor}"/>
+    <SolidColorBrush x:Key="HighlightBlue" Color="{StaticResource HighlightBlueColor}"/>
+    <SolidColorBrush x:Key="HighlightPurple" Color="{StaticResource HighlightPurpleColor}"/>
+    <SolidColorBrush x:Key="HighlightRed" Color="{StaticResource HighlightRedColor}"/>
+
+    <SolidColorBrush x:Key="HighlightBlueHover" Color="{StaticResource HighlightBlueHoverColor}"/>
+    <SolidColorBrush x:Key="HighlightRedHover" Color="{StaticResource HighlightRedHoverColor}"/>
+
 </ResourceDictionary>

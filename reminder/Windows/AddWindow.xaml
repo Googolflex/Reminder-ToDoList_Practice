@@ -50,7 +50,7 @@
                 <Label x:Name="nameWarning"
                        Content="Name too long"
                        FontSize="12"
-                       Foreground="#e8181c"
+                       Foreground="{StaticResource HighlightRed}"
                        Visibility="Hidden"/>
 
                 <Label>Task Description:</Label>
@@ -63,7 +63,7 @@
                 <Label x:Name="descriptionWarning"
                        Content="Description too long"
                        FontSize="12"
-                       Foreground="#e8181c"
+                       Foreground="{StaticResource HighlightRed}"
                        Visibility="Hidden"/>
 
                 <Label x:Name="timeLabel1">Task Time:</Label>

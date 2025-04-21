@@ -17,6 +17,8 @@ using System.Windows.Media.Effects;
 using reminder.Windows;
 using reminder.Values;
 using reminder.CustomControls;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace reminder
 {
@@ -235,22 +237,14 @@ namespace reminder
             PlaceholderTextBox box = (PlaceholderTextBox)AddMenu.FindVisualChildren<PlaceholderTextBox>().First();
             groupItems.Add(groupsManager.NewGroupItem(box.Text, groupItems));
 
-            if(box.Text.ToLower() == "add 10")
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    groupItems.Add(groupsManager.NewGroupItem("", groupItems));
-                }
-            }
-
             box.Clear();
 
             AddMenu.IsOpen = false;
         }
 
-        private void AddButton_Click(object sender, MouseButtonEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            AddMenu.PlacementTarget = (Border)sender;
+            AddMenu.PlacementTarget = (IconButton)sender;
             AddMenu.Placement = PlacementMode.Bottom;
             AddMenu.IsOpen = true;
         }
@@ -435,6 +429,7 @@ namespace reminder
                 taskBox.ItemsSource = taskItems;
             }
         }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Keyboard.ClearFocus();
@@ -442,6 +437,50 @@ namespace reminder
             {
                 NotTable.Visibility = Visibility.Collapsed;
                 NotTable.ChangeVisibility();
+            }
+        }
+
+        //Deletes selected group when delete button is pressed 
+        private void DeleteGroup(object sender, RoutedEventArgs e)
+        {
+
+            GroupItem selectedGroup = (GroupItem)CustomGroups.SelectedItem;
+
+            if (CustomGroups.SelectedItem != null)
+            {
+                MessageWindow mes = new MessageWindow("Do you want to delete all tasks in a group?", MessageValues.MessageIcon.QUESTION);
+                mes.ShowDialog();
+
+                if (mes.Result != MessageValues.MessageResult.None)
+                {
+
+                    if (mes.Result == MessageValues.MessageResult.Yes)
+                    {
+                        List<TaskItem> temp = new List<TaskItem>();
+                        foreach (TaskItem task in taskItems)
+                        {
+                            if (task.Group == selectedGroup.Name)
+                            {
+                                temp.Add(task);
+                            }
+                        }
+                        foreach (TaskItem item in temp)
+                        {
+                            tasksManager.DeleteTask(item);
+                        }
+                    }
+                    else if (mes.Result == MessageValues.MessageResult.No)
+                    {
+                        foreach (TaskItem task in taskItems)
+                        {
+                            task.Group = "All Tasks";
+                        }
+                    }
+
+                    groupItems.Remove(selectedGroup);
+
+                    All_Tasks.IsSelected = true;
+                }
             }
         }
     }

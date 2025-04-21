@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:reminder.Windows"
+        xmlns:custom="clr-namespace:reminder.CustomControls"
         mc:Ignorable="d"
         Title="MessageWindow" 
         Height="180"
@@ -32,13 +33,20 @@
                             MinWidth="250">
 
                     <ContentPresenter Name="WindowIcon"></ContentPresenter>
-                    
+
                     <TextBlock x:Name="Header"
                                Style="{StaticResource TasksText}"
                                Text="ToDoList"
                                Margin="10,0,0,0"></TextBlock>
 
                 </StackPanel>
+
+                <custom:IconButton x:Name="CancelButton"
+                                   Content="{StaticResource CloseIcon}"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,2,2,0"
+                                   Click="CancelButton_Click"/>
 
                 <TextBlock x:Name="Body"
                            VerticalAlignment="Center"
@@ -63,7 +71,6 @@
                         Style="{StaticResource OrdinaryButtonStyle}"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Center"
-                        IsCancel="True"
                         ContentStringFormat="Ok"
                         Click="NoOrOkButton_Click"/>
 

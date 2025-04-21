@@ -29,6 +29,8 @@ namespace reminder.Windows
     {
         private MessageValues values = new MessageValues();
 
+        public MessageValues.MessageResult Result { get; private set; } = Values.MessageValues.MessageResult.None;
+
         public MessageWindow(string messageBody, MessageValues.MessageIcon icon)
         {
             InitializeComponent();
@@ -84,11 +86,13 @@ namespace reminder.Windows
 
         private void NoOrOkButton_Click(object sender, RoutedEventArgs e)
         {
+            this.Result = MessageValues.MessageResult.No;
             this.DialogResult = false;
         }
 
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
+            this.Result = MessageValues.MessageResult.Yes;
             this.DialogResult = true;
         }
 
@@ -99,6 +103,12 @@ namespace reminder.Windows
                 this.Owner.Effect = null;
                 Thread.Sleep(30);
             }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Result = MessageValues.MessageResult.None;
+            this.Close();
         }
     }
 }

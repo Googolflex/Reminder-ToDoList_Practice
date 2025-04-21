@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="ButtonContextMenu" TargetType="ContextMenu">
-        <Setter Property="Background" Value="#484848"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColorForMenu}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1.2"/>
         <Setter Property="HasDropShadow" Value="False"/>
