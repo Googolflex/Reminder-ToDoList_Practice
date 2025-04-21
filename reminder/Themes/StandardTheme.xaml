@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <SolidColorBrush x:Key="BackgroundColorForWindow">#FF272727</SolidColorBrush>
+
+    <SolidColorBrush x:Key="BackgroundColorForMenu">#484848</SolidColorBrush>
     
-    <SolidColorBrush x:Key="BackgroundColorForMenu">#485357</SolidColorBrush>
-    
-    <SolidColorBrush x:Key="ForegroundColorForMenu">#20B2AA</SolidColorBrush>
+    <SolidColorBrush x:Key="IconsForeground">#FFFFFF</SolidColorBrush>
     
     <SolidColorBrush x:Key="ForegroundColorForText">#FFFFFF</SolidColorBrush>
     

@@ -38,6 +38,11 @@ namespace reminder
             return newTask;
         }
 
+        public void DeleteTask(TaskItem task)
+        {
+            allTasks.Remove(task);
+        }
+
         public TaskItem editTask(TaskItem task, string editedName, string editedDesc, DateTime editedFstTime)
         {
             task.Name = editedName;

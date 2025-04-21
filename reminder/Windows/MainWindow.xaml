@@ -116,8 +116,7 @@
                             HorizontalAlignment="Left" 
                             Margin="12,0,0,0">
                 
-                    <Button x:Name="MenuButton"
-                            Style="{StaticResource IconButton}"
+                    <custom:IconButton x:Name="MenuButton"
                             Content="{StaticResource MenuIcon}"
                             ContextMenuService.IsEnabled="False"
                             Click="OpenMenu">
@@ -143,7 +142,7 @@
                                 </ContextMenu.Effect>
                             </ContextMenu>
                         </Button.ContextMenu>
-                    </Button>
+                    </custom:IconButton>
 
                     <custom:PlaceholderSearchBox x:Name="SearchBox"
                                                  InputChanged="SearchBox_TextChanged"
@@ -169,17 +168,15 @@
 
                     <Grid>
 
-                        <Button x:Name="NotButton"
-                                Style="{StaticResource IconButton}"
+                        <custom:IconButton x:Name="NotButton"
                                 Content="{StaticResource NotificationIcon}"
                                 ContextMenuService.IsEnabled="False"
                                 Click="NotButton_Click"
                                 LostFocus="NotButton_LostFocus">
-
-                        </Button>
+                        </custom:IconButton>
 
                         <Border x:Name="notiCounterEllipse"
-                                Background="Red"
+                                Background="{StaticResource HighlightRed}"
                                 CornerRadius="10"
                                 Height="15"
                                 Width="15"
@@ -205,25 +202,22 @@
                           Stroke="{DynamicResource SelectedElementColor}"
                           StrokeThickness="1"
                           VerticalAlignment="Center"
-                          Margin="0,0,28,0"></Line>
+                          Margin="0,0,20,0"></Line>
 
-                        <Button Style="{StaticResource IconButton}"
-                                Content="{StaticResource MinIcon}"
-                                Padding="10,5,10,5"
-                                Margin="0"
-                                Click="MinWindow"/>
+                        <custom:IconButton Content="{StaticResource MinIcon}"
+                                           Padding="10,5,10,5"
+                                           Margin="0"
+                                           Click="MinWindow"/>
 
-                        <Button Style="{StaticResource IconButton}"
-                                Content="{StaticResource MaxIcon}"
-                                Padding="10,5,10,5"
-                                Margin="0"
-                                Click="MaxWindow"/>
+                        <custom:IconButton Content="{StaticResource MaxIcon}"
+                                           Padding="10,5,10,5"
+                                           Margin="0"
+                                           Click="MaxWindow"/>
 
-                        <Button Style="{StaticResource IconButton}"
-                                Content="{StaticResource CloseIcon}"
-                                Padding="10,5,10,5"
-                                Margin="0,0,10,0"
-                                Click="CloseWindow"/>
+                        <custom:IconButton Content="{StaticResource CloseIcon}"
+                                           Padding="10,5,10,5"
+                                           Margin="0,0,10,0"
+                                           Click="CloseWindow"/>
 
                     </StackPanel>
 
@@ -269,16 +263,13 @@
                         <TextBlock FontSize="16"
                                    Foreground="{DynamicResource ForegroundColorForText}"
                                    Opacity="0.6">Groups of tasks</TextBlock>
-                        <Border Margin="100,0,0,0"
-                                Style="{StaticResource SelectableBorder}"
-                                Width="25"
-                                Height="25"
-                                MouseDown="AddButton_Click">
-                            <ContentPresenter Content="{StaticResource PlusIcon}"
-                                              Margin="0,0,0,0"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"></ContentPresenter>
-                            <Border.ContextMenu>
+                            <custom:IconButton Margin="120,0,0,0"
+                                                Content="{StaticResource PlusIcon}"
+                                                CornerRadius="4"
+                                                Width="25"
+                                                Height="25"
+                                                Click="AddButton_Click">
+                                <Button.ContextMenu>
 
                                 <!--Add group menu-->
                                 <ContextMenu x:Name="AddMenu" LostFocus="AddMenu_LostFocus">
@@ -312,8 +303,8 @@
                                     </ContextMenu.Style>
                                 </ContextMenu>
 
-                            </Border.ContextMenu>
-                        </Border>
+                            </Button.ContextMenu>
+                        </custom:IconButton>
                     </StackPanel>
 
                 </StackPanel>
@@ -321,7 +312,7 @@
                 <!--Groups list-->
                 <ScrollViewer Style="{StaticResource ScrollViewStyle}"
                               PreviewMouseWheel="ScrollWhenMouseOver"
-                              Margin="0"
+                              Margin="0,0,0,10"
                               VerticalAlignment="Stretch"
                               Grid.Row="1">
 
@@ -342,7 +333,8 @@
                              SelectionMode="Single"
                              ItemsSource="{Binding groupItems}"
                              Background="Transparent"
-                             BorderBrush="Transparent">
+                             BorderBrush="Transparent"
+                             Margin="0,0,30,0">
 
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
@@ -353,9 +345,9 @@
                                         <ControlTemplate>
                                             <!--Observable collection contains two parameters color and name-->
                                             <Border Margin="10,0,30,5"
-                                    Height="40"
-                                    CornerRadius="4"
-                                    Background="{TemplateBinding Background}">
+                                                    Height="40"
+                                                    CornerRadius="4"
+                                                    Background="{TemplateBinding Background}">
 
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
                                                     <Ellipse Fill="{Binding GroupColor}"
@@ -369,7 +361,20 @@
                                                Margin="10,0,0,0"
                                                VerticalAlignment="Center"></TextBlock>
                                                 </StackPanel>
-                                            </Border>
+
+                                                    <Border.ContextMenu>
+                                                        <ContextMenu Style="{StaticResource ButtonContextMenu}"
+                                                                     BorderThickness="0.7"
+                                                                     BorderBrush="{DynamicResource BackgroundColorForWindow}"
+                                                                     Padding="2">
+                                                        <MenuItem Header="Delete"
+                                                                  Style="{StaticResource TaskConMenuItem}"
+                                                                  Click="DeleteGroup"
+                                                                  FontSize="14"></MenuItem>
+                                                        </ContextMenu>
+                                                    </Border.ContextMenu>
+
+                                                </Border>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -397,13 +402,14 @@
                           PreviewMouseWheel="ScrollWhenMouseOver"
                           Grid.Row="1" Grid.RowSpan="4"
                           Grid.Column="1"
-                          Grid.ColumnSpan="4">
+                          Grid.ColumnSpan="4"
+                          Margin="0,40,0,10">
 
                 <!--Changing scroll-->
                 <ScrollViewer.Resources>
                     <Style TargetType="ScrollBar" BasedOn="{StaticResource ScrollBarStyle}">
                         <Setter Property="Foreground" Value="{DynamicResource SecondMainColor}"/>
-                        <Setter Property="Margin" Value="0,67,0,5"/>
+                        <Setter Property="Margin" Value="0,47,0,4"/>
 
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -419,8 +425,7 @@
                     <!--Header text for tasks-->
                     <Border Background="{DynamicResource BackgroundColorForWindow}"
                     Panel.ZIndex="1"
-                    VerticalAlignment="Top"
-                    Margin="0,0,0,20">
+                    VerticalAlignment="Top">
 
                         <DockPanel Margin="45,0,0,0">
                         
@@ -504,14 +509,14 @@
                                                             <!--Task Name-->
                                                             <TextBlock Text="{Binding Name}"
                                                                        Style="{StaticResource TasksText}"
-                                                                       MaxWidth="200"
+                                                                       Width="105"
                                                                        Margin="0,0,20,0"/>
 
                                                             <!--Description text-->
                                                             <TextBlock Text="{Binding Desсription}"
                                                                        Style="{StaticResource TasksText}"
-                                                                       MaxWidth="350"
-                                                                       Margin="40,0,0,0"/>
+                                                                       MaxWidth="375"
+                                                                       Margin="0,0,0,0"/>
 
                                                             <!--Task time-->
                                                             <TextBlock Text="{Binding TimeToShow}"
@@ -558,6 +563,7 @@
                                                                  Padding="2">
                                                         <MenuItem Header="Delete"
                                                                   Style="{StaticResource TaskConMenuItem}"
+                                                                  FontSize="14"
                                                                   Click="DeleteTask"></MenuItem>
                                                     </ContextMenu>
                                                 </Border.ContextMenu>

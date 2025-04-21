@@ -18,7 +18,7 @@
           3.33023C15.3263 3.70423 15.8665 4 16.5 4V2ZM7.5 4C8.13351 4 8.67374 3.70423 9.04328 3.33023L7.62063 1.92451C7.58764 1.95789 7.55556 1.97879 7.53147
           1.98993C7.50849 2.00055 7.4983 2 7.5 2V4ZM2 28H2H0C0 29.1046 0.895431 30 2 30V28ZM22 28V30C23.1046 30 24 29.1046 24 28H22ZM24 4C24 2.89543 23.1046 2 22
           2V4H24ZM2 4V4V2C0.89543 2 0 2.89543 0 4H2Z"
-          Fill="#38D0D0">
+          Fill="{StaticResource HighlightBlue}">
     </Path>
 
     <!--Icon for left menu. TodaysTasks-->
@@ -32,7 +32,7 @@
           24.9407V11.9482H1.62961V24.9407C1.62961 25.1679 1.72443 25.3768 1.91406 25.5674C2.10369 25.758 2.31258 25.8528 2.54072 25.8519ZM1.62961
           10.4667H22.3704V6.02222C22.3704 5.79506 22.2755 5.58618 22.0859 5.39556C21.8963 5.20494 21.6874 5.11013 21.4592 5.11111H2.54072C2.31356
           5.11111 2.10468 5.20593 1.91406 5.39556C1.72344 5.58519 1.62863 5.79408 1.62961 6.02222V10.4667Z"
-          Fill="#42FF00"></Path>
+          Fill="{StaticResource HighlightGreen}"></Path>
     
     <!--Settings icon-->
     <Path x:Key="MenuIcon"
@@ -40,13 +40,13 @@
           Data="M1.66667 20H28.3333C29.25 20 30 19.25 30 18.3333C30 17.4167 29.25 16.6667 28.3333 16.6667H1.66667C0.75 16.6667 0 17.4167 0 18.3333C0 19.25 0.75 20 1.66667 20ZM1.66667
           11.6667H28.3333C29.25 11.6667 30 10.9167 30 10C30 9.08333 29.25 8.33333 28.3333 8.33333H1.66667C0.75 8.33333 0 9.08333 0 10C0 10.9167 0.75 11.6667 1.66667 11.6667ZM0 1.66667C0
           2.58333 0.75 3.33333 1.66667 3.33333H28.3333C29.25 3.33333 30 2.58333 30 1.66667C30 0.75 29.25 0 28.3333 0H1.66667C0.75 0 0 0.75 0 1.66667Z"
-          Fill="White"/>
+          Fill="{DynamicResource IconsForeground}"/>
 
     <!--Icon for left menu. Plus-->
     <Path x:Key="PlusIcon"
           x:Shared="False"
           Data="M14.7917 8.53959H8.54168V14.7896H6.45834V8.53959H0.208344V6.45625H6.45834V0.206253H8.54168V6.45625H14.7917V8.53959Z"
-          Fill="White"></Path>
+          Fill="{DynamicResource IconsForeground}"></Path>
 
     <!--Min button icon-->
     <Path x:Key="MinIcon"
@@ -55,7 +55,7 @@
           Height="17"
           Width="17"
           Stretch="Uniform"
-          Fill="White"/>
+          Fill="{DynamicResource IconsForeground}"/>
 
     <!--Close button icon-->
     <Path x:Key="CloseIcon"
@@ -65,7 +65,7 @@
           Width="20"
           Height="20"
           Stretch="UniformToFill"
-          Fill="White"/>
+          Fill="{DynamicResource IconsForeground}"/>
 
     <!--Max button icon-->
     <Path x:Key="MaxIcon"
@@ -74,7 +74,7 @@
           Height="22"
           Width="22"
           Stretch="UniformToFill"
-          Fill="White"/>
+          Fill="{DynamicResource IconsForeground}"/>
     
     <!--Notification button-->
     <Path x:Key="NotificationIcon"
@@ -91,7 +91,7 @@
           25.5062H14.9825C14.8523 25.8042 14.658 26.0727 14.4107 26.2912C14.0133 26.6424 13.5047 26.8419 12.9746 26.8546C12.43 26.862 11.9011 26.6715 11.4862 26.3186ZM23.5 23.4023H24.7011V23.7241C24.7011
           23.8095 24.6672 23.8913 24.6069 23.9517C24.5465 24.012 24.4647 24.0459 24.3793 24.0459H1.53293C1.44759 24.0459 1.36573 24.012 1.30538 23.9517C1.24503 23.8913 1.21112 23.8095 1.21112
           23.7241V23.4023H2.42049H23.5Z"
-          Stroke="White"
+          Stroke="{DynamicResource IconsForeground}"
           StrokeThickness="1.5"/>
     
     <!--Settings icon-->
@@ -105,21 +105,21 @@
           11.6 0 0 1-4.677 0l-.195-1.74a3.48 3.48 0 0 0-1.14-2.208a3.53 3.53 0 0 0-3.718-.6l-1.606.7a12.2 12.2 0 0 1-2.348-4.05l1.424-1.052a3.488 3.488 0 0 0 0-5.616l-1.421-1.05a12.2 12.2 0 0 1
           2.348-4.046l1.6.7a3.45 3.45 0 0 0 1.4.294a3.5 3.5 0 0 0 3.467-3.108l.194-1.747c.774-.15 1.56-.23 2.347-.24c.782.01 1.562.09 2.33.24l.186 1.74a3.48 3.48 0 0 0 1.137 2.216a3.53 3.53 0 0 0
           3.727.6l1.6-.7a12.2 12.2 0 0 1 2.35 4.047l-1.423 1.046a3.48 3.48 0 0 0 0 5.62l1.422 1.05A12.3 12.3 0 0 1 25 23.901l-1.6-.7a3.473 3.473 0 0 0-4.866 2.81z"
-          Fill="White"/>
+          Fill="{DynamicResource IconsForeground}"/>
     
     <!--Themes icon-->
     <Path x:Key="ThemesIcon"
           x:Shared="False"
           Data="M7 2a1 1 0 0 0-1 1v15.5A3.5 3.5 0 0 0 9.5 22H12v4a4 4 0 0 0 8 0v-4h2.5a3.5 3.5 0 0 0 3.5-3.5V3a1 1 0 0 0-1-1zm11 1h3v6.5a.5.5 0 0 0 1 0V3h3v12H7V3h10v4.5a.5.5 0 0 0 1 0zM7 16h18v2.5a2.5 2.5 0
           0 1-2.5 2.5H20a1 1 0 0 0-1 1v4a3 3 0 1 1-6 0v-4a1 1 0 0 0-1-1H9.5A2.5 2.5 0 0 1 7 18.5z"
-          Stroke="White"/>
+          Stroke="{DynamicResource IconsForeground}"/>
 
     <!--Error icon for messages-->
     <Path x:Key="ErrorIcon"
           x:Shared="False"
           Data="M12 17q.425 0 .713-.288T13 16t-.288-.712T12 15t-.712.288T11 16t.288.713T12 17m-1-4h2V7h-2zm1 9q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1
           2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22"
-          Fill="Red"/>
+          Fill="{StaticResource HighlightRed}"/>
 
     <!--Warning icon for messages-->
     <Path x:Key="WarningIcon"
@@ -132,21 +132,21 @@
           x:Shared="False"
           Data="M11 17h2v-6h-2zm1-8q.425 0 .713-.288T13 8t-.288-.712T12 7t-.712.288T11 8t.288.713T12 9m0 13q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1
           2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22"
-          Fill="DeepSkyBlue"/>
+          Fill="{StaticResource HighlightBlue}"/>
     
     <!--Question icon for messages-->
     <Path x:Key="QuestionIcon"
           x:Shared="False"
           Data="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-1-7v2h2v-2zm2-1.645A3.502 3.502 0 0 0 12 6.5a3.5 3.5 0 0 0-3.433 2.813l1.962.393A1.5 1.5 0 1
           1 12 11.5a1 1 0 0 0-1 1V14h2z"
-          Fill="DeepSkyBlue"/>
+          Fill="{StaticResource HighlightBlue}"/>
     
     <!--Credits icon-->
     <Path x:Key="CredIcon"
           x:Shared="False"
           Data="M15 12V23M15 7V10M28 15C28 22.1797 22.1797 28 15 28C7.8203 28 2 22.1797 2 15C2 7.8203 7.8203 2 15 2C22.1797 2 28 7.8203 28 15Z"
           StrokeThickness="2"
-          Stroke="White"/>
+          Stroke="{DynamicResource IconsForeground}"/>
 
     <Geometry x:Key="TaskOptionsIcon">
         M6.66667 3.99999C6.66667 4.88405 6.31548 5.73189 5.69036 6.35701C5.06523 6.98213 4.21739 7.33332 3.33333 7.33332C2.44928 7.33332 1.60143 6.98213 0.976311 6.35701C0.351189
@@ -163,6 +163,6 @@
           StrokeThickness="2"
           Stretch="UniformToFill"
           Margin="0,3,0,0"
-          Fill="Red"/>
+          Fill="{StaticResource HighlightRed}"/>
 
 </ResourceDictionary>

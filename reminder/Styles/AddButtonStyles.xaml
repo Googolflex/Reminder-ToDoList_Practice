@@ -17,9 +17,9 @@
         <Setter Property="Stroke">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="{StaticResource HighlightGreen}" Offset="0"/>
-                    <GradientStop Color="{StaticResource HighlightBlue}" Offset="0.5"/>
-                    <GradientStop Color="{StaticResource HighlightPurple}" Offset="0.9"/>
+                    <GradientStop Color="{StaticResource HighlightGreenColor}" Offset="0"/>
+                    <GradientStop Color="{StaticResource HighlightBlueColor}" Offset="0.5"/>
+                    <GradientStop Color="{StaticResource HighlightPurpleColor}" Offset="0.9"/>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -34,9 +34,9 @@
         <Setter Property="Stroke">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
-                    <GradientStop Color="{StaticResource HighlightGreen}" Offset="0"/>
-                    <GradientStop Color="{StaticResource HighlightBlue}" Offset="0.63"/>
-                    <GradientStop Color="{StaticResource HighlightPurple}" Offset="1"/>
+                    <GradientStop Color="{StaticResource HighlightGreenColor}" Offset="0"/>
+                    <GradientStop Color="{StaticResource HighlightBlueColor}" Offset="0.63"/>
+                    <GradientStop Color="{StaticResource HighlightPurpleColor}" Offset="1"/>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>

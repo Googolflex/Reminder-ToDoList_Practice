@@ -51,11 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>9F41486D275B8B7D9C82EAF5E1C223C761D3CE47</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>232B71F9C40D5EC76114DDBFE28022B3F4BEF66F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>reminder_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -106,6 +105,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomControls\IconButton.cs" />
     <Compile Include="CustomControls\NotificationItem.cs" />
     <Compile Include="CustomControls\NotificationTable.xaml.cs">
       <DependentUpon>NotificationTable.xaml</DependentUpon>
@@ -171,10 +171,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\OrdinaryButtonsStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\PlaceholderTextBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

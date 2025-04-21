@@ -17,6 +17,13 @@ namespace reminder.Values
             QUESTION
         }
 
+        public enum MessageResult
+        {
+            None,
+            Yes,
+            No
+        }
+
         public static string ErrorText = "An unknown error occurred";
         public static string OnClosingQuestionText = "Are you sure you want to close ToDoList?";
         public static string WarningText = "";

@@ -153,7 +153,7 @@
                                     <Storyboard RepeatBehavior="1x" AutoReverse="True" FillBehavior="Stop">
                                         <ColorAnimation Storyboard.TargetName="Border"
                                                         Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                        To="Red"
+                                                        To="{StaticResource HighlightRedColor}"
                                                         Duration="0:0:0.3"/>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -164,5 +164,32 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="controls:IconButton">
+        <Setter Property="Margin" Value="0,0,15,0"/>
+        <Setter Property="Padding" Value="5,5,5,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:IconButton">
+                    <Border BorderBrush="Transparent"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            BorderThickness="0">
+                        <ContentControl Content="{TemplateBinding Content}"
+                                    VerticalAlignment="Center"
+                                    FocusVisualStyle="{x:Null}"
+                                    Margin="{TemplateBinding Padding}"></ContentControl>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SelectedElementColor}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
