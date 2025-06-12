@@ -21,7 +21,6 @@ namespace reminder
             bool res;
             if (option == true)
             {
-                //If autorun is already enabled drops message
                 if (!IsAutoRunEnabled())
                 {
                     AddToAutoRun();
@@ -32,7 +31,6 @@ namespace reminder
             }
             else
             {
-                //If autorun is already disabled drops message
                 if (IsAutoRunEnabled())
                 {
                     RemoveFromAutoRun();

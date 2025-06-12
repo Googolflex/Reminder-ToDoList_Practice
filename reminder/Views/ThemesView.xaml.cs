@@ -19,7 +19,8 @@ namespace reminder.Views
             Application.Current.Resources.MergedDictionaries.RemoveAt(0);
             Properties.Settings.Default.Theme = "StandardTheme";
             Properties.Settings.Default.Save();
-            Application.Current.Resources.MergedDictionaries.Insert(0, new ResourceDictionary { Source = new Uri($"Themes/{Properties.Settings.Default.Theme}.xaml", UriKind.Relative) });
+            Application.Current.Resources.MergedDictionaries.Insert(0, new ResourceDictionary 
+                { Source = new Uri($"Themes/{Properties.Settings.Default.Theme}.xaml", UriKind.Relative) });
         }
 
         private void LghtTheme_Click(object sender, RoutedEventArgs e)
@@ -27,7 +28,8 @@ namespace reminder.Views
             Application.Current.Resources.MergedDictionaries.RemoveAt(0);
             Properties.Settings.Default.Theme = "LightTheme";
             Properties.Settings.Default.Save();
-            Application.Current.Resources.MergedDictionaries.Insert(0, new ResourceDictionary { Source = new Uri($"Themes/{Properties.Settings.Default.Theme}.xaml", UriKind.Relative) });
+            Application.Current.Resources.MergedDictionaries.Insert(0, new ResourceDictionary 
+                { Source = new Uri($"Themes/{Properties.Settings.Default.Theme}.xaml", UriKind.Relative) });
         }
     }
 }

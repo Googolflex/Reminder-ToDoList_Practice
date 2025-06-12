@@ -7,18 +7,13 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.ComponentModel;
-using System.IO;
-using System.Windows.Media;
-using System.Threading;
 using System.Windows.Controls.Primitives;
 using Xceed.Wpf.AvalonDock.Controls;
 using System.Linq;
-using System.Windows.Media.Effects;
 using reminder.Windows;
 using reminder.Values;
 using reminder.CustomControls;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace reminder
 {
@@ -90,7 +85,7 @@ namespace reminder
 
         private void CheckTaskTime()
         {
-            //If time in task < time now then send an notification
+            //If time in task < time now and task not remindet yet then send an notification
             foreach (TaskItem taskItem in taskItems)
             {
                 if (DateTime.Now >= taskItem.FirstTime && (!taskItem.IsReminded && !taskItem.IsComplete))
@@ -107,6 +102,8 @@ namespace reminder
                     NotTable.AddNotification(notify);
                     notiCount.Text = unseenNotify.ToString();
 
+                    tasksManager.saveTasksToXml();
+
                     if(notiCounterEllipse.Visibility != Visibility.Visible)
                     {
                         notiCounterEllipse.Visibility = Visibility.Visible;
@@ -115,7 +112,7 @@ namespace reminder
             }
         }
 
-        //Open window for add an task. Needs to be reworked
+        //Open window for add an task.
         private void AddTask(object sender, MouseButtonEventArgs e)
         {
             AddWindow addWindow = new AddWindow(selectedGroup);
@@ -125,6 +122,7 @@ namespace reminder
                 taskItems.Add(addWindow.NewTask);
                 tasksManager.UpdateAllTasks(taskItems);
                 taskItems = tasksManager.sortTasksByGroup(selectedGroup);
+                tasksManager.saveTasksToXml();
             }
             taskBox.ItemsSource = taskItems;
         }
@@ -149,12 +147,14 @@ namespace reminder
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
                 taskItems.Remove(selectedTask);
+                tasksManager.DeleteTask(selectedTask);
+                tasksManager.saveTasksToXml();
             }
         }
 
         private void EditTask(object sender, MouseButtonEventArgs e)
         {
-            //Opens edit window for selected task when edit button is pressed and selected task is active. Needs to be reworked
+            //Opens edit window for selected task when edit button is pressed and selected task is active.
             if (taskBox.SelectedItem != null && !(taskBox.SelectedItem as TaskItem).IsComplete)
             {
                 TaskItem selectedTask = (TaskItem)taskBox.SelectedItem;
@@ -164,7 +164,8 @@ namespace reminder
                 if (editWindow.DialogResult == true)
                 {
                     selectedTask = editWindow.editedTask;
-                }
+                    tasksManager.saveTasksToXml();
+                }                
             }
         }
 
@@ -240,6 +241,8 @@ namespace reminder
             box.Clear();
 
             AddMenu.IsOpen = false;
+
+            groupsManager.saveGroupsToXml(groupItems);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -443,17 +446,13 @@ namespace reminder
         //Deletes selected group when delete button is pressed 
         private void DeleteGroup(object sender, RoutedEventArgs e)
         {
-
             GroupItem selectedGroup = (GroupItem)CustomGroups.SelectedItem;
-
             if (CustomGroups.SelectedItem != null)
             {
                 MessageWindow mes = new MessageWindow("Do you want to delete all tasks in a group?", MessageValues.MessageIcon.QUESTION);
                 mes.ShowDialog();
-
                 if (mes.Result != MessageValues.MessageResult.None)
                 {
-
                     if (mes.Result == MessageValues.MessageResult.Yes)
                     {
                         List<TaskItem> temp = new List<TaskItem>();
@@ -473,12 +472,15 @@ namespace reminder
                     {
                         foreach (TaskItem task in taskItems)
                         {
-                            task.Group = "All Tasks";
+                            if (task.Group == selectedGroup.Name)
+                            {
+                                task.Group = "All Tasks";
+                            }
                         }
                     }
-
                     groupItems.Remove(selectedGroup);
-
+                    tasksManager.saveTasksToXml();
+                    groupsManager.saveGroupsToXml(groupItems);
                     All_Tasks.IsSelected = true;
                 }
             }

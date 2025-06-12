@@ -97,6 +97,7 @@ namespace reminder
                 }
             }
         }
+
         public bool IsReminded
         {
             get { return isReminded; }

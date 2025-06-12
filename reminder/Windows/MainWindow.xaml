@@ -509,13 +509,13 @@
                                                             <!--Task Name-->
                                                             <TextBlock Text="{Binding Name}"
                                                                        Style="{StaticResource TasksText}"
-                                                                       Width="105"
+                                                                       Width="145"
                                                                        Margin="0,0,20,0"/>
 
                                                             <!--Description text-->
                                                             <TextBlock Text="{Binding Desсription}"
                                                                        Style="{StaticResource TasksText}"
-                                                                       MaxWidth="375"
+                                                                       MaxWidth="335"
                                                                        Margin="0,0,0,0"/>
 
                                                             <!--Task time-->

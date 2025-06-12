@@ -48,7 +48,7 @@
                                            FontSize="16"
                                            TextExceededMaxLength="InputExceededMaxLength"/>
                 <Label x:Name="nameWarning"
-                       Content="Name too long"
+                       Content=""
                        FontSize="12"
                        Foreground="{StaticResource HighlightRed}"
                        Visibility="Hidden"/>
@@ -61,7 +61,7 @@
                                            TextExceededMaxLength="InputExceededMaxLength"
                                            AllowWrapping="Wrap"/>
                 <Label x:Name="descriptionWarning"
-                       Content="Description too long"
+                       Content=""
                        FontSize="12"
                        Foreground="{StaticResource HighlightRed}"
                        Visibility="Hidden"/>

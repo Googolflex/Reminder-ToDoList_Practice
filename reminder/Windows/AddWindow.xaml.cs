@@ -58,10 +58,32 @@ namespace reminder
         }
 
 
-        private void Accept_Click(object sender, RoutedEventArgs e)
+        private async void Accept_Click(object sender, RoutedEventArgs e)
         {
-            tasksManager.AddNewTask(TaskName, TaskDescription, TaskTime, Group);
-            this.DialogResult = true;
+            if (TaskName != String.Empty && TaskDescription != String.Empty)
+            {
+                tasksManager.AddNewTask(TaskName, TaskDescription, TaskTime, Group);
+                this.DialogResult = true;
+            }
+            else
+            {
+                if (TaskName == String.Empty)
+                {
+                    nameWarning.Content = "Name can`t be empty";
+                    nameWarning.Visibility = Visibility.Visible;
+                    await Task.Delay(1000);
+                    nameWarning.Visibility = Visibility.Hidden;
+                    nameWarning.Content = String.Empty;
+                }
+                else if (TaskDescription == String.Empty)
+                {
+                    descriptionWarning.Content = "Description can`t be empty";
+                    descriptionWarning.Visibility = Visibility.Visible;
+                    await Task.Delay(1000);
+                    descriptionWarning.Visibility = Visibility.Hidden;
+                    descriptionWarning.Content = String.Empty;
+                }
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -78,15 +100,19 @@ namespace reminder
         {
             if (sender == nameBox)
             {
+                nameWarning.Content = "Name too long";
                 nameWarning.Visibility = Visibility.Visible;
                 await Task.Delay(600);
                 nameWarning.Visibility = Visibility.Hidden;
+                nameWarning.Content = String.Empty;
             }
             else if (sender == deskBox)
             {
+                descriptionWarning.Content = "Description too long";
                 descriptionWarning.Visibility = Visibility.Visible;
                 await Task.Delay(600);
                 descriptionWarning.Visibility = Visibility.Hidden;
+                descriptionWarning.Content = String.Empty;
             }
             else
             {

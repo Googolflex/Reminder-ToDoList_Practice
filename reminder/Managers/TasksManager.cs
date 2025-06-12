@@ -22,8 +22,6 @@ namespace reminder
                     allTasks.Add(item);
                 }
             }
-            foreach (TaskItem item in allTasks)
-                Console.WriteLine(item.Id);
         }
         public TaskItem AddNewTask(string name, string desсription, DateTime firstTime, string group)
         {
@@ -65,7 +63,7 @@ namespace reminder
         public ObservableCollection<TaskItem> loadTasksFromXml()
         {
             allTasks = xmlManager.DeserializeFromXml<ObservableCollection<TaskItem>>(path.TasksPath);
-            return xmlManager.DeserializeFromXml<ObservableCollection<TaskItem>>(path.TasksPath);
+            return allTasks;
         }
 
         public void saveTasksToXml()

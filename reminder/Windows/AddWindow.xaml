@@ -48,21 +48,21 @@
                                            FontSize="16"
                                            TextExceededMaxLength="InputExceededMaxLength"/>
                 <Label x:Name="nameWarning"
-                       Content="Name too long"
                        FontSize="12"
+                       Content=""
                        Foreground="{StaticResource HighlightRed}"
                        Visibility="Hidden"/>
 
                 <Label>Task Description:</Label>
                 <custom:PlaceholderTextBox x:Name="deskBox"
-                                           Placeholder="Enter description(optional)"
+                                           Placeholder="Enter description"
                                            MaxLength="200"
                                            FontSize="16"
                                            TextExceededMaxLength="InputExceededMaxLength"
                                            AllowWrapping="Wrap"/>
                 <Label x:Name="descriptionWarning"
-                       Content="Description too long"
                        FontSize="12"
+                       Content=""
                        Foreground="{StaticResource HighlightRed}"
                        Visibility="Hidden"/>
 

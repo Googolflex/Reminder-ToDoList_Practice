@@ -6,8 +6,6 @@ namespace reminder
 {
     public class GroupItem : INotifyPropertyChanged
     {
-
-
         private string _groupColor;
         private string _name;
 
@@ -35,8 +33,6 @@ namespace reminder
                 }
             }
         }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

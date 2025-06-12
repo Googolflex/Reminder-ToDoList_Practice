@@ -14,7 +14,7 @@ namespace reminder
         private string Today_Tomorrow_Yesterday(DateTime day)
         {
             string dayOfWeek = Convert.ToString(day.DayOfWeek);
-            if((day - DateTime.Today).TotalDays <= 2)
+            if((day - DateTime.Today).TotalDays <= 2 && (day - DateTime.Today).TotalDays >= -1)
             {
                 if (dayOfWeek == Convert.ToString(DateTime.Today.DayOfWeek))
                     dayOfWeek = $"Today {day.ToShortTimeString()}";
